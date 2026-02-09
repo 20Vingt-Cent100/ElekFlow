@@ -11,6 +11,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 ext {
@@ -26,7 +27,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'ca.qc.bdeb.sim.elekflow.UI'
-    mainClass = 'ca.qc.bdeb.sim.elekflow.UI.HelloApplication'
+    mainClass = 'ca.qc.bdeb.sim.elekflow.UI.App'
 }
 
 javafx {
@@ -35,9 +36,10 @@ javafx {
 }
 
 dependencies {
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'com.github.hervegirod:fxsvgimage:1.4'
+    implementation("org.ejml:ejml-all:0.44.0")
 }
 
 test {
