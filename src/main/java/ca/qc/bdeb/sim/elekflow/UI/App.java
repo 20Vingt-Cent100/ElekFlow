@@ -11,6 +11,10 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
+
+
+
         Pane root = new Pane();
         Scene scene = new Scene(root,320, 240);
         stage.setTitle("Hello!");
