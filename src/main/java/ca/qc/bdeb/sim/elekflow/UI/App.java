@@ -25,6 +25,7 @@ public class App extends Application {
         Loggeur.changerNiveauLog(NiveauLog.TOTAL);
         var atlas = new Atlas();
         atlas.loadSvgs();
+        atlas.loadImgs();
     }
 
     public static void main(String[] args) {
