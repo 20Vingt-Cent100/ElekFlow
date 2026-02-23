@@ -1,0 +1,31 @@
+#mainBox {
+    -fx-background-color: #CCD6E0;
+}
+#mainVBox {
+    -fx-background-color: #788491;
+    -fx-pref-width: 396px;
+    -fx-pref-height: 1000px;
+    -fx-background-radius: 22px
+}
+#vBoxRecherche {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 49px;
+    -fx-background-radius: 22px
+}
+#mainTitre {
+    -fx-font-size: 20;
+    -fx-text-fill: #CCD6E0;
+}
+#vBoxRechercheSources {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 236px;
+    -fx-background-radius: 22px
+}
+#vBoxRechercheComposantes {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 622px;
+    -fx-background-radius: 22px
+}
