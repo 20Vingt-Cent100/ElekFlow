@@ -1,6 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI;
 
-import ca.qc.bdeb.sim.elekflow.Logique.Test;
+import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -8,16 +8,19 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.girod.javafx.svgimage.SVGImage;
 
 import java.io.IOException;
 
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        Atlas atlas = new Atlas();
+        atlas.loadSvgs();
+        atlas.loadImgs();
+
         AnchorPane root = new AnchorPane();
         root.setId("mainBox");
 
@@ -33,14 +36,12 @@ public class App extends Application {
         AnchorPane.setTopAnchor(vBox2, 62.0); //Y
         AnchorPane.setLeftAnchor(vBox2, 65.0); //X
 
-        Label titre = new Label("Matériel életique");
+
+        Label titre = new Label("\uD83D\uDD0C Matériel életique");
         titre.setId("mainTitre");
-        titre.setPadding(new Insets(11.14, 0, 0, 40.28));
+        titre.setPadding(new Insets(11.14, 0, 0, 10.33));
 
-        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("ca/qc/bdeb/sim/elekflow/SVGs/svgviewer-output (5).svg")));
-
-        vBox2.getChildren().addAll(icon, titre);
-
+        vBox2.getChildren().addAll(titre);
 
         VBox vBox3 = new VBox();
         vBox3.setId("vBoxRechercheSources");
@@ -64,8 +65,6 @@ public class App extends Application {
         stage.setFullScreenExitHint("");
         stage.setFullScreen(true);
         stage.show();
-
-        Test.log();
     }
 
     public static void main(String[] args) {

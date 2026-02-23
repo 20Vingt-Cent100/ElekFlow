@@ -15,6 +15,7 @@
 }
 #mainTitre {
     -fx-font-size: 20;
+    -fx-font-weight: bold;
     -fx-text-fill: #CCD6E0;
 }
 #vBoxRechercheSources {
