@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'ca.qc.bdeb.SIM'
-version 'dev-Alpha'
+version '0-Alpha'
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'com.github.hervegirod:fxsvgimage:1.4'
-    implementation("org.ejml:ejml-all:0.44.0")
+    //implementation("org.ejml:ejml-all:0.44.0")
 }
 
 test {
