@@ -28,4 +28,8 @@ public class Atlas {
     public SVGImage getSVG(String key){
         return LIST_SVG.get(key);
     }
+
+    public SVGImage getSVG(String key, double scale){
+        return LIST_SVG.get(key).scale(scale);
+    }
 }
