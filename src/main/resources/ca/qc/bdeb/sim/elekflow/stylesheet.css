@@ -15,8 +15,8 @@
 }
 #mainTitre {
     -fx-font-size: 20;
+    -fx-text-fill: #788491;
     -fx-font-weight: bold;
-    -fx-text-fill: #CCD6E0;
 }
 #vBoxRechercheSources {
     -fx-background-color: #243242;
@@ -24,9 +24,38 @@
     -fx-pref-height: 236px;
     -fx-background-radius: 22px
 }
+#titreSources {
+   -fx-font-size: 20;
+   -fx-text-fill: #788491;
+   -fx-font-weight: bold;
+}
+#separateurVBox {
+   -fx-background-color: #788491;
+       -fx-pref-width: 310.11px;
+       -fx-pref-height: 3px;
+       -fx-background-radius: 22px
+}
 #vBoxRechercheComposantes {
     -fx-background-color: #243242;
     -fx-pref-width: 345px;
     -fx-pref-height: 622px;
     -fx-background-radius: 22px
 }
+#bouton {
+   -fx-background-color: transparent;
+}
+#bouton SVGImage *{
+   -fx-stroke: #788491;
+}
+#titreComposantes {
+   -fx-font-size: 20;
+   -fx-text-fill: #788491;
+   -fx-font-weight: bold;
+}
+#tooltip {
+   -fx-background-color: rgba(20, 30, 50, 0.7);
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2);
+   -fx-text-fill: #CCD6E0;
+   -fx-font-size: 14px;
+}
+

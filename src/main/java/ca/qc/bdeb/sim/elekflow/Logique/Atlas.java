@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class Atlas {
    private final HashMap<String, SVGImage> LIST_SVGs = new HashMap<>();
