@@ -15,10 +15,11 @@ public class Atlas {
    private final HashMap<String, SVGImage> LIST_SVGs = new HashMap<>();
    private final HashMap<String, Image> LIST_IMGs = new HashMap<>();
 
-   private final String RESOURCE_PATH = "./src/main/resources/ca/qc/bdeb/sim/elekflow/";
+   private final String DEFAULT_FOLDER_PATH = "./src/main/resources/";
+   private final String RESOURCE_PATH = "ca/qc/bdeb/sim/elekflow/";
 
     public void loadSvgs(){
-        final String SVGs_FOLDER_PATH = RESOURCE_PATH + "SVGs";
+        final String SVGs_FOLDER_PATH = DEFAULT_FOLDER_PATH + RESOURCE_PATH + "SVGs";
         File f = new File(SVGs_FOLDER_PATH);
         for (String i : f.list()){
             if(i.endsWith(".svg")) {
@@ -32,13 +33,21 @@ public class Atlas {
     }
 
     public void loadImgs(){
-        final String IMGs_FOLDER_PATH = RESOURCE_PATH + "IMGs";
+        final String IMGs_FOLDER_PATH = DEFAULT_FOLDER_PATH + RESOURCE_PATH + "IMGs";
         File f = new File(IMGs_FOLDER_PATH);
         for (String i : f.list()){
-            LIST_IMGs.put(i.substring(0, i.indexOf(".")), new Image(IMGs_FOLDER_PATH + "/"  + i));
+            LIST_IMGs.put(
+                    i.substring(0, i.indexOf(".")),
+                    new Image(getClass().getResourceAsStream("/" + RESOURCE_PATH + "IMGs/" + i))
+            );
         }
     }
 
+    /**
+     *
+     * @param key Name of the svg ()
+     * @return The SVGImage associated to the key inputted
+     */
     public SVGImage getSVG(String key){
         return LIST_SVGs.get(key);
     }
