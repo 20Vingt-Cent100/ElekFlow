@@ -24,9 +24,10 @@ public class Atlas {
         for (String i : f.list()){
             if(i.endsWith(".svg")) {
                 try {
-                    LIST_SVGs.put(i.substring(0, i.length() - 4), SVGLoader.load(Files.readString(Path.of(SVGs_FOLDER_PATH + "/" + i))));
+                    LIST_SVGs.put(i.substring(0, i.length() - 4),
+                            SVGLoader.load(Files.readString(Path.of(SVGs_FOLDER_PATH + "/" + i))));
                 }catch (IOException e){
-                    Loggeur.logConsole(e.getMessage(), NiveauLog.ERREUR);
+                    Loggeur.logConsole(e.getCause() + e.getMessage(), NiveauLog.ERREUR);
                 }
             }
         }
@@ -38,7 +39,7 @@ public class Atlas {
         for (String i : f.list()){
             LIST_IMGs.put(
                     i.substring(0, i.indexOf(".")),
-                    new Image(getClass().getResourceAsStream("/" + RESOURCE_PATH + "IMGs/" + i))
+                    new Image(Objects.requireNonNull(getClass().getResourceAsStream("/" + RESOURCE_PATH + "IMGs/" + i)))
             );
         }
     }

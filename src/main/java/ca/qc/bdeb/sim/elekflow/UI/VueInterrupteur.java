@@ -11,7 +11,7 @@ public class VueInterrupteur extends VueComposantElectrique{
 
     public VueInterrupteur() {
         super(
-                new SVGImage[]{App.atlas.getSVG("InterrupteurOuvert"), App.atlas.getSVG("InterrupteurFermeFixe2")},
+                new SVGImage[]{App.atlas.getSVG("InterrupteurOuvert"), App.atlas.getSVG("InterrupteurFerme")},
                 new Interrupteur()
         );
     }
@@ -26,7 +26,7 @@ public class VueInterrupteur extends VueComposantElectrique{
         isOpen = !isOpen;
 
         getChildren().getFirst().setVisible(!isOpen);
-        getChildren().getLast().setVisible(isOpen);
+        getChildren().get(1).setVisible(isOpen);
 
         Loggeur.logConsole("L'etat de l'interrupteur a ete change", NiveauLog.TOTAL);
     }

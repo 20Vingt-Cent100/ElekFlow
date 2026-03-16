@@ -5,7 +5,5 @@ module ca.qc.bdeb.sim.elekflow.UI {
 
 
     exports ca.qc.bdeb.sim.elekflow.UI;
-    opens ca.qc.bdeb.sim.elekflow.UI to javafx.fxml;
     exports ca.qc.bdeb.sim.elekflow.Logique;
-    opens ca.qc.bdeb.sim.elekflow.Logique to javafx.fxml;
 }

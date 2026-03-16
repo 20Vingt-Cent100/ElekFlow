@@ -6,6 +6,6 @@ public class VueLed extends VueComposantElectrique{
 
     public VueLed() {
         super(App.atlas.getSVG("LED"), new Led(5));
-        this.getStyleClass().add("led");
+        this.getStyleClass().add("composant-fill");
     }
 }
