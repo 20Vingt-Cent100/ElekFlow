@@ -21,7 +21,7 @@
 #vBoxRechercheSources {
     -fx-background-color: #243242;
     -fx-pref-width: 345px;
-    -fx-pref-height: 236px;
+    -fx-pref-height: 180px;
     -fx-background-radius: 22px
 }
 #titreSources {
@@ -32,13 +32,13 @@
 #separateurVBox {
    -fx-background-color: #788491;
        -fx-pref-width: 310.11px;
-       -fx-pref-height: 3px;
+       -fx-pref-height: 1.5px;
        -fx-background-radius: 22px
 }
 #vBoxRechercheComposantes {
     -fx-background-color: #243242;
     -fx-pref-width: 345px;
-    -fx-pref-height: 622px;
+    -fx-pref-height: 420px;
     -fx-background-radius: 22px
 }
 #bouton {
@@ -52,10 +52,34 @@
    -fx-text-fill: #788491;
    -fx-font-weight: bold;
 }
+#vBoxDeff {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 232px;
+    -fx-background-radius: 22px
+}
+#titreDeff{
+   -fx-font-size: 20;
+   -fx-text-fill: #788491;
+   -fx-font-weight: bold;
+   -fx-padding: 15px;
+}
+#vBoxDeffComposante {
+    -fx-pref-width: 345px;
+    -fx-pref-height: 232px;
+    -fx-background-radius: 22px;
+    -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* base + overlay */
+    -fx-background-insets: 0, 0;            /* les deux remplissent toute la VBox */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2);
+}
+#labelDeff {
+   -fx-font-size:14;
+   -fx-text-fill: #CCD6E0;
+   -fx-padding: 15px;
+}
 #tooltip {
-   -fx-background-color: rgba(20, 30, 50, 0.7);
-   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2);
+   -fx-background-color: rgba(25, 35, 45, 0.9); /* fond plus transparent */
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2); /* ombre plus légère */
    -fx-text-fill: #CCD6E0;
    -fx-font-size: 14px;
 }
-
