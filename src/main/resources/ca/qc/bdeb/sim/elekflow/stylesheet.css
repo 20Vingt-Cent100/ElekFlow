@@ -83,3 +83,25 @@
    -fx-text-fill: #CCD6E0;
    -fx-font-size: 14px;
 }
+
+/*Code css de Vincent:*/
+.root {
+    -composant-couleur: #031927;
+    -composant-couleur-hover : #384B57;
+}
+
+.composant SVGPath{
+    -fx-stroke: -composant-couleur;
+}
+
+.composant-fill *:not(.borne){
+    -fx-fill: -composant-couleur;
+}
+
+.hovered *{
+    -fx-stroke: -composant-couleur-hover;
+}
+
+.composant-fill.hovered *, .composant.hovered .borne{
+    -fx-fill: -composant-couleur-hover;
+}
