@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.Objects;
 
 public class SimulationScene extends Scene {
+    private WindowMode mode = WindowMode.FULLSCREEN;
+
     public static SimulationScene creerSceneDeSimulation(File projectFile){
         var root = new Pane();
 

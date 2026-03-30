@@ -37,16 +37,21 @@ public class Atlas {
         final String IMGs_FOLDER_PATH = DEFAULT_FOLDER_PATH + RESOURCE_PATH + "IMGs";
         File f = new File(IMGs_FOLDER_PATH);
         for (String i : f.list()){
-            LIST_IMGs.put(
-                    i.substring(0, i.indexOf(".")),
-                    new Image(Objects.requireNonNull(getClass().getResourceAsStream("/" + RESOURCE_PATH + "IMGs/" + i)))
-            );
+            try{
+                LIST_IMGs.put(
+                        i.substring(0, i.indexOf(".")),
+                        new Image(Objects.requireNonNull(getClass().getResourceAsStream("/" + RESOURCE_PATH + "IMGs/" + i)))
+                );
+            }catch (NullPointerException ex){
+                Loggeur.logConsole(ex.getCause() + ex.getMessage(), NiveauLog.ERREUR);
+            }
+
         }
     }
 
     /**
-     *
-     * @param key Name of the svg ()
+     *Get an SVGImage corresponding to the key
+     * @param key Name of the svg (without the extension)
      * @return The SVGImage associated to the key inputted
      */
     public SVGImage getSVG(String key){
