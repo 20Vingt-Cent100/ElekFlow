@@ -324,6 +324,8 @@ public class SimulationScene extends Scene {
                 vBox5.getChildren().setAll(labelDeff);
                 vBox5.setId("vBoxDeff");
             });
+
+
         }
 
         root.getChildren().addAll(vBox1, vBox2, vBox3, vBox4, vBoxSeparateur1, vBoxSeparateur2, tile, tile2, vBox5);

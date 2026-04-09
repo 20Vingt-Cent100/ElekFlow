@@ -13,7 +13,7 @@ import java.util.HashSet;
 
 public class App extends Application {
     public static Atlas atlas;
-    private static final HashMap<String, Stage> STAGES = new HashMap<>();
+    private static final HashMap<String, ElekFlowStage> STAGES = new HashMap<>();
 
 
     /**
@@ -33,7 +33,10 @@ public class App extends Application {
         //Ajout du stage à la liste de stages de l'application
         addStage(ElekFlowStage.createStage("ElekFlow", atlas.getIMG("iconDark"), true),
                 "Primaire",
-                true);
+                false);
+
+        changeScene(StartupScene.createStartupScene(), "Primaire");
+        getStage("Primaire").setShow(true);
     }
 
     /**
@@ -53,6 +56,10 @@ public class App extends Application {
         Loggeur.changerNiveauLog(niveauLog);
     }
 
+
+    public static ElekFlowStage getStage(String cle){
+        return STAGES.get(cle);
+    }
 
     /**
      * Permet d'ajouté un stage à l'application

@@ -1,55 +1,104 @@
 package ca.qc.bdeb.sim.elekflow.UI;
 
-import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.io.File;
+import java.util.Objects;
 
-public class StartupScene extends Scene {
+public class StartupScene extends ElekflowScene {
 
     public static StartupScene createStartupScene(){
         Pane root = new Pane();
-        root.setBackground(new Background(new BackgroundFill(Color.web("031927"), null, null)));
+        root.setId("mainVBox");
 
-        return new StartupScene(root, 900, 700, Color.rgb(3, 25, 39));
+
+        return new StartupScene(root, 1200, 700, Color.rgb(3, 25, 39));
     }
 
     private final Pane root;
 
     private StartupScene(Parent root, double width, double height, Paint fill) {
-        super(root, width, height);
+        super(root, width, height, WindowMode.WINDOWED);
 
         this.root = (Pane) root;
+
+        this.getStylesheets().add(
+                Objects.requireNonNull(getClass()
+                                .getResource("/ca/qc/bdeb/sim/elekflow/menuDepart.css"))
+                        .toString()
+        );
 
         populateScene();
     }
 
     private void populateScene(){
-        VBox sceneLayout = new VBox();
+        AnchorPane sceneLayout = new AnchorPane();
         HBox options = new HBox();
 
-        sceneLayout.getChildren().addAll(options);
+        AnchorPane.setTopAnchor(options, 600.0); //Y
+        AnchorPane.setLeftAnchor(options, 50.0); //X
 
-        root.getChildren().addAll(sceneLayout);
+        options.setSpacing(10);
 
-        var importBtn = new Button("Importer un projet");
-        var createNewBtn = new Button("Créer un nouveau projet");
+        var createNewBtn = new Button("Créer nouveau projet");
+        var importBtn = new Button("Importer projet existant");
+
+        importBtn.setId("bouttons");
+        createNewBtn.setId("bouttons");
 
         importBtn.setOnAction(this::importNewProject);
+
         createNewBtn.setOnAction(this::createNewProject);
 
-        options.getChildren().add(importBtn);
-        options.getChildren().add(createNewBtn);
+        ImageView image = new ImageView(App.atlas.getIMG("logo"));
+        image.setFitHeight(1228.0/4);
+        image.setFitWidth(786.0/4);
+
+        AnchorPane.setTopAnchor(image, 60.0); //Y
+        AnchorPane.setLeftAnchor(image, 50.0); //X
+
+        Label textLogo = new Label("ElekFlow");
+        textLogo.setId("textLogo");
+
+        AnchorPane.setTopAnchor(textLogo, 165.0); //Y
+        AnchorPane.setLeftAnchor(textLogo, 180.0); //X
+
+        options.getChildren().addAll(createNewBtn, importBtn);
+
+        createNewBtn.setOnMouseEntered(e -> {
+            createNewBtn.setId("bouttonsBleu");
+
+        });
+
+        createNewBtn.setOnMouseExited(e -> {
+            createNewBtn.setId("bouttons");
+        });
+
+        importBtn.setOnMouseEntered(e -> {
+            importBtn.setId("bouttonsBleu");
+
+        });
+
+        importBtn.setOnMouseExited(e -> {
+            importBtn.setId("bouttons");
+        });
+
+        sceneLayout.getChildren().addAll(options, image, textLogo);
+        root.getChildren().addAll(sceneLayout);
     }
 
     private void importNewProject(ActionEvent actionEvent){
@@ -67,7 +116,8 @@ public class StartupScene extends Scene {
         var secondaryStage = new Stage();
 
         VBox root = new VBox();
-        root.setBackground(new Background(new BackgroundFill(Color.web("031927"), null, null)));
+
+        //root.setBackground(new Background(new BackgroundFill(Color.web("031927"), null, null)));
 
         var dir = new DirectoryChooser();
         dir.setInitialDirectory(new File("./projets"));
@@ -109,7 +159,7 @@ public class StartupScene extends Scene {
         secondaryStage.setScene(createNewProjectScene);
         secondaryStage.setResizable(false);
         secondaryStage.centerOnScreen();
-        secondaryStage.setTitle("Créer un nouveau projet");
+        secondaryStage.setTitle("Crée un nouveau projet");
         secondaryStage.show();
     }
 
