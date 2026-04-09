@@ -32,7 +32,7 @@ public class App extends Application {
                 "Primaire",
                 false);
 
-        changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED), "Primaire");
+        changeScene(new SimulationScene(1920, 1080, WindowMode.WINDOWED), "Primaire");
         getStage("Primaire").setShow(true);
 
     }

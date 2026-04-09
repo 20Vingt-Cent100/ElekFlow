@@ -172,7 +172,7 @@ public class BouttonComposant extends Button {
 
         this.getStyleClass().add("--btn-composant");
 
-        this.setGraphic(App.atlas.getSVG("key"));
+        this.setGraphic(App.atlas.getSVG(key));
 
         var tooltip = new Tooltip(tooltipStr);
         tooltip.getStyleClass().add("--tooltip");

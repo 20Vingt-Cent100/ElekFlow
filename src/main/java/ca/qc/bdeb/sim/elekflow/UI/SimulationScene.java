@@ -95,7 +95,7 @@ public class SimulationScene extends ElekflowScene{
         tile2.setPrefTileHeight(50);
         tile2.getChildren().addAll(
                 new BouttonComposant("Diode", "Diode"),
-                new BouttonComposant("Led", "Diode électroluminescente"),
+                new BouttonComposant("Del", "Diode électroluminescente"),
                 new BouttonComposant("Moteur", "Moteur"),
                 new BouttonComposant("Resistance", "Résistance"),
                 new BouttonComposant("ElementChauffant", "Élément chauffant"),

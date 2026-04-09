@@ -1,3 +1,90 @@
+#mainBox {
+    -fx-background-color: #CCD6E0;
+}
+#mainVBox {
+    -fx-background-color: #788491;
+    -fx-pref-width: 396px;
+    -fx-pref-height: 1000px;
+    -fx-background-radius: 22px
+}
+#vBoxRecherche {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 49px;
+    -fx-background-radius: 22px
+}
+#mainTitre {
+    -fx-font-size: 20;
+    -fx-text-fill: #788491;
+    -fx-font-weight: bold;
+}
+#vBoxRechercheSources {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 180px;
+    -fx-background-radius: 22px
+}
+#titreSources {
+   -fx-font-size: 20;
+   -fx-text-fill: #788491;
+   -fx-font-weight: bold;
+}
+#separateurVBox {
+   -fx-background-color: #788491;
+       -fx-pref-width: 310.11px;
+       -fx-pref-height: 1.5px;
+       -fx-background-radius: 22px
+}
+#vBoxRechercheComposantes {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 420px;
+    -fx-background-radius: 22px
+}
+#bouton {
+   -fx-background-color: transparent;
+}
+#bouton SVGImage *{
+   -fx-stroke: #788491;
+}
+#titreComposantes {
+   -fx-font-size: 20;
+   -fx-text-fill: #788491;
+   -fx-font-weight: bold;
+}
+#vBoxDeff {
+    -fx-background-color: #243242;
+    -fx-pref-width: 345px;
+    -fx-pref-height: 232px;
+    -fx-background-radius: 22px
+}
+#titreDeff{
+   -fx-font-size: 20;
+   -fx-text-fill: #788491;
+   -fx-font-weight: bold;
+   -fx-padding: 15px;
+}
+#vBoxDeffComposante {
+    -fx-pref-width: 345px;
+    -fx-pref-height: 232px;
+    -fx-background-radius: 22px;
+    -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* base + overlay */
+    -fx-background-insets: 0, 0;            /* les deux remplissent toute la VBox */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2);
+}
+#labelDeff {
+   -fx-font-size:14;
+   -fx-text-fill: #CCD6E0;
+   -fx-padding: 15px;
+}
+#tooltip {
+   -fx-background-color: rgba(25, 35, 45, 0.9); /* fond plus transparent */
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2); /* ombre plus légère */
+   -fx-text-fill: #CCD6E0;
+   -fx-font-size: 14px;
+}
+
+/*Code css de Vincent:*/
 .root {
     -composant-couleur: #031927;
     -composant-couleur-hover : #384B57;
