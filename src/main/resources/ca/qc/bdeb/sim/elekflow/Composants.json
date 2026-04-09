@@ -1,0 +1,8 @@
+[{
+  "nom": "Ampoule",
+  "description": "Une ampoule convertit l’énergie électrique en lumière, souvent avec une émission de chaleur. Elle se comporte comme une résistance non linéaire dépendante de la température. En simulation, elle peut être simplifiée en résistance. Elle sert d’indicateur visuel de fonctionnement.",
+  "SVGfill" : false
+},
+  {
+
+  }]

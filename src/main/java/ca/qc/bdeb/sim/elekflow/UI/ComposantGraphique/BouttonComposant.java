@@ -1,12 +1,12 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
+import ca.qc.bdeb.sim.elekflow.UI.App;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.girod.javafx.svgimage.SVGImage;
-
 import java.util.HashMap;
 
 public class BouttonComposant extends Button {
@@ -170,12 +170,12 @@ public class BouttonComposant extends Button {
     public BouttonComposant(String key, String tooltipStr){
         super("");
 
-        this.getStyleClass().add("--btn-composant");
+        this.getStyleClass().add("btn-composant");
 
         this.setGraphic(App.atlas.getSVG(key));
 
         var tooltip = new Tooltip(tooltipStr);
-        tooltip.getStyleClass().add("--tooltip");
+        tooltip.getStyleClass().add("tooltip");
         tooltip.setShowDelay(Duration.ZERO);
         tooltip.setHideDelay(Duration.ZERO);
         tooltip.setShowDuration(Duration.INDEFINITE);
@@ -229,9 +229,10 @@ public class BouttonComposant extends Button {
     }
 
     private void handleOnMouseEntered(MouseEvent mouseEvent) {
-
+        setCursor(Cursor.HAND);
     }
 
     private void handleOnMouseDragged(MouseEvent mouseEvent) {
+
     }
 }

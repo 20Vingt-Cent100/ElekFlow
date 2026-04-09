@@ -1,5 +1,7 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -9,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class ProjectsScene extends ElekflowScene{
+public class ProjectsScene extends ElekflowScene {
 
     public ProjectsScene() {
         super(900, 600, WindowMode.WINDOWED);

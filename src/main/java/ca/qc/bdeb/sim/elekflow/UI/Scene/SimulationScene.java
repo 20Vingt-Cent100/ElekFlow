@@ -1,16 +1,17 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.BouttonComposant;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
-public class SimulationScene extends ElekflowScene{
+public class SimulationScene extends ElekflowScene {
     public SimulationScene(double width, double height, WindowMode mode) {
         super(width, height, mode);
         BouttonComposant.setLabels();
@@ -24,6 +25,8 @@ public class SimulationScene extends ElekflowScene{
 
     private AnchorPane menuComposant(){
         AnchorPane menu = new AnchorPane();
+
+        menu.setLayoutX(200);
         menu.setId("--menu-composant");
 
         VBox vBox1 = new VBox();

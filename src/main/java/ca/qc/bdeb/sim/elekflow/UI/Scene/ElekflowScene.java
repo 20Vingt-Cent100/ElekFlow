@@ -1,8 +1,7 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.scene.layout.Pane;
-
-import java.util.Objects;
 
 public abstract class ElekflowScene extends javafx.scene.Scene {
     private WindowMode mode;

@@ -1,4 +1,4 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.Utils;
 
 public enum WindowMode {
     FULLSCREEN,
