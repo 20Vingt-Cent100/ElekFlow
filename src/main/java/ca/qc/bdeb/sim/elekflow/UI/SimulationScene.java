@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class SimulationScene extends Scene {
+    private WindowMode mode = WindowMode.FULLSCREEN;
+
     public static SimulationScene creerSceneDeSimulation(File projectFile){
         var root = new AnchorPane();
 

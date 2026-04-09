@@ -5,75 +5,85 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class App extends Application {
     public static Atlas atlas;
-    private final boolean isDebugMode = false;
-
-    private static Stage stage;
-    private Pane root;
+    private static final HashMap<String, Stage> STAGES = new HashMap<>();
 
 
+    /**
+     *Point de départ de l'application
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws IOException
+     */
     @Override
-    public void start(Stage stage) throws IOException {
-        App.stage = stage;
+    public void start(Stage primaryStage) throws IOException {
+        //Configurations initiales
         loadAtlas();
         setLoggeur(NiveauLog.TOTAL);
 
-        setScene(StartupScene.createStartupScene());
-
-        setStage();
+        //Ajout du stage à la liste de stages de l'application
+        addStage(ElekFlowStage.createStage("ElekFlow", atlas.getIMG("iconDark"), true),
+                "Primaire",
+                true);
     }
 
+    /**
+     * Charge en mémoire toutes les images et SVGs présent dans les dossiers IMGs et SVGs
+     */
     private void loadAtlas(){
         atlas = new Atlas();
         atlas.loadSvgs();
         atlas.loadImgs();
     }
+
+    /**
+     * Permet de définir quel niveau de logs est voulu
+     * @param niveauLog Niveau de messages à écrire dans la console
+     */
     private void setLoggeur(NiveauLog niveauLog){
         Loggeur.changerNiveauLog(niveauLog);
     }
 
-    private void setSimulationScene(){
-        root = new Pane();
 
-        Scene app = new Scene(root,1920, 1080);
-        app.getStylesheets().add(
-                Objects.requireNonNull(getClass()
-                                .getResource("/ca/qc/bdeb/sim/elekflow/stylesheet.css"))
-                        .toString()
-        );
+    /**
+     * Permet d'ajouté un stage à l'application
+     * @param stage Stage à ajouter au dictionnaire des Stages de l'application
+     * @param cle Clé pour récupérer un stage depuis le dictionnaire
+     * @param show Affiche, ou non, le stage à l'écran
+     */
+    public static void addStage(ElekFlowStage stage, String cle, boolean show){
+        STAGES.put(cle, stage);
+        stage.setShow(show);
 
-        root.setBackground(new Background(new BackgroundFill(Color.web("D5DFE5"), null, null)));
-
-        setScene(app, WindowMode.MAXIMISED);
+        Loggeur.logConsole("Le stage à été créé", NiveauLog.TOTAL);
     }
 
-    private void setStage(){
-        stage.getIcons().add(atlas.getIMG("iconDark"));
-        stage.setFullScreenExitHint("");
-        stage.getIcons().add(atlas.getIMG("iconLight"));
-        stage.setTitle("ElekFlow");
-        stage.show();
-
-        stage.setOnCloseRequest((e) ->{
-            Platform.exit();
-        });
+    /**
+     * Permet de changer de scène
+     * @param scene Scene à affiché
+     * @param stageKey clé associé au stage dont l'on veut changer la scène
+     */
+    public static void changeScene(ElekflowScene scene, String stageKey){
+        changeScene(scene, stageKey, WindowMode.WINDOWED);
     }
 
-    public static void setScene(Scene scene){
-        stage.setScene(scene);
-        setHandles(scene);
-    }
-
-    public static void setScene(Scene scene, WindowMode mode){
+    /**
+     * Permet de changer de scène
+     * @param scene Scene à affiché
+     * @param stageKey clé associé au stage dont l'on veut changer la scène
+     * @param mode Mode d'affichage à l'écran (Fullscreen, Maximized, Windowed)
+     */
+    public static void changeScene(ElekflowScene scene, String stageKey, WindowMode mode){
+        Stage stage = STAGES.get(stageKey);
         stage.setScene(scene);
 
         switch (mode){
@@ -87,6 +97,10 @@ public class App extends Application {
 
     private static void setHandles(Scene scene){}
 
+    /**
+     * Point d'entré du projet
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }

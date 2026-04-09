@@ -4,12 +4,10 @@ import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import javafx.event.ActionEvent;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -61,8 +59,8 @@ public class StartupScene extends Scene {
         file.setInitialDirectory(new File("./projets"));
 
         var ioFile = file.showOpenDialog(root.getScene().getWindow());
-        if (ioFile != null)
-            changeScene(ioFile);
+        //if (ioFile != null)
+            //changeScene(ioFile);
     }
 
     private void createNewProject(ActionEvent actionEvent){
@@ -97,9 +95,9 @@ public class StartupScene extends Scene {
 
         var createBtn = new Button("Créer projet");
         createBtn.setOnAction((e) ->{
-            changeScene(
-                    new File(locationText.getText())
-            );
+            //changeScene(
+                    //new File(locationText.getText())
+            //);
             secondaryStage.close();
         });
 
@@ -115,12 +113,5 @@ public class StartupScene extends Scene {
         secondaryStage.show();
     }
 
-    private void changeScene(File fileToOpen){
-        App.setScene(
-                SimulationScene.
-                        creerSceneDeSimulation(
-                                fileToOpen
-                        ),
-                WindowMode.MAXIMISED);
-    }
+
 }
