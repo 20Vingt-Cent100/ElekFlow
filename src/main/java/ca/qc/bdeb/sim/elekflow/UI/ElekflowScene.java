@@ -1,24 +1,25 @@
 package ca.qc.bdeb.sim.elekflow.UI;
 
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 
-import java.io.File;
+import java.util.Objects;
 
-public class ElekflowScene extends javafx.scene.Scene {
+public abstract class ElekflowScene extends javafx.scene.Scene {
     private WindowMode mode;
+    protected static final Pane ROOT = new Pane();
 
-    public static ElekflowScene creerSceneSimulation(File fileProject, double width, double height, WindowMode mode){
-        var root = new Pane();
-
-        return new ElekflowScene(root, width, height, mode);
-    }
-
-    public ElekflowScene(Parent root, double width, double height, WindowMode mode) {
-        super(root, width, height);
-
+    public ElekflowScene(double width, double height, WindowMode mode) {
+        super(ROOT, width, height);
         this.mode = mode;
+        populateScene();
     }
+
+
+    protected void addStyleSheet(String style){
+        getStylesheets().add(style);
+    }
+
+    public abstract void populateScene();
 
     public WindowMode getMode(){
         return mode;

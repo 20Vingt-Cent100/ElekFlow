@@ -3,17 +3,14 @@ import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class App extends Application {
     public static Atlas atlas;
-    private static final HashMap<String, Stage> STAGES = new HashMap<>();
+    private static final HashMap<String, ElekFlowStage> STAGES = new HashMap<>();
 
 
     /**
@@ -31,9 +28,13 @@ public class App extends Application {
         setLoggeur(NiveauLog.TOTAL);
 
         //Ajout du stage à la liste de stages de l'application
-        addStage(ElekFlowStage.createStage("ElekFlow", atlas.getIMG("iconDark"), true),
+        addStage(ElekFlowStage.createStage("ElekFlow Project Manager", atlas.getIMG("LogoDark"), true),
                 "Primaire",
-                true);
+                false);
+
+        changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED), "Primaire");
+        getStage("Primaire").setShow(true);
+
     }
 
     /**
@@ -43,6 +44,7 @@ public class App extends Application {
         atlas = new Atlas();
         atlas.loadSvgs();
         atlas.loadImgs();
+        atlas.loadStylesheets();
     }
 
     /**
@@ -51,6 +53,7 @@ public class App extends Application {
      */
     private void setLoggeur(NiveauLog niveauLog){
         Loggeur.changerNiveauLog(niveauLog);
+        Loggeur.logConsole("Logger was set to: " + niveauLog.toString(), NiveauLog.TOTAL);
     }
 
 
@@ -63,8 +66,15 @@ public class App extends Application {
     public static void addStage(ElekFlowStage stage, String cle, boolean show){
         STAGES.put(cle, stage);
         stage.setShow(show);
+    }
 
-        Loggeur.logConsole("Le stage à été créé", NiveauLog.TOTAL);
+    /**
+     * Obtenir un stage grâce à sa clé
+     * @param cle
+     * @return le stage associé à la clé
+     */
+    public static ElekFlowStage getStage(String cle){
+        return STAGES.get(cle);
     }
 
     /**

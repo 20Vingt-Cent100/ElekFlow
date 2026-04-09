@@ -18,3 +18,11 @@
 .composant-fill.hovered *, .composant.hovered .borne{
     -fx-fill: -composant-couleur-hover;
 }
+
+.--white {
+    -fx-stroke: #FFFFFF;
+}
+
+#--menu-composant{
+-fx-background-color:#000000;
+}
