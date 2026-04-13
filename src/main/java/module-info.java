@@ -2,6 +2,7 @@ module ca.qc.bdeb.sim.elekflow.UI {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.girod.javafx.svgimage;
+    requires json.simple;
 
 
     exports ca.qc.bdeb.sim.elekflow.UI;

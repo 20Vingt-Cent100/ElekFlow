@@ -1,7 +1,5 @@
 package ca.qc.bdeb.sim.elekflow.Logique;
 
-import javafx.scene.layout.VBox;
-
 import java.io.*;
 import java.nio.file.Path;
 import java.util.Scanner;

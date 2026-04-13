@@ -1,6 +1,5 @@
 package ca.qc.bdeb.sim.elekflow.Logique;
 
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import org.girod.javafx.svgimage.SVGImage;
 import org.girod.javafx.svgimage.SVGLoader;
@@ -20,10 +19,16 @@ public class Atlas {
    private final String DEFAULT_FOLDER_PATH = "./src/main/resources/";
    private final String RESOURCE_PATH = "ca/qc/bdeb/sim/elekflow/";
 
-    public void loadSvgs(){
+   public void loadAtlas(){
+       loadSvgs();
+       loadImgs();
+       loadStylesheets();
+   }
+
+    private void loadSvgs(){
         final String SVGs_FOLDER_PATH = DEFAULT_FOLDER_PATH + RESOURCE_PATH + "SVGs";
         File f = new File(SVGs_FOLDER_PATH);
-        for (String i : f.list()){
+        for (String i : Objects.requireNonNull(f.list())){
             if(i.endsWith(".svg")) {
                 try {
                     LIST_SVGs.put(i.substring(0, i.length() - 4),
@@ -35,10 +40,10 @@ public class Atlas {
         }
     }
 
-    public void loadImgs(){
+    private void loadImgs(){
         final String IMGs_FOLDER_PATH = DEFAULT_FOLDER_PATH + RESOURCE_PATH + "IMGs";
         File f = new File(IMGs_FOLDER_PATH);
-        for (String i : f.list()){
+        for (String i : Objects.requireNonNull(f.list())){
             try{
                 LIST_IMGs.put(
                         i.substring(0, i.indexOf(".")),
@@ -51,10 +56,10 @@ public class Atlas {
         }
     }
 
-    public void loadStylesheets(){
+    private void loadStylesheets(){
         final String style_FOLDER_PATH = DEFAULT_FOLDER_PATH + RESOURCE_PATH + "stylesheets";
         File f = new File(style_FOLDER_PATH);
-        for (String i : f.list()){
+        for (String i : Objects.requireNonNull(f.list())){
             if(i.endsWith(".css")) {
                 try {
                     LIST_STYLESHEETS.put(i.substring(0, i.length() - 4),
@@ -72,7 +77,13 @@ public class Atlas {
      * @return The SVGImage associated to the key inputted
      */
     public SVGImage getSVG(String key){
-        return LIST_SVGs.get(key);
+        try{
+            //Scaled to 1 to return a new instance of the SVG object. Avoiding duplicate references issues
+            return Objects.requireNonNull(LIST_SVGs.get(key).scale(1));
+        }catch (NullPointerException ex){
+            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+        }
+            return null;
     }
 
     public SVGImage getSVG(String key, double scale){

@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Circle;
 import org.girod.javafx.svgimage.SVGImage;
 
 public class VueComposantElectrique extends Region{

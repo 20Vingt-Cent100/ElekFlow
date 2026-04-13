@@ -1,8 +1,24 @@
-[{
+[
+  {
   "nom": "Ampoule",
+  "cle_svg": "Ampoule",
+  "categories": ["lineaire", "autre"],
   "description": "Une ampoule convertit l’énergie électrique en lumière, souvent avec une émission de chaleur. Elle se comporte comme une résistance non linéaire dépendante de la température. En simulation, elle peut être simplifiée en résistance. Elle sert d’indicateur visuel de fonctionnement.",
   "SVGfill" : false
 },
   {
+  "nom": "Avertisseur sonore",
+   "cle_svg": "AvertisseurSonore",
+    "Categorie": [],
+    "description": "Un avertisseur sonore produit un son lorsqu’il est alimenté électriquement. Il peut être actif (son intégré) ou passif (nécessite un signal). En simulation, il est modélisé comme une charge ou une source sonore. Il est utilisé pour les alertes et signaux.",
+    "SVGfill": false
+  },
 
-  }]
+  {
+    "nom": "",
+    "cle_svg": "",
+    "Categorie": [],
+    "description": "",
+    "SVGfill": false
+  }
+]

@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.BouttonComposant;
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.MenuComposant;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,19 +20,18 @@ public class SimulationScene extends ElekflowScene {
 
     @Override
     public void populateScene() {
-        ROOT.getChildren().add(menuComposant());
-        addStyleSheet(App.atlas.getStylesheet("stylesheet"));
+        ROOT.getChildren().add(new MenuComposant());
+        addStyleSheet(App.atlas.getStylesheet("simulationStyle"));
     }
 
     private AnchorPane menuComposant(){
         AnchorPane menu = new AnchorPane();
 
-        menu.setLayoutX(200);
         menu.setId("--menu-composant");
 
         VBox vBox1 = new VBox();
         vBox1.setId("mainVBox");
-        AnchorPane.setTopAnchor(vBox1, 40.0); //Y
+        AnchorPane.setTopAnchor(vBox1, 30.0); //Y
         AnchorPane.setLeftAnchor(vBox1, 40.0); //X
 
         VBox vBox2 = new VBox();
