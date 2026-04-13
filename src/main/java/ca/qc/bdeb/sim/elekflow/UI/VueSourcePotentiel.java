@@ -1,8 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI;
 
-import ca.qc.bdeb.sim.elekflow.Logique.ComposantElectrique;
 import ca.qc.bdeb.sim.elekflow.Logique.Resistance;
-import org.girod.javafx.svgimage.SVGImage;
 
 public class VueSourcePotentiel extends VueComposantElectrique{
     public VueSourcePotentiel() {

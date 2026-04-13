@@ -41,12 +41,17 @@
     -fx-pref-height: 420px;
     -fx-background-radius: 22px
 }
-#bouton {
+.btn-composant {
    -fx-background-color: transparent;
 }
-#bouton SVGImage *{
+.btn-composant SVGImage *{
    -fx-stroke: #788491;
 }
+
+.svg-fill *{
+   -fx-fill: #788491;
+}
+
 #titreComposantes {
    -fx-font-size: 20;
    -fx-text-fill: #788491;
@@ -77,7 +82,7 @@
    -fx-text-fill: #CCD6E0;
    -fx-padding: 15px;
 }
-#tooltip {
+.tooltip {
    -fx-background-color: rgba(25, 35, 45, 0.9); /* fond plus transparent */
    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2); /* ombre plus légère */
    -fx-text-fill: #CCD6E0;
@@ -104,4 +109,12 @@
 
 .composant-fill.hovered *, .composant.hovered .borne{
     -fx-fill: -composant-couleur-hover;
+}
+
+.--white {
+    -fx-stroke: #FFFFFF;
+}
+
+#--menu-composant{
+-fx-background-color: transparent;
 }

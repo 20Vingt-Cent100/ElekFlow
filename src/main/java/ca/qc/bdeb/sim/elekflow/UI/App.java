@@ -2,14 +2,14 @@ package ca.qc.bdeb.sim.elekflow.UI;
 import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class App extends Application {
     public static Atlas atlas;
@@ -31,21 +31,21 @@ public class App extends Application {
         setLoggeur(NiveauLog.TOTAL);
 
         //Ajout du stage à la liste de stages de l'application
-        addStage(ElekFlowStage.createStage("ElekFlow", atlas.getIMG("iconDark"), true),
+        addStage(ElekFlowStage.createStage("ElekFlow ProjectName", atlas.getIMG("LogoDark"), true, true),
                 "Primaire",
                 false);
 
-        changeScene(StartupScene.createStartupScene(), "Primaire");
+        changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED), "Primaire");
         getStage("Primaire").setShow(true);
+
     }
 
     /**
-     * Charge en mémoire toutes les images et SVGs présent dans les dossiers IMGs et SVGs
+     * Charge en mémoire toutes les images, SVGs et stylesheets présent dans les dossiers IMGs, SVGs et stylesheets
      */
     private void loadAtlas(){
         atlas = new Atlas();
-        atlas.loadSvgs();
-        atlas.loadImgs();
+        atlas.loadAtlas();
     }
 
     /**
@@ -54,12 +54,9 @@ public class App extends Application {
      */
     private void setLoggeur(NiveauLog niveauLog){
         Loggeur.changerNiveauLog(niveauLog);
+        Loggeur.logConsole("Logger was set to: " + niveauLog.toString(), NiveauLog.TOTAL);
     }
 
-
-    public static ElekFlowStage getStage(String cle){
-        return STAGES.get(cle);
-    }
 
     /**
      * Permet d'ajouté un stage à l'application
@@ -70,8 +67,15 @@ public class App extends Application {
     public static void addStage(ElekFlowStage stage, String cle, boolean show){
         STAGES.put(cle, stage);
         stage.setShow(show);
+    }
 
-        Loggeur.logConsole("Le stage à été créé", NiveauLog.TOTAL);
+    /**
+     * Obtenir un stage grâce à sa clé
+     * @param cle
+     * @return le stage associé à la clé
+     */
+    public static ElekFlowStage getStage(String cle){
+        return STAGES.get(cle);
     }
 
     /**
@@ -80,24 +84,10 @@ public class App extends Application {
      * @param stageKey clé associé au stage dont l'on veut changer la scène
      */
     public static void changeScene(ElekflowScene scene, String stageKey){
-        changeScene(scene, stageKey, WindowMode.WINDOWED);
-    }
-
-    /**
-     * Permet de changer de scène
-     * @param scene Scene à affiché
-     * @param stageKey clé associé au stage dont l'on veut changer la scène
-     * @param mode Mode d'affichage à l'écran (Fullscreen, Maximized, Windowed)
-     */
-    public static void changeScene(ElekflowScene scene, String stageKey, WindowMode mode){
-        Stage stage = STAGES.get(stageKey);
+        ElekFlowStage stage = STAGES.get(stageKey);
         stage.setScene(scene);
 
-        switch (mode){
-            case FULLSCREEN -> stage.setFullScreen(true);
-            case WINDOWED -> {stage.setFullScreen(false); stage.setMaximized(false);}
-            case MAXIMISED -> {stage.setMaximized(true);}
-        }
+        stage.changeMode(scene.getMode());
 
         setHandles(scene);
     }
