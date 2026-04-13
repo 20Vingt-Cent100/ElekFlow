@@ -1,61 +1,42 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.event.ActionEvent;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.io.File;
 import java.util.Objects;
 
 public class StartupScene extends ElekflowScene {
+    public StartupScene(double width, double height, WindowMode mode) {
+        super(width, height, WindowMode.WINDOWED);
 
-    public static StartupScene createStartupScene(){
-        Pane root = new Pane();
-        root.setId("mainVBox");
-
-
-        return new StartupScene(root, 1200, 700, Color.rgb(3, 25, 39));
-    }
-
-    private final Pane root;
-
-    private StartupScene(Parent root, double width, double height, Paint fill) {
-        super(root, width, height, WindowMode.WINDOWED);
-
-        this.root = (Pane) root;
-
-        this.getStylesheets().add(
-                Objects.requireNonNull(getClass()
-                                .getResource("/ca/qc/bdeb/sim/elekflow/menuDepart.css"))
-                        .toString()
-        );
+        addStyleSheet(App.atlas.getStylesheet("menuDepart"));
 
         populateScene();
     }
 
-    private void populateScene(){
+    protected void populateScene(){
         AnchorPane sceneLayout = new AnchorPane();
         HBox options = new HBox();
 
-        AnchorPane.setTopAnchor(options, 600.0); //Y
+        AnchorPane.setTopAnchor(options, 450.0); //Y
         AnchorPane.setLeftAnchor(options, 50.0); //X
 
         options.setSpacing(10);
 
-        var createNewBtn = new Button("Créer nouveau projet");
-        var importBtn = new Button("Importer projet existant");
+        var createNewBtn = new Button("Créer projet");
+        var importBtn = new Button("Importer projet");
 
         importBtn.setId("bouttons");
         createNewBtn.setId("bouttons");
@@ -97,8 +78,39 @@ public class StartupScene extends ElekflowScene {
             importBtn.setId("bouttons");
         });
 
-        sceneLayout.getChildren().addAll(options, image, textLogo);
-        root.getChildren().addAll(sceneLayout);
+        Label texteProjetRecent = new Label("Projets recents");
+        texteProjetRecent.setId("texteProjetsRecents");
+
+        AnchorPane.setTopAnchor(texteProjetRecent, 80.0);
+        AnchorPane.setLeftAnchor(texteProjetRecent, 650.0);
+
+        VBox content = new VBox();
+
+        ScrollPane scroller = new ScrollPane();
+        scroller.setId("scroller");
+
+        for(int i = 0; i < 100; i++){
+            Button btn = new Button("Projet" + i);
+
+            btn.setOnMouseEntered(e -> {
+                btn.setId("btnProjets");
+
+            });
+
+            btn.setOnMouseExited(e -> {
+                btn.setId("btnProjetsBleu");
+            });
+
+            content.getChildren().addAll(btn);
+
+        }
+
+        scroller.setContent(content);
+        AnchorPane.setTopAnchor(scroller, 155.0);
+        AnchorPane.setLeftAnchor(scroller, 550.0);
+
+        sceneLayout.getChildren().addAll(options, image, textLogo, scroller, texteProjetRecent);
+        ROOT.getChildren().addAll(sceneLayout);
     }
 
     private void importNewProject(ActionEvent actionEvent){
@@ -107,7 +119,7 @@ public class StartupScene extends ElekflowScene {
         file.setTitle("Importer un projet");
         file.setInitialDirectory(new File("./projets"));
 
-        var ioFile = file.showOpenDialog(root.getScene().getWindow());
+        var ioFile = file.showOpenDialog(ROOT.getScene().getWindow());
         //if (ioFile != null)
             //changeScene(ioFile);
     }

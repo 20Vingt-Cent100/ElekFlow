@@ -1,0 +1,160 @@
+.root {
+    -fx-background-color: #243242;
+}
+#bouttons {
+    -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* base + overlay */;
+    -fx-font-size: 20;
+    -fx-text-fill: #CCD6E0;
+    -fx-font-weight: bold;
+    -fx-pref-width: 212px;
+    -fx-pref-height: 45px;
+    -fx-background-radius: 10px;
+}
+#textLogo {
+   -fx-font-size:70;
+   -fx-text-fill: #CCD6E0;
+   -fx-font-weight: bold;
+}
+#bouttonsBleu {
+   -fx-background-color: #54BAF8;
+   -fx-font-size: 20;
+   -fx-text-fill: #CCD6E0;
+   -fx-font-weight: bold;
+   -fx-pref-width: 212px;
+   -fx-pref-height: 45px;
+   -fx-background-radius: 10px;
+}
+#texteProjetRecents {
+   -fx-font-size: 35;
+   -fx-text-fill: #CCD6E0;
+   -fx-font-weight: bold;
+}
+
+
+#scrollPane {
+    -fx-background-color: #243242;
+    -fx-padding: 10;
+    -fx-pref-height:413;
+    -fx-pref-width: 400;
+}
+
+/* zone interne */
+#scrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* scrollbar */
+#scrollPane .scroll-bar:vertical {
+    -fx-pref-width: 10px;
+    -fx-block-increment: 100;
+    -fx-unit-increment: 100;
+    -fx-background-color: transparent;
+}
+
+#scrollPane .scroll-bar:vertical .thumb {
+    -fx-background-insets: 0.05;
+}
+
+/* track (fond) */
+#scrollPane .scroll-bar:vertical .track {
+    -fx-background-color: #243242, rgba(25, 35, 45, 0.9);
+    -fx-background-radius: 10px;
+}
+
+/* thumb (la vraie barre draggable) */
+#scrollPane .scroll-bar:vertical .thumb {
+    -fx-background-color: #CCD6E0;
+    -fx-background-radius: 10px;
+}
+
+/* hover pour mieux voir */
+#scrollPane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #f1f1f1;
+}
+
+/* supprimer boutons */
+#scrollPane .increment-button,
+#scrollPane .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+    -fx-padding: 0;
+}
+
+/* supprimer flèches */
+#scrollPane .increment-arrow,
+#scrollPane .decrement-arrow {
+    -fx-shape: "";
+}
+
+#btnProjets{
+    -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* base + overlay */;
+    -fx-font-size: 20;
+    -fx-text-fill: #CCD6E0;
+    -fx-font-weight: bold;
+    -fx-pref-width: 400px;
+    -fx-pref-height: 60px;
+    -fx-background-radius: 10px;
+}
+#btnProjetsBleu {
+    -fx-background-color: #54BAF8;
+    -fx-font-size: 20;
+    -fx-text-fill: #CCD6E0;
+    -fx-font-weight: bold;
+    -fx-pref-width: 400px;
+    -fx-pref-height: 60px;
+    -fx-background-radius: 10px;
+}
+.create-project-root{
+    -fx-background-color: #243242;
+}
+
+
+/* ===== SCROLLPANE ===== */
+#scroller {
+    -fx-pref-height: 340;
+    -fx-pref-width: 450;
+    -fx-background-color: rgba(5, 25, 45, 0.65); /* bleu foncé transparent */
+    -fx-background-radius: 12;
+}
+
+/* zone intérieure */
+#scroller .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== SCROLLBAR VERTICALE ===== */
+#scroller .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 10px;
+}
+
+/* track (fond derrière la barre) */
+#scroller .scroll-bar:vertical .track {
+    -fx-background-color: rgba(0, 140, 255, 0.08); /* bleu très léger */
+    -fx-background-radius: 10;
+}
+
+/* thumb (barre blanche) */
+#scroller .scroll-bar:vertical .thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-pref-width: 6px;
+}
+
+/* hover sur la barre */
+#scroller .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #d9d9d9;
+}
+
+/* enlever boutons haut/bas */
+#scroller .scroll-bar:vertical .increment-button,
+#scroller .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+#texteProjetsRecents {
+    -fx-font-size:35;
+    -fx-text-fill: #CCD6E0;
+    -fx-font-weight: bold;
+}

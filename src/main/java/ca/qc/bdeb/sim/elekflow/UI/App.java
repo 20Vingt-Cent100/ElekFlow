@@ -4,6 +4,7 @@ import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.StartupScene;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -35,7 +36,7 @@ public class App extends Application {
                 "Primaire",
                 false);
 
-        changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED), "Primaire");
+        changeScene(new StartupScene(1050, 550, WindowMode.WINDOWED), "Primaire");
         getStage("Primaire").setShow(true);
 
     }

@@ -17,6 +17,8 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
         ROOT.setFocusTraversable(true);
         ROOT.setOnMouseClicked((e)->{ROOT.requestFocus();});
 
+        ROOT.getStyleClass().add("root");
+
         populateScene();
     }
 
@@ -25,7 +27,7 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
         getStylesheets().add(style);
     }
 
-    public abstract void populateScene();
+    protected abstract void populateScene();
 
     public WindowMode getMode(){
         return mode;
