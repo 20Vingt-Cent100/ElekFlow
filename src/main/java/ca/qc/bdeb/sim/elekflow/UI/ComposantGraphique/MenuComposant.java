@@ -6,20 +6,25 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.SearchEvent;
 import com.github.cliftonlabs.json_simple.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 import static ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles.*;
 
 public class MenuComposant extends VBox {
     private HashMap<String, ComposantElectrique> COMPOSANTS_ELECTRIQUES = new HashMap<>();
-    private LinkedList<String> listeCategorie = new LinkedList<>();
+    private HashSet<String> categoriesSet = new HashSet<>();
     private final Label label = new Label();
+
+    private final VBox categorieVBox;
 
     public MenuComposant(){
         loadAllElectricalComponents();
@@ -35,68 +40,85 @@ public class MenuComposant extends VBox {
         this.setTranslateX(0);
         this.setTranslateY(0);
 
-        var recherche = new ComposantCategorieGrille("Recherche");
+        var recherche = new ComposantCategorieGrille("Recherche", null);
         recherche.setManaged(false);
         recherche.setVisible(false);
 
         recherche.getChildren().add(label);
 
-        getChildren().addAll(new BarRecherche(), new Separator(),
-                new ComposantCategorieGrille("Sources"),
-                new ComposantCategorieGrille("Composants linéaires"),
-                new ComposantCategorieGrille("Semiconducteurs"),
-                new ComposantCategorieGrille("Interrupteurs"),
-                new ComposantCategorieGrille("Portes logiques"),
-                new ComposantCategorieGrille("Autre"),
-                recherche
-        );
+        var listeTemporaire = new ArrayList<ComposantElectrique>();
+        listeTemporaire.add(COMPOSANTS_ELECTRIQUES.get("Ampoule"));
 
+        categorieVBox = new VBox();
+        categorieVBox.getStyleClass().add("vbox");
+        var categorieScrollPane = new ScrollPane(categorieVBox);
 
+        categoriesSet.forEach((str) -> {
+            List<ComposantElectrique> c =  new ArrayList<>();
+            COMPOSANTS_ELECTRIQUES.forEach((k, v) -> {
+                if (v.getCATEGORY().equals(str))
+                    c.add(v);
+            });
+
+            categorieVBox.getChildren().add(
+                    new ComposantCategorieGrille(str, c));
+        });
+
+        categorieVBox.getChildren().add(recherche);
+
+        getChildren().addAll(new BarRecherche(), new Separator(), categorieScrollPane);
 
         this.addEventHandler(SearchEvent.SEARCH_ENGAGED, this::handleSearchEngaged);
         this.addEventHandler(SearchEvent.SEARCH_CANCELED, this::handleSearchCanceled);
     }
 
     private void handleSearchEngaged(SearchEvent event){
-        for (int i = 2; i < this.getChildren().size() - 1; i++) {
-            this.getChildren().get(i).setVisible(false);
-            this.getChildren().get(i).setManaged(false);
-        }
+        categorieVBox.getChildren().forEach((n) ->{
+            n.setVisible(false);
+            n.setManaged(false);
+        });
 
-        this.getChildren().getLast().setManaged(true);
-        this.getChildren().getLast().setVisible(true);
+        categorieVBox.getChildren().getLast().setManaged(true);
+        categorieVBox.getChildren().getLast().setVisible(true);
 
         rechercher(this.getChildren().getLast(), event.getSearchQuerry());
-        label.setText("Aucun composant nommé: 《 " + event.getSearchQuerry() + " 》");
+
     }
 
     private void handleSearchCanceled(SearchEvent event){
-        for (int i = 2; i < this.getChildren().size() - 1; i++) {
-            this.getChildren().get(i).setVisible(true);
-            this.getChildren().get(i).setManaged(true);
-        }
+        categorieVBox.getChildren().forEach((n) ->{
+            n.setVisible(true);
+            n.setManaged(true);
+        });
 
-        this.getChildren().getLast().setManaged(false);
-        this.getChildren().getLast().setVisible(false);
+        categorieVBox.getChildren().getLast().setManaged(false);
+        categorieVBox.getChildren().getLast().setVisible(false);
 
     }
 
     //TODO: REGEX Logique;
     public void rechercher(Node n, String reg){
+        label.setText("Aucun composant nommé: 《 " + reg + " 》");
     }
 
     public void loadAllElectricalComponents(){
         try {
-            FileReader jsonFile = new FileReader(getClass().getResource("/ca/qc/bdeb/sim/elekflow/Composants.json").getFile());
+            FileReader jsonFile = new FileReader(getClass().getResource("/ca/qc/bdeb/sim/elekflow/Composants.json").getFile(), StandardCharsets.UTF_8);
             JsonArray jsonArray = (JsonArray) Jsoner.deserialize(jsonFile);
 
             for (Object o : jsonArray){
                 JsonObject obj = (JsonObject) o;
-                COMPOSANTS_ELECTRIQUES.put(
+
+                if (!obj.getString(CATEGORIES).isEmpty()) {
+
+                    COMPOSANTS_ELECTRIQUES.put(
                         obj.getString(NOM),
                         new ComposantElectrique(obj));
+                    categoriesSet.add(obj.getString(CATEGORIES));
+                    Loggeur.logConsole("Category added: " + obj.getString(CATEGORIES), NiveauLog.TOTAL);
+                }
             }
-        }catch (FileNotFoundException | JsonException ex){
+        }catch (JsonException | NullPointerException | IOException ex){
             Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
         }
     }

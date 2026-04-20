@@ -167,14 +167,18 @@ public class BouttonComposant extends Button {
 
     private final Text DESCRIPTION = new Text();
 
-    public BouttonComposant(String key, String tooltipStr){
+    public BouttonComposant(ComposantElectrique compElec){
         super("");
 
         this.getStyleClass().add("btn-composant");
 
-        this.setGraphic(App.atlas.getSVG(key));
+        this.setGraphic(App.atlas.getSVG(compElec.getCLE_SVG()));
 
-        var tooltip = new Tooltip(tooltipStr);
+        if(compElec.isSVGFILL()){
+            this.getStyleClass().add("svg-fill");
+        }
+
+        var tooltip = new Tooltip(compElec.getNOM());
         tooltip.getStyleClass().add("tooltip");
         tooltip.setShowDelay(Duration.ZERO);
         tooltip.setHideDelay(Duration.ZERO);
@@ -182,7 +186,7 @@ public class BouttonComposant extends Button {
 
         this.setTooltip(tooltip);
 
-        DESCRIPTION.setText(DESCRIPTIONS.get(key));
+        DESCRIPTION.setText(compElec.getDESCRIPTION());
 
         setHandles();
     }

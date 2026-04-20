@@ -29,7 +29,7 @@ public class BarRecherche extends HBox {
 
             
             fireEvent(event);
-            Loggeur.logConsole(event.getSearchQuerry(), NiveauLog.TOTAL);
+            Loggeur.logConsole("Search event fired. Content: " + event.getSearchQuerry(), NiveauLog.TOTAL);
         });
 
         var iconRecherche = App.atlas.getSVG("SearchIcon");

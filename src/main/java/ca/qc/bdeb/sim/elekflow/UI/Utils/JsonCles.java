@@ -5,7 +5,7 @@ import com.github.cliftonlabs.json_simple.JsonKey;
 public enum JsonCles implements JsonKey {
     NOM("nom"),
     CLE_SVG("cle_svg"),
-    CATEGORIES("categories"),
+    CATEGORIES("category"),
     DESCRIPTION("description"),
     SVGFILL("SVGfill");
     private final String CLE;

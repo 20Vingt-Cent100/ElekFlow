@@ -54,6 +54,7 @@
 
     -fx-pref-width: 345px;
     -fx-pref-height: 49px;
+    -fx-min-height: 49px;
 
     -fx-background-color: dark-blue;
 
@@ -73,6 +74,21 @@
     -fx-spacing: 23px;
 }
 
+#menu-composant .scroll-pane{
+    -fx-fit-to-width: true;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+
+
+}
+
+#menu-composant .scroll-pane .vbox{
+    -fx-spacing: 23px;
+}
+
 .separator .line{
     -fx-border-color: dark-blue;
     -fx-border-width: 1.5px;
@@ -86,7 +102,7 @@
     -fx-background-radius: 13px;
     -fx-padding: 12px 17.56px 0 17.56px;
 
-    -fx-spacing: 20px;
+    -fx-spacing: 10px;
 
     -fx-min-height: 100px;
 }
@@ -99,4 +115,25 @@
     -fx-border-color: medium-blue;
     -fx-border-width: 1px;
     -fx-border-radius: 50%;
+}
+
+.btn-composant{
+    -fx-min-height: 80px;
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.btn-composant .svg *{
+    -fx-stroke: gray-blue;
+}
+
+.tooltip{
+    -fx-background: transparent;
+}
+
+.grille-pane{
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+
+    -fx-alignement: top-left;
 }

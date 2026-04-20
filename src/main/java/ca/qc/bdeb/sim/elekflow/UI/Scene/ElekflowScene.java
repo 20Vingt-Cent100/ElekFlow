@@ -1,11 +1,12 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public abstract class ElekflowScene extends javafx.scene.Scene {
     private WindowMode mode;
-    protected static final Pane ROOT = new Pane();
+    protected static final BorderPane ROOT = new BorderPane();
 
     public ElekflowScene(double width, double height, WindowMode mode) {
         super(ROOT, width, height);

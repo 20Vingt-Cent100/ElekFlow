@@ -20,11 +20,13 @@ public class SimulationScene extends ElekflowScene {
 
     @Override
     public void populateScene() {
-        ROOT.getChildren().add(new MenuComposant());
+        ROOT.setLeft(new MenuComposant());
         addStyleSheet(App.atlas.getStylesheet("simulationStyle"));
     }
 
+    /*
     private AnchorPane menuComposant(){
+
         AnchorPane menu = new AnchorPane();
 
         menu.setId("--menu-composant");
@@ -148,10 +150,10 @@ public class SimulationScene extends ElekflowScene {
                 informationsComposant.getChildren().setAll(labelDeff);
                 informationsComposant.setId("vBoxDeff");
             });
-        }*/
+        }
 
         menu.getChildren().addAll(vBox1, vBox2, vBox3, vBox4, vBoxSeparateur1, vBoxSeparateur2, tile, tile2, informationsComposant);
 
         return menu;
-    }
+    }*/
 }
