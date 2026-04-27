@@ -2,7 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
-import javafx.scene.Cursor;
+import ca.qc.bdeb.sim.elekflow.UI.VueComposantElectrique;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.*;
@@ -14,6 +14,8 @@ import java.util.HashMap;
 
 public class BouttonComposant extends Button {
     public final static HashMap<String, String> DESCRIPTIONS = new HashMap<>();
+
+    private VueComposantElectrique vueCreer = null;
 
     //TODO: Permettre la modification et l'ajout par un fichier
     public static void setLabels(){
@@ -169,12 +171,12 @@ public class BouttonComposant extends Button {
     }
 
     private final Text DESCRIPTION = new Text();
-    private final ComposantElectrique composantElectrique;
+    private final ComposantElectriqueGraphique composantElectriqueGraphique;
 
-    public BouttonComposant(ComposantElectrique compElec){
+    public BouttonComposant(ComposantElectriqueGraphique compElec){
         super("");
 
-        this.composantElectrique = compElec;
+        this.composantElectriqueGraphique = compElec;
         this.getStyleClass().add("btn-composant");
 
         SVGImage svg = App.atlas.getSVG(compElec.getCLE_SVG());
@@ -219,29 +221,33 @@ public class BouttonComposant extends Button {
     }
 
     private void handleOnMouseDragExited(MouseDragEvent mouseDragEvent) {
+
     }
 
     private void handleOnMouseDragReleased(MouseDragEvent mouseDragEvent) {
     }
 
     private void handleOnMouseExited(MouseEvent mouseEvent) {
-        this.getGraphic().setScaleX(1);
-        this.getGraphic().setScaleY(1);
     }
 
-    private void handleOnMouseReleased(MouseEvent mouseEvent) {
-        this.getGraphic().setScaleX(1);
-        this.getGraphic().setScaleY(1);
+    private void handleOnMouseReleased(MouseEvent e) {
+        if (vueCreer.getLayoutX() <=396){
+            fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT,
+                    vueCreer,
+                    e));
+            vueCreer = null;
+        }
     }
 
     private void handleOnMousePressed(MouseEvent mouseEvent) {
-        fireEvent(new ComponentEvent(
-                ComponentEvent.CREATE_NEW_COMPONENT, composantElectrique,
-                mouseEvent.getSceneX(), mouseEvent.getSceneY(),
-                mouseEvent.getX(), mouseEvent.getY()));
+        vueCreer = new VueComposantElectrique(composantElectriqueGraphique,
+                mouseEvent.getSceneX() - mouseEvent.getX(),
+                mouseEvent.getSceneY() - mouseEvent.getY());
 
-        this.getGraphic().setScaleX(0.95);
-        this.getGraphic().setScaleY(0.95);
+        fireEvent(new ComponentEvent(
+                ComponentEvent.CREATE_NEW_COMPONENT,
+                vueCreer,
+                mouseEvent));
     }
 
     private void handleOnZoom(ZoomEvent zoomEvent) {
@@ -255,11 +261,13 @@ public class BouttonComposant extends Button {
     }
 
     private void handleOnMouseEntered(MouseEvent mouseEvent) {
-        this.getGraphic().setScaleX(1.05);
-        this.getGraphic().setScaleY(1.05);
+        //this.getGraphic().setScaleX(1.05);
+        //this.getGraphic().setScaleY(1.05);
     }
 
     private void handleOnMouseDragged(MouseEvent mouseEvent) {
-
+        fireEvent(new ComponentEvent(
+                ComponentEvent.MOVE_COMPONENT, vueCreer,
+                mouseEvent));
     }
 }

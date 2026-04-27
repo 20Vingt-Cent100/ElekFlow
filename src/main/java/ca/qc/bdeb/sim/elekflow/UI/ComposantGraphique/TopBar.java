@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 
 public class TopBar extends HBox {
     public TopBar(String projectName){
-
+        this.getStyleClass().add("top-hbox");
 
         MenuBar menuBar = new MenuBar();
         var fichier = new Menu("Fichier");

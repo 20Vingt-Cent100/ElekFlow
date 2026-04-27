@@ -5,14 +5,14 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles;
 import com.github.cliftonlabs.json_simple.JsonObject;
 
-public class ComposantElectrique {
+public class ComposantElectriqueGraphique {
     private final String NOM;
     private final String CLE_SVG;
     private final String CATEGORY;
     private final String DESCRIPTION;
     private final boolean SVGFILL;
 
-    public ComposantElectrique(JsonObject obj){
+    public ComposantElectriqueGraphique(JsonObject obj){
         this.NOM = obj.getString(JsonCles.NOM);
         this.CLE_SVG = obj.getString(JsonCles.CLE_SVG);
         this.CATEGORY = obj.getString(JsonCles.CATEGORIES);

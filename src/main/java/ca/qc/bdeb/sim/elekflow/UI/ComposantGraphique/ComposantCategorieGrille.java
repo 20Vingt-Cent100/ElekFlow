@@ -1,10 +1,8 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
-import ca.qc.bdeb.sim.elekflow.UI.App;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -13,7 +11,7 @@ public class ComposantCategorieGrille extends VBox {
 
     private FlowPane grille = new FlowPane();
 
-    public ComposantCategorieGrille(String nomCategorie, List<ComposantElectrique> liste){
+    public ComposantCategorieGrille(String nomCategorie, List<ComposantElectriqueGraphique> liste){
         this.getStyleClass().add("grille-composants");
 
         var titreCategorie = new Label(nomCategorie);
@@ -26,7 +24,7 @@ public class ComposantCategorieGrille extends VBox {
         grille.getStyleClass().add("grille-pane");
 
         if(liste != null) {
-            for (ComposantElectrique comp : liste) {
+            for (ComposantElectriqueGraphique comp : liste) {
                 ajouterElement(new BouttonComposant(comp));
             }
         }

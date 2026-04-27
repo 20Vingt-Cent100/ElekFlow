@@ -128,8 +128,23 @@
     -fx-background-color: transparent;
 }
 
+.btn-composant .svg{
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
 .btn-composant:hover{
     -fx-cursor: hand;
+}
+
+.btn-composant:hover .svg{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.btn-composant:pressed .svg{
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
 }
 
 .btn-composant .svg *{
@@ -152,4 +167,39 @@
     -fx-vgap: 10px;
 
     -fx-alignement: top-left;
+}
+
+.top-hbox{
+    -fx-background-color: medium-blue;
+    -fx-max-width: 396px;
+    -fx-alignement:center-left;
+}
+
+.top-hbox .menu-bar{
+    -fx-background-color: medium-blue;
+    -fx-font-family: "inter";
+}
+
+.top-hbox .menu-bar .menu:hover{
+    -fx-background-color: dark-blue;
+}
+
+.vue-composant *{
+    -fx-stroke: red;
+}
+
+.vue-composant.svg-fill .svg *{
+    -fx-fill: red;
+}
+
+.vue-composant:hover{
+    -fx-cursor: hand;
+}
+
+.vue-composant:hover.svg-fill .svg *{
+    -fx-fill: orange;
+}
+
+.vue-composant:hover *{
+    -fx-stroke: orange;
 }

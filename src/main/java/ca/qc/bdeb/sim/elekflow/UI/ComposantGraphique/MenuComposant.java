@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import static ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles.*;
 
 public class MenuComposant extends VBox {
-    private HashMap<String, ComposantElectrique> COMPOSANTS_ELECTRIQUES = new HashMap<>();
+    private HashMap<String, ComposantElectriqueGraphique> COMPOSANTS_ELECTRIQUES = new HashMap<>();
     private HashSet<String> categoriesSet = new HashSet<>();
 
     private final ArrayList<String> COMPOSANT_NOM = new ArrayList<>();
@@ -48,7 +48,7 @@ public class MenuComposant extends VBox {
 
         recherche.getChildren().add(label);
 
-        var listeTemporaire = new ArrayList<ComposantElectrique>();
+        var listeTemporaire = new ArrayList<ComposantElectriqueGraphique>();
         listeTemporaire.add(COMPOSANTS_ELECTRIQUES.get("Ampoule"));
 
         categorieVBox = new VBox();
@@ -56,7 +56,7 @@ public class MenuComposant extends VBox {
         var categorieScrollPane = new ScrollPane(categorieVBox);
 
         categoriesSet.forEach((str) -> {
-            List<ComposantElectrique> c =  new ArrayList<>();
+            List<ComposantElectriqueGraphique> c =  new ArrayList<>();
             COMPOSANTS_ELECTRIQUES.forEach((k, v) -> {
                 if (v.getCATEGORY().equals(str))
                     c.add(v);
@@ -135,7 +135,7 @@ public class MenuComposant extends VBox {
 
                     COMPOSANTS_ELECTRIQUES.put(
                         obj.getString(NOM),
-                        new ComposantElectrique(obj));
+                        new ComposantElectriqueGraphique(obj));
                     categoriesSet.add(obj.getString(CATEGORIES));
                     Loggeur.logConsole("Category added: " + obj.getString(CATEGORIES), NiveauLog.TOTAL);
 

@@ -4,11 +4,9 @@ import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
-import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.BouttonComposant;
-import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.MenuComposant;
-import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.MenuOptions;
-import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.TopBar;
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.*;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import ca.qc.bdeb.sim.elekflow.UI.VueComposantElectrique;
 import javafx.scene.control.MenuButton;
@@ -21,16 +19,32 @@ public class SimulationScene extends ElekflowScene {
         BouttonComposant.setLabels();
 
         this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);
+        this.addEventHandler(ComponentEvent.MOVE_COMPONENT, this::handleMoveComponent);
+        this.addEventHandler(ComponentEvent.DELETE_COMPONENT, this::handleDeleteComponent);
+        this.addEventHandler(ShowInfoEvent.SHOW_INFO, this::handleShowInfoEvent);
     }
 
     private void handleCreateNewComponent(ComponentEvent e){
-        VueComposantElectrique vue = new VueComposantElectrique(e.getComposantElectrique(), e.getSceneX() - e.getDx(), e.getSceneY() - e.getDy());
-        OVERLAY_PANE.getChildren().add(vue);
+        VueComposantElectrique vue = e.getComposantElectrique();
+        ROOT.getChildren().add(vue);
         Loggeur.logConsole(
-                "New component: " + e.getComposantElectrique().getNOM() + " was created at (" + (e.getSceneX() - e.getDx()) + ", " + (e.getSceneY() - e.getDy()) + ")",
+                "New component: " + vue.getComposantNom() + " was created at ("
+                        + (e.getMouseEvent().getSceneX() - e.getMouseEvent().getX())
+                        + ", " + (e.getMouseEvent().getSceneY() - e.getMouseEvent().getY()) + ")",
                 NiveauLog.TOTAL);
+    }
 
-        vue.requestFocus();
+    private void handleMoveComponent(ComponentEvent e){
+        ((VueComposantElectrique) ROOT.getChildren().get(ROOT.getChildren().indexOf(e.getComposantElectrique())))
+                .move(e.getMouseEvent());
+    }
+
+    private void handleDeleteComponent(ComponentEvent e){
+        ROOT.getChildren().remove(e.getComposantElectrique());
+    }
+
+    private void handleShowInfoEvent(ShowInfoEvent e){
+        ROOT.setRight(new InfoMenu(e.compElecGraph.getNOM()));
     }
 
     @Override
