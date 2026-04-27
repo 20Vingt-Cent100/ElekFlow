@@ -7,12 +7,14 @@ import javafx.scene.layout.StackPane;
 
 public abstract class ElekflowScene extends javafx.scene.Scene {
     private WindowMode mode;
-    protected final static StackPane STACK_PANE = new StackPane();
+    protected final StackPane STACK_PANE;
     protected final BorderPane ROOT = new BorderPane();
     protected final Pane OVERLAY_PANE = new Pane();
 
     public ElekflowScene(double width, double height, WindowMode mode) {
-        super(STACK_PANE, width, height);
+        super(new StackPane(), width, height);
+
+        STACK_PANE = (StackPane) getRoot();
 
         OVERLAY_PANE.setMouseTransparent(true);
         OVERLAY_PANE.setPickOnBounds(false);
