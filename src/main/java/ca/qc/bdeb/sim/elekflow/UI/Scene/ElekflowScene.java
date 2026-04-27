@@ -3,13 +3,22 @@ package ca.qc.bdeb.sim.elekflow.UI.Scene;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 public abstract class ElekflowScene extends javafx.scene.Scene {
     private WindowMode mode;
-    protected static final BorderPane ROOT = new BorderPane();
+    protected final static StackPane STACK_PANE = new StackPane();
+    protected final BorderPane ROOT = new BorderPane();
+    protected final Pane OVERLAY_PANE = new Pane();
 
     public ElekflowScene(double width, double height, WindowMode mode) {
-        super(ROOT, width, height);
+        super(STACK_PANE, width, height);
+
+        OVERLAY_PANE.setMouseTransparent(true);
+        OVERLAY_PANE.setPickOnBounds(false);
+
+        STACK_PANE.getChildren().addAll(ROOT, OVERLAY_PANE);
+
         ROOT.setPrefWidth(width);
         ROOT.setPrefHeight(height);
 

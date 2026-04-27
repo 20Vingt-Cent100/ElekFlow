@@ -4,24 +4,26 @@ import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Events.SearchEvent;
 import com.github.cliftonlabs.json_simple.*;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles.*;
 
 public class MenuComposant extends VBox {
     private HashMap<String, ComposantElectrique> COMPOSANTS_ELECTRIQUES = new HashMap<>();
     private HashSet<String> categoriesSet = new HashSet<>();
+
+    private final ArrayList<String> COMPOSANT_NOM = new ArrayList<>();
+
     private final Label label = new Label();
 
     private final VBox categorieVBox;
@@ -78,10 +80,11 @@ public class MenuComposant extends VBox {
             n.setManaged(false);
         });
 
-        categorieVBox.getChildren().getLast().setManaged(true);
-        categorieVBox.getChildren().getLast().setVisible(true);
+        ComposantCategorieGrille rechercherGrille = (ComposantCategorieGrille) categorieVBox.getChildren().getLast();
+        rechercherGrille.setManaged(true);
+        rechercherGrille.setVisible(true);
 
-        rechercher(this.getChildren().getLast(), event.getSearchQuerry());
+        rechercher(rechercherGrille, event.getSearchQuerry());
 
     }
 
@@ -96,9 +99,28 @@ public class MenuComposant extends VBox {
 
     }
 
-    //TODO: REGEX Logique;
-    public void rechercher(Node n, String reg){
-        label.setText("Aucun composant nommé: 《 " + reg + " 》");
+    //TODO: Clean up le code;
+    public void rechercher(ComposantCategorieGrille rechercherGrille, String reg){
+        rechercherGrille.clear();
+
+        String pattern = reg;
+        Pattern compiledPattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+        Matcher matcher;
+
+        int result = 0;
+
+        for (String s : COMPOSANT_NOM){
+            matcher = compiledPattern.matcher(s);
+                if (matcher.find()) {
+                    rechercherGrille.ajouterElement(
+                            new BouttonComposant(COMPOSANTS_ELECTRIQUES.get(s)));
+
+                    result++;
+                }
+        }
+
+        if(result == 0) label.setText("Aucun composant nommé: 《 " + reg + " 》");
+        else label.setText("");
     }
 
     public void loadAllElectricalComponents(){
@@ -116,6 +138,8 @@ public class MenuComposant extends VBox {
                         new ComposantElectrique(obj));
                     categoriesSet.add(obj.getString(CATEGORIES));
                     Loggeur.logConsole("Category added: " + obj.getString(CATEGORIES), NiveauLog.TOTAL);
+
+                    COMPOSANT_NOM.add(obj.getString(NOM));
                 }
             }
         }catch (JsonException | NullPointerException | IOException ex){

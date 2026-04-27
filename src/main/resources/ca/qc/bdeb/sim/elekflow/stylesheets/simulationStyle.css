@@ -1,3 +1,4 @@
+/*Root and variables used througout the code*/
 .root{
     dark-blue: #08141f;
     medium-blue: #0b1926;
@@ -6,6 +7,8 @@
     -fx-background-color: white;
 }
 
+
+/*Default classes*/
 .medium-text{
     -fx-font-size: 16px;
 }
@@ -14,6 +17,7 @@
     -fx-text-fill: gray-blue;
 }
 
+/*Search Bar CSS*/
 #search-bar .text-field{
     -fx-font-family: "inter";
 
@@ -64,13 +68,14 @@
     -fx-padding: 0 10.33px 0 10.33px;
 }
 
+/*Menu Composant CSS*/
 #menu-composant{
     -fx-background-color: medium-blue;
     -fx-max-width: 396px;
     -fx-max-height: 1920;
     -fx-pref-height: 1000;
 
-    -fx-padding: 23px 25px 23px 25px;
+    -fx-padding: 23px 25px 23px;
     -fx-spacing: 23px;
 }
 
@@ -123,12 +128,23 @@
     -fx-background-color: transparent;
 }
 
+.btn-composant:hover{
+    -fx-cursor: hand;
+}
+
 .btn-composant .svg *{
     -fx-stroke: gray-blue;
 }
 
+.btn-composant, .svg-fill .svg *{
+    -fx-fill: gray-blue;
+}
+
 .tooltip{
-    -fx-background: transparent;
+       -fx-background-color: dark-blue;
+       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2); /* ombre plus légère */
+       -fx-text-fill: gray-blue;
+       -fx-font-size: 14px;
 }
 
 .grille-pane{

@@ -1,12 +1,15 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.girod.javafx.svgimage.SVGImage;
+
 import java.util.HashMap;
 
 public class BouttonComposant extends Button {
@@ -166,13 +169,19 @@ public class BouttonComposant extends Button {
     }
 
     private final Text DESCRIPTION = new Text();
+    private final ComposantElectrique composantElectrique;
 
     public BouttonComposant(ComposantElectrique compElec){
         super("");
 
+        this.composantElectrique = compElec;
         this.getStyleClass().add("btn-composant");
 
-        this.setGraphic(App.atlas.getSVG(compElec.getCLE_SVG()));
+        SVGImage svg = App.atlas.getSVG(compElec.getCLE_SVG());
+
+        this.setGraphic(svg);
+        this.setWidth(svg.getWidth());
+        this.setHeight(svg.getHeight());
 
         if(compElec.isSVGFILL()){
             this.getStyleClass().add("svg-fill");
@@ -180,8 +189,8 @@ public class BouttonComposant extends Button {
 
         var tooltip = new Tooltip(compElec.getNOM());
         tooltip.getStyleClass().add("tooltip");
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setHideDelay(Duration.ZERO);
+        tooltip.setShowDelay(Duration.millis(100));
+        tooltip.setHideDelay(Duration.millis(100));
         tooltip.setShowDuration(Duration.INDEFINITE);
 
         this.setTooltip(tooltip);
@@ -206,6 +215,7 @@ public class BouttonComposant extends Button {
     }
 
     private void handleOnKeyPressed(KeyEvent keyEvent) {
+
     }
 
     private void handleOnMouseDragExited(MouseDragEvent mouseDragEvent) {
@@ -215,12 +225,23 @@ public class BouttonComposant extends Button {
     }
 
     private void handleOnMouseExited(MouseEvent mouseEvent) {
+        this.getGraphic().setScaleX(1);
+        this.getGraphic().setScaleY(1);
     }
 
     private void handleOnMouseReleased(MouseEvent mouseEvent) {
+        this.getGraphic().setScaleX(1);
+        this.getGraphic().setScaleY(1);
     }
 
     private void handleOnMousePressed(MouseEvent mouseEvent) {
+        fireEvent(new ComponentEvent(
+                ComponentEvent.CREATE_NEW_COMPONENT, composantElectrique,
+                mouseEvent.getSceneX(), mouseEvent.getSceneY(),
+                mouseEvent.getX(), mouseEvent.getY()));
+
+        this.getGraphic().setScaleX(0.95);
+        this.getGraphic().setScaleY(0.95);
     }
 
     private void handleOnZoom(ZoomEvent zoomEvent) {
@@ -230,10 +251,12 @@ public class BouttonComposant extends Button {
     }
 
     private void handleOnMouseClicked(MouseEvent mouseEvent) {
+
     }
 
     private void handleOnMouseEntered(MouseEvent mouseEvent) {
-        setCursor(Cursor.HAND);
+        this.getGraphic().setScaleX(1.05);
+        this.getGraphic().setScaleY(1.05);
     }
 
     private void handleOnMouseDragged(MouseEvent mouseEvent) {

@@ -1,26 +1,43 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
+import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
+import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.BouttonComposant;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.MenuComposant;
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.MenuOptions;
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.TopBar;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
+import ca.qc.bdeb.sim.elekflow.UI.VueComposantElectrique;
+import javafx.scene.control.MenuButton;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 public class SimulationScene extends ElekflowScene {
     public SimulationScene(double width, double height, WindowMode mode) {
         super(width, height, mode);
         BouttonComposant.setLabels();
+
+        this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);
+    }
+
+    private void handleCreateNewComponent(ComponentEvent e){
+        VueComposantElectrique vue = new VueComposantElectrique(e.getComposantElectrique(), e.getSceneX() - e.getDx(), e.getSceneY() - e.getDy());
+        OVERLAY_PANE.getChildren().add(vue);
+        Loggeur.logConsole(
+                "New component: " + e.getComposantElectrique().getNOM() + " was created at (" + (e.getSceneX() - e.getDx()) + ", " + (e.getSceneY() - e.getDy()) + ")",
+                NiveauLog.TOTAL);
+
+        vue.requestFocus();
     }
 
     @Override
     public void populateScene() {
         ROOT.setLeft(new MenuComposant());
+
+        ROOT.setTop(new TopBar("{Placeholder}"));
         addStyleSheet(App.atlas.getStylesheet("simulationStyle"));
     }
 

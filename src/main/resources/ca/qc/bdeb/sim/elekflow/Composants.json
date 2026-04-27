@@ -15,11 +15,35 @@
   },
 
   {
+    "nom": "Commutateur",
+    "cle_svg": "Commutateur",
+    "category": "Autre",
+    "description": "",
+    "SVGfill": false
+  },
+
+  {
+    "nom": "Condensateur",
+    "cle_svg": "Condensateur",
+    "category": "Autre",
+    "description": "",
+    "SVGfill": false
+  },
+
+  {
     "nom": "Résistance",
     "cle_svg": "Resistance",
     "category": "Linéaire",
     "description": "Une résistance limite le passage du courant en dissipant de l’énergie sous forme de chaleur. Elle obéit à la loi d’Ohm qui relie tension, courant et résistance. En simulation, c’est un composant linéaire simple. Elle est utilisée pour contrôler les courants et tensions.",
     "SVGfill": false
+  },
+
+  {
+    "nom": "Diode",
+    "cle_svg": "Diode",
+    "category": "Semi-conducteur",
+    "description": "Une diode est un composant qui ne laisse passer le courant que dans un seul sens. Elle bloque le courant en polarisation inverse sauf si une tension limite est dépassée. Dans une simulation, elle est modélisée avec un seuil de conduction ou une équation non linéaire. Elle sert à protéger ou redresser des signaux.",
+    "SVGfill": true
   },
 
   {
