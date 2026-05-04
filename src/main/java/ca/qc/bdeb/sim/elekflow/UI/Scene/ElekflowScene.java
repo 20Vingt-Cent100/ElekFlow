@@ -9,7 +9,7 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
     private WindowMode mode;
     protected final StackPane STACK_PANE;
     protected final BorderPane ROOT = new BorderPane();
-    protected final Pane OVERLAY_PANE = new Pane();
+    protected final BorderPane OVERLAY_PANE = new BorderPane();
 
     public ElekflowScene(double width, double height, WindowMode mode) {
         super(new StackPane(), width, height);

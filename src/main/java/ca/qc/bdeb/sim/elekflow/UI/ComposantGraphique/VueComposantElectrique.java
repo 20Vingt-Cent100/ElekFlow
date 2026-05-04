@@ -8,12 +8,13 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
 import ca.qc.bdeb.sim.elekflow.UI.VueBorne;
 import javafx.geometry.Point2D;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
+import javafx.scene.input.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.transform.Rotate;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class VueComposantElectrique extends Region{
 
@@ -21,18 +22,34 @@ public class VueComposantElectrique extends Region{
         private final double centerX;
         private final double centerY;
         private final Vec2 dernierClick = new Vec2();
-        private VueBorne borne = new VueBorne();
+        private ArrayList<VueBorne> bornes = new ArrayList<>();
 
         private final ComposantJSON composantElecGraphique;
 
+        private final double[] size;
+
         public VueComposantElectrique(ComposantJSON composantElecGraphique, double posX, double posY){
-                this.getChildren().addAll(App.atlas.getSVG(composantElecGraphique.getCLE_SVG()), borne);
+                var svg = App.atlas.getSVG(composantElecGraphique.getCLE_SVG());
+                this.getChildren().addAll(svg);
                 this.setLayoutX(posX);
                 this.setLayoutY(posY);
                 this.setHandles();
                 this.setSnapToPixel(true);
+                this.setFocusTraversable(true);
 
-                borne.hide();
+                size = new double[]{svg.getWidth(), svg.getHeight()};
+
+                if(composantElecGraphique.getBORNES() != null){
+                    BigDecimal[][] listBorne = composantElecGraphique.getBORNES();
+                        for (int i = 0; i < listBorne.length; i++) {
+                            var borne = new VueBorne(listBorne[i], size);
+                            bornes.add(borne);
+                            Loggeur.logConsole("borne creer", NiveauLog.TOTAL);
+                            this.getChildren().add(borne);
+                            borne.toFront();
+                        }
+                }
+
                 this.composantElecGraphique = composantElecGraphique;
 
                 centerX = this.getBoundsInLocal().getWidth() /2;
@@ -58,6 +75,20 @@ public class VueComposantElectrique extends Region{
                 dernierClick.y = newPosY;
         }
 
+        public void moveComponent(MouseEvent event){
+                double newPosX = event.getSceneX();
+                double newPosY = event.getSceneY();
+
+                double deltaX = newPosX - dernierClick.x;
+                double deltaY = newPosY - dernierClick.y;
+
+                this.setLayoutX(this.getLayoutX() + deltaX / this.getParent().getParent().getScaleX());
+                this.setLayoutY(this.getLayoutY() + deltaY / this.getParent().getParent().getScaleY());
+
+                dernierClick.x = newPosX;
+                dernierClick.y = newPosY;
+        }
+
         private void setHandles(){
                 setOnMouseDragged(this::handleOnMouseDragged);
                 setOnMouseEntered(this::handleOnMouseEntered);
@@ -70,12 +101,11 @@ public class VueComposantElectrique extends Region{
                 setOnMouseDragReleased(this::handleOnMouseDragReleased);
                 setOnMouseDragExited(this::handleOnMouseDragExited);
                 setOnKeyPressed(this::handleOnKeyPressed);
-
         }
 
         protected void handleOnMouseDragged(MouseEvent e){
                 e.consume();
-                moveOnDrag(e);
+                moveComponent(e);
         }
 
         protected void handleOnMouseDragReleased(MouseEvent e){
@@ -87,11 +117,11 @@ public class VueComposantElectrique extends Region{
         }
 
         protected void handleOnMouseEntered(MouseEvent e){
-                borne.show();
+                bornes.forEach(VueBorne::show);
         }
 
         protected void handleOnMouseExited(MouseEvent e){
-                borne.hide();
+                bornes.forEach(VueBorne::hide);
         }
 
         protected void handleOnScroll(ScrollEvent e){
@@ -108,29 +138,31 @@ public class VueComposantElectrique extends Region{
         protected void handleOnMousePressed(MouseEvent e){
                 dernierClick.x = e.getSceneX();
                 dernierClick.y = e.getSceneY();
+
+                e.consume();
         }
 
         protected void handleOnMouseReleased(MouseEvent e){
-                Loggeur.logConsole("Mouse Released", NiveauLog.TOTAL);
-                if(this.getLayoutX() <= 396) {
-                        fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT,
-                                this,
-                                e));
-                }
+
         }
 
         protected void handleOnMouseClicked(MouseEvent e){
                 this.requestFocus();
                 fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
+
+                e.consume();
         }
 
         protected void handleOnKeyPressed(KeyEvent e){
                 switch (e.getCode()){
-                        case UP -> this.setTranslateY(this.getTranslateY()-1);
-                        case DOWN -> this.setTranslateY(this.getTranslateY()+1);
-                        case LEFT -> this.setTranslateX(this.getTranslateX()-1);
-                        case RIGHT -> this.setTranslateX(this.getTranslateX()+1);
+                        case UP -> this.setLayoutY(this.getLayoutY() - 1);
+                        case DOWN -> this.setLayoutY(this.getLayoutY() + 1);
+                        case LEFT -> this.setLayoutX(this.getLayoutX() - 1);
+                        case RIGHT -> this.setLayoutX(this.getLayoutX() + 1);
+                        case DELETE -> fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT, this, null));
                 }
+
+                e.consume();
         }
 
         public String getComposantNom(){

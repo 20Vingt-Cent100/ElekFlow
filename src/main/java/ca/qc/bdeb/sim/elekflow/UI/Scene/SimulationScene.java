@@ -21,7 +21,7 @@ public class SimulationScene extends ElekflowScene {
         this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);
         this.addEventHandler(ComponentEvent.BUTTON_DRAGGED, this::handleMoveComponent);
         this.addEventHandler(ComponentEvent.PLACED, this::handlePlacedComponent);
-        this.addEventHandler(ComponentEvent.DELETE_COMPONENT, this::handleDeleteComponent);
+        this.addEventHandler(ComponentEvent.DELETE_GHOST_COMPONENT, this::handleDeleteComponent);
         this.addEventHandler(ShowInfoEvent.SHOW_INFO, this::handleShowInfoEvent);
         this.addEventHandler(ConsoleEvent.OPEN_CONSOLE, this::handleOpenConsole);
         this.addEventHandler(ConsoleEvent.HIDE_CONSOLE, this::handleHideConsole);
@@ -29,10 +29,6 @@ public class SimulationScene extends ElekflowScene {
 
     private void handleCreateNewComponent(ComponentEvent e) {
         VueComposantElectrique vue = e.getComposantElectrique();
-        var scale = zoneSimulation.getGroupScale();
-
-        vue.setScaleX(scale.getX());
-        vue.setScaleY(scale.getY());
 
         OVERLAY_PANE.getChildren().add(vue);
         Loggeur.logConsole(
@@ -57,7 +53,9 @@ public class SimulationScene extends ElekflowScene {
     }
 
     private void handleShowInfoEvent(ShowInfoEvent e) {
-        ROOT.setRight(new InfoMenu(e.compElecGraph.getNOM()));
+        var infoMenu = new InfoMenu(e.compElecGraph.getNOM());
+
+        OVERLAY_PANE.setRight(infoMenu);
     }
 
     private void handleOpenConsole(ConsoleEvent e) {
