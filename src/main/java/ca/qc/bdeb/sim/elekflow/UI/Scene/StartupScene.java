@@ -3,18 +3,20 @@ package ca.qc.bdeb.sim.elekflow.UI.Scene;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.ElekFlowStage;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class StartupScene extends ElekflowScene {
@@ -82,26 +84,95 @@ public class StartupScene extends ElekflowScene {
         texteProjetRecent.setId("texteProjetsRecents");
 
         AnchorPane.setTopAnchor(texteProjetRecent, 80.0);
-        AnchorPane.setLeftAnchor(texteProjetRecent, 650.0);
+        AnchorPane.setLeftAnchor(texteProjetRecent, 653.0);
 
         VBox content = new VBox();
+        content.setSpacing(10);
 
         ScrollPane scroller = new ScrollPane();
-        scroller.setId("scroller");
+        scroller.setId("scrollPane");
 
-        for(int i = 0; i < 100; i++){
-            Button btn = new Button("Projet" + i);
+        HBox projet1 = new HBox();
+        HBox projet2 = new HBox();
+        HBox projet3 = new HBox();
+        HBox projet4 = new HBox();
+        HBox projet5 = new HBox();
+        HBox projet6 = new HBox();
+        HBox projet7 = new HBox();
+        HBox projet8 = new HBox();
+        HBox projet9 = new HBox();
+        HBox projet10 = new HBox();
 
-            btn.setOnMouseEntered(e -> {
-                btn.setId("btnProjets");
+        ArrayList<HBox> listeProjet = new ArrayList<>();
+
+        listeProjet.add(projet1);
+        listeProjet.add(projet2);
+        listeProjet.add(projet3);
+        listeProjet.add(projet4);
+        listeProjet.add(projet5);
+        listeProjet.add(projet6);
+        listeProjet.add(projet7);
+        listeProjet.add(projet8);
+        listeProjet.add(projet9);
+        listeProjet.add(projet10);
+
+        for(HBox projet : listeProjet){
+
+            projet.setId("HBoxProjet");
+            projet.setPadding(new Insets(10));
+            projet.setSpacing(15);
+
+            Label nomProjet = new Label("Nom du projet");
+            nomProjet.setId("textProjetListe");
+
+            Button optionProjet = new Button();
+            ContextMenu menu = new ContextMenu();
+            menu.setId("menuFenetre");
+
+            MenuItem option1 = new MenuItem("Ouvrir");
+            MenuItem option2 = new MenuItem("Renommer");
+            MenuItem option3 = new MenuItem("Supprimer");
+
+            menu.getItems().addAll(option1, option2, option3);
+
+            optionProjet.setOnAction((e -> {
+
+                menu.show(optionProjet,
+                        optionProjet.localToScreen(0, optionProjet.getHeight()).getX(),
+                        optionProjet.localToScreen(0, optionProjet.getHeight()).getY());
+            }));
+
+            optionProjet.setGraphic(App.atlas.getSVG("Menu"));
+
+            optionProjet.setOnMouseEntered(e -> {
+                optionProjet.setGraphic(App.atlas.getSVG("MenuBleu"));
 
             });
 
-            btn.setOnMouseExited(e -> {
-                btn.setId("btnProjetsBleu");
+            optionProjet.setOnMouseExited(e -> {
+                optionProjet.setGraphic(App.atlas.getSVG("Menu"));
             });
 
-            content.getChildren().addAll(btn);
+            optionProjet.setAlignment(Pos.CENTER);
+            optionProjet.setId("bouttonMenu");
+
+            Label nomPath = new Label("E:\\ElekFlow\\projets\\ProjectPaths");
+            nomPath.setId("nomPath");
+            nomPath.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
+            nomPath.setPadding(new Insets(5));
+
+            // deux spacers pour centrer le bouton
+            Region spacerLeft = new Region();
+            Region spacerRight = new Region();
+
+            HBox.setHgrow(spacerLeft, Priority.ALWAYS);
+            HBox.setHgrow(spacerRight, Priority.ALWAYS);
+
+            nomPath.setMaxWidth(200);
+
+            projet.getChildren().addAll(nomProjet, spacerLeft, optionProjet, spacerRight, nomPath);
+
+            content.getChildren().add(projet);
 
         }
 
@@ -116,7 +187,7 @@ public class StartupScene extends ElekflowScene {
     private void importNewProject(ActionEvent actionEvent){
         var file = new FileChooser();
         file.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Fichiers ElekFlow", "*.elk"));
-        file.setTitle("Importer un projet");
+        file.setTitle("Importer projet");
         file.setInitialDirectory(new File("./projets"));
 
         var ioFile = file.showOpenDialog(ROOT.getScene().getWindow());
@@ -125,54 +196,8 @@ public class StartupScene extends ElekflowScene {
     }
 
     private void createNewProject(ActionEvent actionEvent){
-        var secondaryStage = new Stage();
-
-        VBox root = new VBox();
-
-        //root.setBackground(new Background(new BackgroundFill(Color.web("031927"), null, null)));
-
-        var dir = new DirectoryChooser();
-        dir.setInitialDirectory(new File("./projets"));
-
-        var saveLocation = new HBox();
-
-        var locationText = new TextField(dir.getInitialDirectory().getAbsolutePath());
-        locationText.setMinWidth(250);
-
-        var locationBtn = new Button("choisir...");
-
-        saveLocation.getChildren().addAll(locationText, locationBtn);
-
-        locationBtn.setOnAction((e) ->{
-            try {
-                locationText.setText((dir.showDialog(secondaryStage.getOwner())).getAbsolutePath());
-            }catch (NullPointerException ex){
-                Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
-            }
-
-        });
-
-        root.getChildren().add(new TextField("nom_projet"));
-        root.getChildren().add(saveLocation);
-
-        var createBtn = new Button("Créer projet");
-        createBtn.setOnAction((e) ->{
-            //changeScene(
-                    //new File(locationText.getText())
-            //);
-            secondaryStage.close();
-        });
-
-        root.getChildren().add(createBtn);
-
-        Scene createNewProjectScene = new Scene(root, 300, 500);
-
-        secondaryStage.getIcons().add(App.atlas.getIMG("iconDark"));
-        secondaryStage.setScene(createNewProjectScene);
-        secondaryStage.setResizable(false);
-        secondaryStage.centerOnScreen();
-        secondaryStage.setTitle("Crée un nouveau projet");
-        secondaryStage.show();
+        App.addStage(ElekFlowStage.createStage("Créer projet",App.atlas.getIMG("logoAdapte"), false, false), "createProjectStage", false);
+        App.changeScene(new CreerProjetScene(260, 250, WindowMode.WINDOWED), "createProjectStage");
     }
 
 

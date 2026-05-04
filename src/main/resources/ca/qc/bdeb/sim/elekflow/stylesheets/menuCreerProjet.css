@@ -1,0 +1,35 @@
+.root {
+    -fx-background-color: #243242;
+}
+
+#texte {
+   -fx-font-size:18;
+   -fx-text-fill: #CCD6E0;
+   -fx-font-weight: bold;
+
+}
+
+.text-field {
+     -fx-text-fill: #CCD6E0;       /* Couleur du texte */
+        -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* Couleur de fond */
+        -fx-border-color: transparent;     /* Couleur de la bordure */
+        -fx-border-radius: 5px;        /* Coins arrondis */
+        -fx-background-radius: 5px;    /* Coins arrondis du fond */
+        -fx-padding: 5px;              /* Espacement interne */
+}
+
+#bouttons {
+    -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* base + overlay */;
+    -fx-font-size: 13;
+    -fx-text-fill: #CCD6E0;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+}
+
+#bouttonsBleu {
+   -fx-background-color: #0096C9;
+   -fx-font-size: 13;
+   -fx-text-fill: #CCD6E0;
+   -fx-font-weight: bold;
+   -fx-background-radius: 5px;
+}

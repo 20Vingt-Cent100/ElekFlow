@@ -32,11 +32,15 @@ public class App extends Application {
         setLoggeur(NiveauLog.TOTAL);
 
         //Ajout du stage à la liste de stages de l'application
-        addStage(ElekFlowStage.createStage("ElekFlow ProjectName", atlas.getIMG("LogoDark"), true, true),
+        addStage(ElekFlowStage.createStage(
+                "ElekFlow ProjectName",
+                atlas.getIMG("LogoDark"),
+                true,
+                true),
                 "Primaire",
                 false);
 
-        changeScene(new StartupScene(1050, 550, WindowMode.WINDOWED), "Primaire");
+        changeScene(new StartupScene(1090, 550, WindowMode.WINDOWED), "Primaire");
         getStage("Primaire").setShow(true);
 
     }
