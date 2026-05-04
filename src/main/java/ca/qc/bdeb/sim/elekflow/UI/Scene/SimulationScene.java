@@ -6,6 +6,7 @@ import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.*;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ConsoleEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.VueComposantElectrique;
@@ -25,6 +26,11 @@ public class SimulationScene extends ElekflowScene {
         this.addEventHandler(ShowInfoEvent.SHOW_INFO, this::handleShowInfoEvent);
         this.addEventHandler(ConsoleEvent.OPEN_CONSOLE, this::handleOpenConsole);
         this.addEventHandler(ConsoleEvent.HIDE_CONSOLE, this::handleHideConsole);
+        this.addEventHandler(ExportEvent.EXPORT_SVG, this::handleExportSVG);
+    }
+
+    private void handleExportSVG(ExportEvent event){
+        zoneSimulation.exportToSVG(event.getFile());
     }
 
     private void handleCreateNewComponent(ComponentEvent e) {

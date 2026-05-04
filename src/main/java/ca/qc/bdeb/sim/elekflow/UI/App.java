@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI;
 import ca.qc.bdeb.sim.elekflow.Logique.Atlas;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekFlowStage;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;

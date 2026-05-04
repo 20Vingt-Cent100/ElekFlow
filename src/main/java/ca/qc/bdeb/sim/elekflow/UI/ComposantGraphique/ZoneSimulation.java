@@ -1,6 +1,9 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
+import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
+import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -8,12 +11,15 @@ import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
+import org.girod.javafx.svgimage.tosvg.SVGConverter;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ZoneSimulation extends Pane {
     private Group simultionGroup = new Group();
     private final Pane pane = new Pane();
-    private final Scale zoomScale = new Scale(0, 0);
+    private final SVGConverter converter = new SVGConverter();
 
     private Point2D lastClick;
 
@@ -47,11 +53,34 @@ public class ZoneSimulation extends Pane {
         setOnKeyPressed(this::handleOnKeyPressed);
         addEventHandler(ComponentEvent.DELETE_COMPONENT, this::handleDeleteComponent);
         addEventHandler(WireEvent.CREATE_WIRE, this::handleCreateWire);
+        addEventHandler(WireEvent.MOVE_END_POINT, this::handleWireMoveEndPoint);
+    }
+
+    public void exportToSVG(File file){
+        try {
+            converter.convert(pane, file.toURI().toURL());
+            Loggeur.logConsole("Svg exporter", NiveauLog.TOTAL);
+        }catch (IOException e){
+            Loggeur.logConsole(e.getMessage(), NiveauLog.ERREUR);
+        }
+
+    }
+
+    private void handleWireMoveEndPoint(WireEvent event){
+        var fil = new Line();
+        fil.startXProperty().bind(event.getStartXproperty());
+        fil.startYProperty().bind(event.getStartYproperty());
+
+        fil.setEndX(event.getSceneX());
+        fil.setEndY(event.getSceneY());
+
+        simultionGroup.getChildren().add(new Line());
     }
 
     private void handleCreateWire(WireEvent event){
         var fil = new Line();
-        //fil.startXProperty().bind(event.getStartXproperty());
+        fil.startXProperty().bind(event.getStartXproperty());
+        fil.startYProperty().bind(event.getStartYproperty());
 
         simultionGroup.getChildren().add(new Line());
     }

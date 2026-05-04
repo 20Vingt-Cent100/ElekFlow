@@ -6,10 +6,8 @@ import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
-import ca.qc.bdeb.sim.elekflow.UI.VueBorne;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.transform.Rotate;
 
@@ -159,7 +157,7 @@ public class VueComposantElectrique extends Region{
                         case DOWN -> this.setLayoutY(this.getLayoutY() + 1);
                         case LEFT -> this.setLayoutX(this.getLayoutX() - 1);
                         case RIGHT -> this.setLayoutX(this.getLayoutX() + 1);
-                        case DELETE -> fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT, this, null));
+                        case DELETE, BACK_SPACE -> fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT, this, null));
                 }
 
                 e.consume();

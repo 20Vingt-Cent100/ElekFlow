@@ -1,11 +1,8 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
-import javafx.event.Event;
-import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
 import java.math.BigDecimal;
 
@@ -65,7 +62,8 @@ public class VueBorne extends Circle {
     private void handleOnMousePressed(MouseEvent event) {
         event.consume();
 
-        fireEvent(new WireEvent(WireEvent.CREATE_WIRE, this.centerXProperty(), this.centerYProperty()));
+        fireEvent(new WireEvent(WireEvent.CREATE_WIRE, this.layoutXProperty(), this.layoutYProperty(),
+                event.getSceneX(), event.getSceneY()));
     }
 
     private void handleOnZoom(ZoomEvent event) {
@@ -83,5 +81,7 @@ public class VueBorne extends Circle {
 
     private void handleOnMouseDragged(MouseEvent event) {
         event.consume();
+        fireEvent(new WireEvent(WireEvent.MOVE_END_POINT, this.layoutXProperty(), this.layoutYProperty(),
+                event.getSceneX(), event.getSceneY()));
     }
 }

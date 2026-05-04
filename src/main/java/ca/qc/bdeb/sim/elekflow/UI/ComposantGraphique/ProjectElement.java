@@ -1,4 +1,4 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import javafx.scene.layout.Region;

@@ -1,7 +1,8 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Platform;
 import javafx.scene.image.Image;

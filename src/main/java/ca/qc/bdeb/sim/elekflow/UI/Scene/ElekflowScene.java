@@ -37,7 +37,7 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
         getStylesheets().add(style);
     }
 
-    public abstract void populateScene();
+    protected abstract void populateScene();
 
     public WindowMode getMode(){
         return mode;
