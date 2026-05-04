@@ -40,7 +40,7 @@ public class BoutonComposant extends Button {
 
         DESCRIPTION.setText(compElec.getDESCRIPTION());
 
-        setTooltip();
+        setTooltip(new Tooltip(composantJSON.getNOM()));
         setHandles();
     }
 

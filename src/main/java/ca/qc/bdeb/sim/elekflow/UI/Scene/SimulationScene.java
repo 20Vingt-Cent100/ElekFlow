@@ -11,13 +11,19 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.VueComposantElectrique;
 
+import java.io.File;
+
 public class SimulationScene extends ElekflowScene {
     private final Console console = new Console();
     private ZoneSimulation zoneSimulation;
 
-    public SimulationScene(double width, double height, WindowMode mode) {
+    private final File file;
+
+    public SimulationScene(double width, double height, WindowMode mode, File file) {
         super(width, height, mode);
         addStyleSheet(App.atlas.getStylesheet("simulationStyle"));
+
+        this.file = file;
 
         this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);
         this.addEventHandler(ComponentEvent.BUTTON_DRAGGED, this::handleMoveComponent);

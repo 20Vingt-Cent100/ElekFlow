@@ -34,15 +34,15 @@ public class App extends Application {
 
         //Ajout du stage à la liste de stages de l'application
         addStage(ElekFlowStage.createStage(
-                "ElekFlow ProjectName",
+                "Créer un projet",
                 atlas.getIMG("LogoDark"),
                 true,
-                true),
-                "Primaire",
+                false),
+                "StartupStage",
                 false);
 
-        changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED), "Primaire");
-        getStage("Primaire").setShow(true);
+        changeScene(new StartupScene(), "StartupStage");
+        getStage("StartupStage").setShow(true);
 
     }
 

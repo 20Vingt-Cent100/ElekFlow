@@ -5,6 +5,7 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -93,6 +94,20 @@ public class CreerProjetScene extends ElekflowScene{
             createBtn.setId("bouttons");
         });
 
+        createBtn.setOnAction((e) ->{
+            if(!textDebut.getText().isEmpty() && !locationText.getText().isEmpty()){
+                App.addStage(
+                        ElekFlowStage.createStage("Elekflow: " + textDebut.getText(), App.atlas.getIMG("LogoDark"), true, true),
+                        "Simulation",
+                        false
+                );
+
+                App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, new File(locationText.getText())), "Simulation");
+                App.getStage("Simulation").setShow(true);
+                App.getStage("createProjectStage").close();
+                App.getStage("StartupStage").close();
+            }
+        });
 
 
         conteneur.getChildren().addAll(nomProjet, textDebut, emplacement, saveLocation, creation, createBtn);

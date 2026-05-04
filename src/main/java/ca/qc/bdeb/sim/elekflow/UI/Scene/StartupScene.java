@@ -13,8 +13,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class StartupScene extends ElekflowScene {
-    public StartupScene(double width, double height, WindowMode mode) {
-        super(width, height, WindowMode.WINDOWED);
+    public StartupScene() {
+        super(1090, 550, WindowMode.WINDOWED);
 
         addStyleSheet(App.atlas.getStylesheet("menuDepart"));
 
