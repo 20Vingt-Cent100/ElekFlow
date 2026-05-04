@@ -7,7 +7,8 @@ public enum JsonCles implements JsonKey {
     CLE_SVG("cle_svg"),
     CATEGORIES("category"),
     DESCRIPTION("description"),
-    BORNES("bornes");
+    BORNES("bornes"),
+    PROPRIETES("proprietes");
 
     private final String CLE;
 

@@ -1,23 +1,16 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
-import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
-import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
-import ca.qc.bdeb.sim.elekflow.UI.ElekFlowStage;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.*;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class StartupScene extends ElekflowScene {
     public StartupScene(double width, double height, WindowMode mode) {
