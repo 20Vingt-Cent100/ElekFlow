@@ -1,47 +1,202 @@
 [
   {
-  "nom": "Résistance électrique",
-  "cle_svg": "Resistance",
-  "category": "Composants passifs",
-  "description": "",
-  "bornes": [[0.0, 0.5], [1.0, 0.5]]
-},
-  {
-  "nom": "Inductance",
-   "cle_svg": "Inductance",
-    "category": "Composants passifs",
+    "nom": "Source de tension continue",
+    "cle_svg": "SourceTensionContinue",
+    "category": "Générateurs",
     "description": "",
-    "bornes": [[0.0, 0.96], [1.0, 0.96]]
+    "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
-
   {
-    "nom": "Condensateur",
-    "cle_svg": "Condensateur",
-    "category": "Composants passifs",
+    "nom": "Pile",
+    "cle_svg": "Pile",
+    "category": "Générateurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Source de courant",
+    "cle_svg": "SourceCourant",
+    "category": "Générateurs",
+    "description": "",
+    "bornes": [[0.5, 0.0], [0.5, 1.0]]
+  },
+  {
+    "nom": "Source de tension alternative",
+    "cle_svg": "SourceTensionAlternative",
+    "category": "Générateurs",
     "description": "",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
 
   {
+    "nom": "Résistance électrique",
+    "cle_svg": "Resistance",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Inductance",
+    "cle_svg": "Inductance",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.0, 0.96], [1.0, 0.96]]
+  },
+  {
+    "nom": "Condensateur",
+    "cle_svg": "Condensateur",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.5, 0.0], [0.5, 1.0]]
+  },
+  {
+    "nom": "Condensateur Polarisé",
+    "cle_svg": "CondensateurPolarise",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.5, 0.0], [0.5, 1.0]]
+  },
+  {
     "nom": "Potentiomètre",
     "cle_svg": "Potentiometre",
-    "category": "Composants passifs",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.0, 0.8], [1.0, 0.8]]
+  },
+  {
+    "nom": "Résistance ajustable",
+    "cle_svg": "ResistanceAjustable",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Quartz",
+    "cle_svg": "Quartz",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.5, 0.0], [0.5, 1.0]]
+  },
+  {
+    "nom": "Fusible",
+    "cle_svg": "Fusible",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Élément chauffant",
+    "cle_svg": "ElementChauffant",
+    "category": "Passifs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Photorésistance",
+    "cle_svg": "PhotoResistance",
+    "category": "Passifs",
     "description": "",
     "bornes": [[0.0, 0.8], [1.0, 0.8]]
   },
 
   {
-    "nom": "Condensateur Polarisé",
-    "cle_svg": "CondensateurPolarise",
-    "category": "Composants passifs",
+    "nom": "Diode",
+    "cle_svg": "Diode",
+    "category": "Semi-conducteurs",
     "description": "",
-    "bornes": [[0.5, 0.0], [0.5, 1.0]]
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Diode Schottky",
+    "cle_svg": "DiodeSchottky",
+    "category": "Semi-conducteurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Diode Zener",
+    "cle_svg": "DiodeZener",
+    "category": "Semi-conducteurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Diode électroluminescente",
+    "cle_svg": "DiodeElectroluminescente",
+    "category": "Semi-conducteurs",
+    "description": "",
+    "bornes": [[0.0, 0.7], [1.0, 0.7]]
+  },
+  {
+    "nom": "Diode varicap",
+    "cle_svg": "DiodeVaricap",
+    "category": "Semi-conducteurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Photodiode",
+    "cle_svg": "Photodiode",
+    "category": "Semi-conducteurs",
+    "description": "",
+    "bornes": [[0.0, 0.7], [1.0, 0.7]]
+  },
+  {
+    "nom": "Boutton poussoir",
+    "cle_svg": "BouttonPoussoir",
+    "category": "Interrupteurs",
+    "description": "",
+    "bornes": [[0.0, 0.7], [1.0, 0.7]]
   },
 
   {
-    "nom": "Résistance ajustable",
-    "cle_svg": "ResistanceAjustable",
-    "category": "Composants passifs",
+    "nom": "Interrupteur simple",
+    "cle_svg": "InterrupteurSimple",
+    "category": "Interrupteurs",
+    "description": "",
+    "bornes": [[0.0, 0.69], [1.0, 0.69]]
+  },
+  {
+    "nom": "Interrupteur double",
+    "cle_svg": "InterrupteurDouble",
+    "category": "Interrupteurs",
+    "description": "",
+    "bornes": [[0.0, 0.35], [1.0, 0.35], [0.0, 0.88], [1.0, 0.88]]
+  },
+  {
+    "nom": "Commutateur",
+    "cle_svg": "Commutateur",
+    "category": "Interrupteurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+
+  {
+    "nom": "Moteur",
+    "cle_svg": "Moteur",
+    "category": "Actionneurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Haut-parleur",
+    "cle_svg": "HautParleur",
+    "category": "Actionneurs",
+    "description": "",
+    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+  },
+  {
+    "nom": "Avertisseur sonore",
+    "cle_svg": "AvertisseurSonore",
+    "category": "Actionneurs",
+    "description": "",
+    "bornes": [[0.0, 0.97], [1.0, 0.97]]
+  },
+
+  {
+    "nom": "Ampoule",
+    "cle_svg": "Ampoule",
+    "category": "Actionneurs",
     "description": "",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
@@ -49,121 +204,8 @@
   {
     "nom": "Point équipotentiel",
     "cle_svg": "MiseALaTerre",
-    "category": "Autre composants",
+    "category": "Divers",
     "description": "",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
-  },
-
-  {
-    "nom": "Haut-parleur",
-    "cle_svg": "HautParleur",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.5], [1.0, 0.5]]
-  },
-
-  {
-    "nom": "Avertisseur sonore",
-    "cle_svg": "AvertisseurSonore",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.97], [1.0, 0.97]]
-  },
-
-  {
-    "nom": "Diode",
-    "cle_svg": "Diode",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.5], [1.0, 0.5]]
-  },
-
-  {
-    "nom": "Diode Schottky",
-    "cle_svg": "DiodeSchottky",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.5], [1.0, 0.5]]
-  },
-
-  {
-    "nom": "Diode Zener",
-    "cle_svg": "DiodeZener",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.5], [1.0, 0.5]]
-  },
-
-  {
-    "nom": "Diode électroluminescente",
-    "cle_svg": "DiodeElectroluminescente",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.70], [1.0, 0.70]]
-  },
-
-  {
-    "nom": "Diode varicap",
-    "cle_svg": "DiodeVaricap",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.50], [1.0, 0.50]]
-  },
-
-  {
-    "nom": "Photodiode",
-    "cle_svg": "Photodiode",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.70], [1.0, 0.70]]
-  },
-
-  {
-    "nom": "Quartz",
-    "cle_svg": "Quartz",
-    "category": "Composants passifs",
-    "description": "",
-    "bornes": [[0.5, 0.0], [0.5, 1.0]]
-  },
-
-  {
-  "nom": "Élement chauffant",
-  "cle_svg": "ElementChauffant",
-  "category": "Composants passifs",
-  "description": "",
-  "bornes": [[0.0, 0.50], [1.0, 0.50]]
-  },
-
-  {
-    "nom": "Fusible",
-    "cle_svg": "Fusible",
-    "category": "Composants passifs",
-    "description": "",
-    "bornes": [[0.0, 0.50], [1.0, 0.50]]
-  },
-
-  {
-    "nom": "Moteur",
-    "cle_svg": "Moteur",
-    "category": "Composants actifs",
-    "description": "",
-    "bornes": [[0.0, 0.50], [1.0, 0.50]]
-  },
-
-  {
-    "nom": "Photorésistance",
-    "cle_svg": "PhotoResistance",
-    "category": "Composants passifs",
-    "description": "",
-    "bornes": [[0.0, 0.80], [1.0, 0.80]]
-  },
-
-  {
-    "nom": "Photorésistance",
-    "cle_svg": "PhotoResistance",
-    "category": "Composants passifs",
-    "description": "",
-    "bornes": [[0.0, 0.80], [1.0, 0.80]]
   }
-
 ]
