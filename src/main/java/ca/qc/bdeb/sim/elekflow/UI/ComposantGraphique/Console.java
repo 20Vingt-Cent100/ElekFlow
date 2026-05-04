@@ -2,6 +2,8 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ConsoleEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.LogEvent;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,6 +18,10 @@ public class Console extends VBox {
 
     public Console(){
         ScrollPane logs = new ScrollPane(textVBox);
+        textVBox.heightProperty().addListener((oldValue, newValue, meta) ->{
+            logs.setVvalue(1.0);
+        });
+
         HBox consoleTitle = new HBox();
 
         Button hideButton = new Button();
@@ -28,10 +34,9 @@ public class Console extends VBox {
 
         this.getChildren().addAll(consoleTitle, new Separator(),logs);
         this.getStyleClass().add("console");
-        logs.getStyleClass().add("console");
     }
 
-    public static void addLog(String log){
-        textVBox.getChildren().add(new Text(log));
+    public static void addLog(String message){
+        textVBox.getChildren().add(new Text(message));
     }
 }

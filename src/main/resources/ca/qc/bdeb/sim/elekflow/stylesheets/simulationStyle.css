@@ -180,5 +180,5 @@
 
 .console{
     -fx-background-color: #031927;
+    -fx-max-height: 300px;
 }
-

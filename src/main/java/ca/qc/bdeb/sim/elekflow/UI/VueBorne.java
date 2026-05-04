@@ -59,6 +59,7 @@ public class VueBorne extends Circle {
     }
 
     private void handleOnMousePressed(MouseEvent event) {
+        event.consume();
     }
 
     private void handleOnZoom(ZoomEvent event) {
@@ -68,11 +69,13 @@ public class VueBorne extends Circle {
     }
 
     private void handleOnMouseClicked(MouseEvent event) {
+        event.consume();
     }
 
     private void handleOnMouseEntered(MouseEvent event) {
     }
 
     private void handleOnMouseDragged(MouseEvent event) {
+        event.consume();
     }
 }
