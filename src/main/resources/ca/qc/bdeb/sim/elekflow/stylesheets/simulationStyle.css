@@ -70,7 +70,7 @@
 /*Menu Composant CSS*/
 #menu-composant{
     -fx-background-color: medium-blue;
-    -fx-max-width: 396px;
+    -fx-max-width: 410px;
     -fx-max-height: 1920;
     -fx-pref-height: 1080;
 
@@ -149,7 +149,7 @@
 
 .top-hbox{
     -fx-background-color: medium-blue;
-    -fx-max-width: 396px;
+    -fx-max-width: 410px;
     -fx-alignement:center-left;
 }
 

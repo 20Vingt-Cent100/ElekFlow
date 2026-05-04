@@ -63,7 +63,7 @@ public class MenuComposant extends VBox {
                     c.add(v);
             });
 
-            categorieVBox.getChildren().add(
+            categorieVBox.getChildren().addFirst(
                     new ComposantCategorieGrille(str, c));
         });
 

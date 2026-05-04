@@ -5,6 +5,7 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekFlowStage;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.StartupScene;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -32,7 +33,11 @@ public class App extends Application {
         setLoggeur(NiveauLog.TOTAL);
 
         //Ajout du stage à la liste de stages de l'application
-        addStage(ElekFlowStage.createStage("ElekFlow ProjectName", atlas.getIMG("LogoDark"), true, true),
+        addStage(ElekFlowStage.createStage(
+                "ElekFlow ProjectName",
+                atlas.getIMG("LogoDark"),
+                true,
+                true),
                 "Primaire",
                 false);
 
