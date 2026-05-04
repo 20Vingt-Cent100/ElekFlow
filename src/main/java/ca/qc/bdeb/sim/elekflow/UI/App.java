@@ -40,7 +40,7 @@ public class App extends Application {
                 "Primaire",
                 false);
 
-        changeScene(new StartupScene(1090, 550, WindowMode.WINDOWED), "Primaire");
+        changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED), "Primaire");
         getStage("Primaire").setShow(true);
 
     }

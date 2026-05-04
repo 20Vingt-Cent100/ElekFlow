@@ -22,7 +22,7 @@ public class CreerProjetScene extends ElekflowScene{
     }
 
     @Override
-    protected void populateScene() {
+    public void populateScene() {
         VBox conteneur = new VBox();
 
         conteneur.setPadding(new Insets(10));
@@ -96,7 +96,7 @@ public class CreerProjetScene extends ElekflowScene{
 
 
         conteneur.getChildren().addAll(nomProjet, textDebut, emplacement, saveLocation, creation, createBtn);
-        ROOT.getChildren().add(conteneur);
+        ROOT.setCenter(conteneur);
 
         App.getStage("createProjectStage").setX(750);
         App.getStage("createProjectStage").setY(350);

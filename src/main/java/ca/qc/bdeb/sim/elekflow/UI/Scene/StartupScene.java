@@ -28,7 +28,7 @@ public class StartupScene extends ElekflowScene {
         populateScene();
     }
 
-    protected void populateScene(){
+    public void populateScene(){
         AnchorPane sceneLayout = new AnchorPane();
         HBox options = new HBox();
 
@@ -199,6 +199,5 @@ public class StartupScene extends ElekflowScene {
         App.addStage(ElekFlowStage.createStage("Créer projet",App.atlas.getIMG("logoAdapte"), false, false), "createProjectStage", false);
         App.changeScene(new CreerProjetScene(260, 250, WindowMode.WINDOWED), "createProjectStage");
     }
-
 
 }
