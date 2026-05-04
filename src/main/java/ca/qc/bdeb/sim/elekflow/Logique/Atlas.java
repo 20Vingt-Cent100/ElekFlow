@@ -78,8 +78,10 @@ public class Atlas {
      */
     public SVGImage getSVG(String key){
         try{
-            //Scaled to 1 to return a new instance of the SVG object. Avoiding duplicate references issues
-            return Objects.requireNonNull(LIST_SVGs.get(key).scale(1));
+            SVGImage svg = LIST_SVGs.get(key).clone();
+            svg.getStyleClass().add("svg");
+
+            return svg;
         }catch (NullPointerException ex){
             Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
         }
@@ -87,7 +89,10 @@ public class Atlas {
     }
 
     public SVGImage getSVG(String key, double scale){
-        return LIST_SVGs.get(key).scale(scale);
+        SVGImage svg = LIST_SVGs.get(key).scale(scale, true);
+        svg.getStyleClass().add("svg");
+
+        return svg;
     }
 
     public Image getIMG(String key){

@@ -2,23 +2,62 @@
   {
   "nom": "Ampoule",
   "cle_svg": "Ampoule",
-  "categories": ["lineaire", "autre"],
-  "description": "Une ampoule convertit l’énergie électrique en lumière, souvent avec une émission de chaleur. Elle se comporte comme une résistance non linéaire dépendante de la température. En simulation, elle peut être simplifiée en résistance. Elle sert d’indicateur visuel de fonctionnement.",
-  "SVGfill" : false
+  "category": "Linéaire",
+  "description": "Une ampoule convertit l’énergie électrique en lumière, souvent avec une émission de chaleur. Elle se comporte comme une résistance non linéaire dépendante de la température. En simulation, elle peut être simplifiée en résistance. Elle sert d’indicateur visuel de fonctionnement."
 },
   {
   "nom": "Avertisseur sonore",
    "cle_svg": "AvertisseurSonore",
-    "Categorie": [],
-    "description": "Un avertisseur sonore produit un son lorsqu’il est alimenté électriquement. Il peut être actif (son intégré) ou passif (nécessite un signal). En simulation, il est modélisé comme une charge ou une source sonore. Il est utilisé pour les alertes et signaux.",
-    "SVGfill": false
+    "category": "Autre",
+    "description": "Un avertisseur sonore produit un son lorsqu’il est alimenté électriquement. Il peut être actif (son intégré) ou passif (nécessite un signal). En simulation, il est modélisé comme une charge ou une source sonore. Il est utilisé pour les alertes et signaux."
+  },
+
+  {
+    "nom": "Commutateur",
+    "cle_svg": "Commutateur",
+    "category": "Autre",
+    "description": ""
+  },
+
+  {
+    "nom": "Condensateur",
+    "cle_svg": "Condensateur",
+    "category": "Autre",
+    "description": ""
+  },
+
+  {
+    "nom": "Résistance",
+    "cle_svg": "Resistance",
+    "category": "Linéaire",
+    "description": "Une résistance limite le passage du courant en dissipant de l’énergie sous forme de chaleur. Elle obéit à la loi d’Ohm qui relie tension, courant et résistance. En simulation, c’est un composant linéaire simple. Elle est utilisée pour contrôler les courants et tensions."
+  },
+
+  {
+    "nom": "Diode",
+    "cle_svg": "Diode",
+    "category": "Semi-conducteur",
+    "description": "Une diode est un composant qui ne laisse passer le courant que dans un seul sens. Elle bloque le courant en polarisation inverse sauf si une tension limite est dépassée. Dans une simulation, elle est modélisée avec un seuil de conduction ou une équation non linéaire. Elle sert à protéger ou redresser des signaux."
+  },
+
+  {
+    "nom": "Source de courant",
+    "cle_svg": "SourceCourant",
+    "category": "Sources",
+    "description": ""
+  },
+
+  {
+    "nom": "Source tension alternative",
+    "cle_svg": "SourceTensionAlternative",
+    "category": "Sources",
+    "description": ""
   },
 
   {
     "nom": "",
     "cle_svg": "",
-    "Categorie": [],
-    "description": "",
-    "SVGfill": false
+    "category": "",
+    "description": ""
   }
 ]

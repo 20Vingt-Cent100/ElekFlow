@@ -1,27 +1,11 @@
-package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
-
-import ca.qc.bdeb.sim.elekflow.UI.App;
-import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.*;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
-import java.util.HashMap;
-
-public class BouttonComposant extends Button {
-    public final static HashMap<String, String> DESCRIPTIONS = new HashMap<>();
-
-    //TODO: Permettre la modification et l'ajout par un fichier
-    public static void setLabels(){
-        DESCRIPTIONS.put("Default",
+DESCRIPTIONS.put("Default",
                 """
                 Survolez un matériel électrique pour voir sa description
                 """);
 
         DESCRIPTIONS.put("SourceCourantContinu",
                 """
-                Une source de courant continu fournit une tension ou un courant constant dans le temps, 
+                Une source de courant continu fournit une tension ou un courant constant dans le temps,
                 sans variation. Elle est utilisée pour représenter des batteries ou alimentations stabilisées.
                 Dans une simulation, elle impose une valeur fixe indépendamment des variations du circuit.
                 Le reste du circuit détermine le courant ou la tension complémentaire.
@@ -163,76 +147,3 @@ public class BouttonComposant extends Button {
                 En simulation, il est modélisé comme une résistance et une inductance.
                 Il représente une sortie audio.
                 """);
-    }
-
-    private final Text DESCRIPTION = new Text();
-
-    public BouttonComposant(String key, String tooltipStr){
-        super("");
-
-        this.getStyleClass().add("btn-composant");
-
-        this.setGraphic(App.atlas.getSVG(key));
-
-        var tooltip = new Tooltip(tooltipStr);
-        tooltip.getStyleClass().add("tooltip");
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setHideDelay(Duration.ZERO);
-        tooltip.setShowDuration(Duration.INDEFINITE);
-
-        this.setTooltip(tooltip);
-
-        DESCRIPTION.setText(DESCRIPTIONS.get(key));
-
-        setHandles();
-    }
-
-    private void setHandles(){
-        setOnMouseDragged(this::handleOnMouseDragged);
-        setOnMouseEntered(this::handleOnMouseEntered);
-        setOnMouseClicked(this::handleOnMouseClicked);
-        setOnScroll(this::handleOnScroll);
-        setOnZoom(this::handleOnZoom);
-        setOnMousePressed(this::handleOnMousePressed);
-        setOnMouseReleased(this::handleOnMouseReleased);
-        setOnMouseExited(this::handleOnMouseExited);
-        setOnMouseDragReleased(this::handleOnMouseDragReleased);
-        setOnMouseDragExited(this::handleOnMouseDragExited);
-        setOnKeyPressed(this::handleOnKeyPressed);
-    }
-
-    private void handleOnKeyPressed(KeyEvent keyEvent) {
-    }
-
-    private void handleOnMouseDragExited(MouseDragEvent mouseDragEvent) {
-    }
-
-    private void handleOnMouseDragReleased(MouseDragEvent mouseDragEvent) {
-    }
-
-    private void handleOnMouseExited(MouseEvent mouseEvent) {
-    }
-
-    private void handleOnMouseReleased(MouseEvent mouseEvent) {
-    }
-
-    private void handleOnMousePressed(MouseEvent mouseEvent) {
-    }
-
-    private void handleOnZoom(ZoomEvent zoomEvent) {
-    }
-
-    private void handleOnScroll(ScrollEvent event) {
-    }
-
-    private void handleOnMouseClicked(MouseEvent mouseEvent) {
-    }
-
-    private void handleOnMouseEntered(MouseEvent mouseEvent) {
-        setCursor(Cursor.HAND);
-    }
-
-    private void handleOnMouseDragged(MouseEvent mouseEvent) {
-
-    }
-}

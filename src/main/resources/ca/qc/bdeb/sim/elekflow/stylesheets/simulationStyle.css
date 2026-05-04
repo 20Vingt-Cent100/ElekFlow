@@ -1,3 +1,4 @@
+/*Root and variables used througout the code*/
 .root{
     dark-blue: #08141f;
     medium-blue: #0b1926;
@@ -6,54 +7,57 @@
     -fx-background-color: white;
 }
 
+.cursor{
+    -fx-cursor: hand;
+}
+
 .medium-text{
     -fx-font-size: 16px;
-}
-
-.light-color{
-    -fx-text-fill: gray-blue;
-}
-
-#search-bar .text-field{
     -fx-font-family: "inter";
+}
 
-    -fx-background-color: transparent;
+.text-light{
     -fx-text-fill: gray-blue;
+}
+
+.svg.light-color *{
+    -fx-stroke: gray-blue;
+}
+
+.svg.light-color > .fill{
+    -fx-fill: gray-blue;
+}
+
+.no-style-button{
+    -fx-background-color: transparent;
+}
+
+.center{
+    -fx-alignment: center-left;
+}
+
+.grow-animation:hover > .svg{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.grow-animation:pressed > .svg{
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/*Search Bar CSS*/
+.search-bar .text-field{
+    -fx-background-color: transparent;
     -fx-prompt-text-fill: gray-blue;
     -fx-max-width: 325px;
     -fx-pref-width: 300px;
 }
 
-#search-bar #search-icon *{
-    -fx-stroke: gray-blue;
-}
-
-#search-bar .button{
-    -fx-background-color: transparent;
-    -fx-cursor: hand
-}
-
-#search-bar .button:hover *{
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-#search-bar .button:pressed *{
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
-}
-
-#search-bar .button *{
-    -fx-stroke: gray-blue;
-}
-
-
-
-#search-bar{
-    -fx-alignment: center-left;
-
+.search-bar{
     -fx-pref-width: 345px;
     -fx-pref-height: 49px;
+    -fx-min-height: 49px;
 
     -fx-background-color: dark-blue;
 
@@ -63,13 +67,29 @@
     -fx-padding: 0 10.33px 0 10.33px;
 }
 
+/*Menu Composant CSS*/
 #menu-composant{
     -fx-background-color: medium-blue;
     -fx-max-width: 396px;
     -fx-max-height: 1920;
     -fx-pref-height: 1000;
 
-    -fx-padding: 23px 25px 23px 25px;
+    -fx-padding: 23px 25px 23px;
+    -fx-spacing: 23px;
+}
+
+#menu-composant .scroll-pane{
+    -fx-fit-to-width: true;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+
+
+}
+
+#menu-composant .scroll-pane .vbox{
     -fx-spacing: 23px;
 }
 
@@ -86,7 +106,7 @@
     -fx-background-radius: 13px;
     -fx-padding: 12px 17.56px 0 17.56px;
 
-    -fx-spacing: 20px;
+    -fx-spacing: 10px;
 
     -fx-min-height: 100px;
 }
@@ -100,3 +120,64 @@
     -fx-border-width: 1px;
     -fx-border-radius: 50%;
 }
+
+.btn-composant{
+    -fx-min-height: 80px;
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.btn-composant .svg{
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.tooltip{
+       -fx-background-color: dark-blue;
+       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2); /* ombre plus légère */
+       -fx-text-fill: gray-blue;
+       -fx-font-size: 14px;
+}
+
+.grille-pane{
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+
+    -fx-alignement: top-left;
+}
+
+.top-hbox{
+    -fx-background-color: medium-blue;
+    -fx-max-width: 396px;
+    -fx-alignement:center-left;
+}
+
+.top-hbox .menu-bar{
+    -fx-background-color: medium-blue;
+    -fx-font-family: "inter";
+}
+
+.top-hbox .menu-bar .menu:hover{
+    -fx-background-color: dark-blue;
+}
+
+.vue-composant *{
+    -fx-stroke: red;
+}
+
+.vue-composant.svg-fill .svg *{
+    -fx-fill: red;
+}
+
+.vue-composant:hover.svg-fill .svg *{
+    -fx-fill: orange;
+}
+
+.vue-composant:hover *{
+    -fx-stroke: orange;
+}
+
+.console{
+    -fx-background-color: #031927;
+}
+
