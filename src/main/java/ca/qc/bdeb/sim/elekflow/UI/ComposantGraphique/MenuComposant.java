@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import static ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles.*;
 
 public class MenuComposant extends VBox {
-    private HashMap<String, ComposantElectriqueGraphique> COMPOSANTS_ELECTRIQUES = new HashMap<>();
+    private HashMap<String, ComposantJSON> COMPOSANTS_ELECTRIQUES = new HashMap<>();
     private HashSet<String> categoriesSet = new HashSet<>();
 
     private final ArrayList<String> COMPOSANT_NOM = new ArrayList<>();
@@ -46,9 +46,10 @@ public class MenuComposant extends VBox {
         recherche.setManaged(false);
         recherche.setVisible(false);
 
+        label.getStyleClass().addAll("medium-text", "text-light");
         recherche.getChildren().add(label);
 
-        var listeTemporaire = new ArrayList<ComposantElectriqueGraphique>();
+        var listeTemporaire = new ArrayList<ComposantJSON>();
         listeTemporaire.add(COMPOSANTS_ELECTRIQUES.get("Ampoule"));
 
         categorieVBox = new VBox();
@@ -56,7 +57,7 @@ public class MenuComposant extends VBox {
         var categorieScrollPane = new ScrollPane(categorieVBox);
 
         categoriesSet.forEach((str) -> {
-            List<ComposantElectriqueGraphique> c =  new ArrayList<>();
+            List<ComposantJSON> c =  new ArrayList<>();
             COMPOSANTS_ELECTRIQUES.forEach((k, v) -> {
                 if (v.getCATEGORY().equals(str))
                     c.add(v);
@@ -68,7 +69,7 @@ public class MenuComposant extends VBox {
 
         categorieVBox.getChildren().add(recherche);
 
-        getChildren().addAll(new BarRecherche(), new Separator(), categorieScrollPane);
+        getChildren().addAll(new BarreRecherche(), new Separator(), categorieScrollPane);
 
         this.addEventHandler(SearchEvent.SEARCH_ENGAGED, this::handleSearchEngaged);
         this.addEventHandler(SearchEvent.SEARCH_CANCELED, this::handleSearchCanceled);
@@ -113,7 +114,7 @@ public class MenuComposant extends VBox {
             matcher = compiledPattern.matcher(s);
                 if (matcher.find()) {
                     rechercherGrille.ajouterElement(
-                            new BouttonComposant(COMPOSANTS_ELECTRIQUES.get(s)));
+                            new BoutonComposant(COMPOSANTS_ELECTRIQUES.get(s)));
 
                     result++;
                 }
@@ -135,7 +136,7 @@ public class MenuComposant extends VBox {
 
                     COMPOSANTS_ELECTRIQUES.put(
                         obj.getString(NOM),
-                        new ComposantElectriqueGraphique(obj));
+                        new ComposantJSON(obj));
                     categoriesSet.add(obj.getString(CATEGORIES));
                     Loggeur.logConsole("Category added: " + obj.getString(CATEGORIES), NiveauLog.TOTAL);
 

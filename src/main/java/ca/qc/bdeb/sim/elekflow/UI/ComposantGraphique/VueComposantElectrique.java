@@ -1,10 +1,13 @@
-package ca.qc.bdeb.sim.elekflow.UI;
+package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
-import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.ComposantElectriqueGraphique;
+import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
+import ca.qc.bdeb.sim.elekflow.UI.VueBorne;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -17,36 +20,42 @@ public class VueComposantElectrique extends Region{
         private final Rotate rotate;
         private final double centerX;
         private final double centerY;
+        private final Vec2 dernierClick = new Vec2();
+        private VueBorne borne = new VueBorne();
 
-        private final ComposantElectriqueGraphique composantElecGraphique;
+        private final ComposantJSON composantElecGraphique;
 
-        public VueComposantElectrique(ComposantElectriqueGraphique composantElecGraphique, double posX, double posY){
-                this.getChildren().add(App.atlas.getSVG(composantElecGraphique.getCLE_SVG()));
+        public VueComposantElectrique(ComposantJSON composantElecGraphique, double posX, double posY){
+                this.getChildren().addAll(App.atlas.getSVG(composantElecGraphique.getCLE_SVG()), borne);
                 this.setLayoutX(posX);
                 this.setLayoutY(posY);
                 this.setHandles();
+                this.setSnapToPixel(true);
 
+                borne.hide();
                 this.composantElecGraphique = composantElecGraphique;
 
                 centerX = this.getBoundsInLocal().getWidth() /2;
                 centerY = this.getBoundsInLocal().getHeight() /2;
 
+                dernierClick.x = posX + centerX;
+                dernierClick.y = posY + centerY;
+
                 rotate = new Rotate(0, centerX, centerY);
                 this.getTransforms().add(rotate);
 
-                this.getStyleClass().add("vue-composant");
-
-                if(composantElecGraphique.isSVGFILL())
-                        this.getStyleClass().add("svg-fill");
+                this.getStyleClass().addAll("vue-composant", "cursor");
         }
 
-        public void move(double dx, double dy){
-                this.setLayoutX(this.getLayoutX() + dx);
-                this.setLayoutY(this.getLayoutY() + dy);
-        }
+        public void moveOnDrag(MouseEvent e){
+                double newPosX = e.getSceneX();
+                double newPosY = e.getSceneY();
 
-        public void move(MouseEvent e){
-                this.move(e.getSceneX() - this.getLayoutX() - centerX, e.getSceneY() - this.getLayoutY() - centerY);
+                this.setTranslateX(getTranslateX() + (newPosX - dernierClick.x) / getScaleX());
+                this.setTranslateY(getTranslateY() + (newPosY - dernierClick.y) / getScaleY());
+
+                dernierClick.x = newPosX;
+                dernierClick.y = newPosY;
         }
 
         private void setHandles(){
@@ -65,7 +74,8 @@ public class VueComposantElectrique extends Region{
         }
 
         protected void handleOnMouseDragged(MouseEvent e){
-                move(e);
+                e.consume();
+                moveOnDrag(e);
         }
 
         protected void handleOnMouseDragReleased(MouseEvent e){
@@ -77,16 +87,17 @@ public class VueComposantElectrique extends Region{
         }
 
         protected void handleOnMouseEntered(MouseEvent e){
-
+                borne.show();
         }
 
         protected void handleOnMouseExited(MouseEvent e){
-
+                borne.hide();
         }
 
         protected void handleOnScroll(ScrollEvent e){
                 if(!e.isControlDown()) {
                         rotate.setAngle(rotate.getAngle() + (e.getDeltaY() * 9) / 12.);
+                        e.consume();
                 }
         }
 
@@ -95,7 +106,8 @@ public class VueComposantElectrique extends Region{
         }
 
         protected void handleOnMousePressed(MouseEvent e){
-
+                dernierClick.x = e.getSceneX();
+                dernierClick.y = e.getSceneY();
         }
 
         protected void handleOnMouseReleased(MouseEvent e){
@@ -123,5 +135,17 @@ public class VueComposantElectrique extends Region{
 
         public String getComposantNom(){
                 return composantElecGraphique.getNOM();
+        }
+
+        public double getCenterX() {
+                return centerX;
+        }
+
+        public double getCenterY() {
+                return centerY;
+        }
+
+        public Point2D getCenter(){
+                return new Point2D(centerX, centerY);
         }
 }

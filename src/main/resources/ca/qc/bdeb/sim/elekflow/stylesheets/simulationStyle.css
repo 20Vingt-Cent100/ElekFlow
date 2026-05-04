@@ -7,55 +7,54 @@
     -fx-background-color: white;
 }
 
-
-/*Default classes*/
-.medium-text{
-    -fx-font-size: 16px;
+.cursor{
+    -fx-cursor: hand;
 }
 
-.light-color{
+.medium-text{
+    -fx-font-size: 16px;
+    -fx-font-family: "inter";
+}
+
+.text-light{
     -fx-text-fill: gray-blue;
+}
+
+.svg.light-color *{
+    -fx-stroke: gray-blue;
+}
+
+.svg.light-color > .fill{
+    -fx-fill: gray-blue;
+}
+
+.no-style-button{
+    -fx-background-color: transparent;
+}
+
+.center{
+    -fx-alignment: center-left;
+}
+
+.grow-animation:hover > .svg{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.grow-animation:pressed > .svg{
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
 }
 
 /*Search Bar CSS*/
-#search-bar .text-field{
-    -fx-font-family: "inter";
-
+.search-bar .text-field{
     -fx-background-color: transparent;
-    -fx-text-fill: gray-blue;
     -fx-prompt-text-fill: gray-blue;
     -fx-max-width: 325px;
     -fx-pref-width: 300px;
 }
 
-#search-bar #search-icon *{
-    -fx-stroke: gray-blue;
-}
-
-#search-bar .button{
-    -fx-background-color: transparent;
-    -fx-cursor: hand
-}
-
-#search-bar .button:hover *{
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-#search-bar .button:pressed *{
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
-}
-
-#search-bar .button *{
-    -fx-stroke: gray-blue;
-}
-
-
-
-#search-bar{
-    -fx-alignment: center-left;
-
+.search-bar{
     -fx-pref-width: 345px;
     -fx-pref-height: 49px;
     -fx-min-height: 49px;
@@ -133,28 +132,6 @@
     -fx-scale-y: 1;
 }
 
-.btn-composant:hover{
-    -fx-cursor: hand;
-}
-
-.btn-composant:hover .svg{
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-.btn-composant:pressed .svg{
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
-}
-
-.btn-composant .svg *{
-    -fx-stroke: gray-blue;
-}
-
-.btn-composant, .svg-fill .svg *{
-    -fx-fill: gray-blue;
-}
-
 .tooltip{
        -fx-background-color: dark-blue;
        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 4, 0, 0, 2); /* ombre plus légère */
@@ -192,10 +169,6 @@
     -fx-fill: red;
 }
 
-.vue-composant:hover{
-    -fx-cursor: hand;
-}
-
 .vue-composant:hover.svg-fill .svg *{
     -fx-fill: orange;
 }
@@ -203,3 +176,8 @@
 .vue-composant:hover *{
     -fx-stroke: orange;
 }
+
+.console{
+    -fx-background-color: #031927;
+}
+

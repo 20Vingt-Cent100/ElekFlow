@@ -9,13 +9,20 @@ import java.util.List;
 
 public class ComposantCategorieGrille extends VBox {
 
+    //Grille de composants
     private FlowPane grille = new FlowPane();
 
-    public ComposantCategorieGrille(String nomCategorie, List<ComposantElectriqueGraphique> liste){
+    /**
+     * Créer une grille qui affiche les composants présents dans un catégorie donnée
+     * @param nomCategorie Nom affiché dans le menu
+     * @param liste Liste de composants qui sont présent dans la catégorie
+     * @cssValue: grille-composants, enfant: grille-pane
+     */
+    public ComposantCategorieGrille(String nomCategorie, List<ComposantJSON> liste){
         this.getStyleClass().add("grille-composants");
 
         var titreCategorie = new Label(nomCategorie);
-        titreCategorie.getStyleClass().addAll("medium-text", "light-color");
+        titreCategorie.getStyleClass().addAll("medium-text", "text-light");
 
         var titreBox = new VBox();
         titreBox.getStyleClass().add("titre-box");
@@ -24,8 +31,8 @@ public class ComposantCategorieGrille extends VBox {
         grille.getStyleClass().add("grille-pane");
 
         if(liste != null) {
-            for (ComposantElectriqueGraphique comp : liste) {
-                ajouterElement(new BouttonComposant(comp));
+            for (ComposantJSON comp : liste) {
+                ajouterElement(new BoutonComposant(comp));
             }
         }
         else{
@@ -40,7 +47,7 @@ public class ComposantCategorieGrille extends VBox {
         grille.setManaged(false);
     }
 
-    public void ajouterElement(BouttonComposant compBtn){
+    public void ajouterElement(BoutonComposant compBtn){
         if(!grille.isManaged())
             grille.setManaged(true);
 
