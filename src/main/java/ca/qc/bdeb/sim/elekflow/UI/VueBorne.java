@@ -1,5 +1,7 @@
 package ca.qc.bdeb.sim.elekflow.UI;
 
+import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
+import javafx.event.Event;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.shape.Circle;
@@ -9,13 +11,15 @@ import java.math.BigDecimal;
 
 public class VueBorne extends Circle {
 
-
     public VueBorne(BigDecimal[] coordinate, double[] parentSize){
         setRadius(5);
         this.setLayoutX(coordinate[0].doubleValue() * parentSize[0]);
         this.setLayoutY(coordinate[1].doubleValue() * parentSize[1]);
+        this.setFocusTraversable(true);
+        this.setPickOnBounds(true);
 
         this.getStyleClass().add("fill");
+        setHandles();
     }
 
     public void hide(){
@@ -60,6 +64,8 @@ public class VueBorne extends Circle {
 
     private void handleOnMousePressed(MouseEvent event) {
         event.consume();
+
+        fireEvent(new WireEvent(WireEvent.CREATE_WIRE, this.centerXProperty(), this.centerYProperty()));
     }
 
     private void handleOnZoom(ZoomEvent event) {

@@ -8,10 +8,7 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
 import ca.qc.bdeb.sim.elekflow.UI.VueBorne;
 import javafx.geometry.Point2D;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.transform.Rotate;
@@ -38,6 +35,7 @@ public class VueComposantElectrique extends Region{
                 this.setLayoutY(posY);
                 this.setHandles();
                 this.setSnapToPixel(true);
+                this.setFocusTraversable(true);
 
                 size = new double[]{svg.getWidth(), svg.getHeight()};
 
@@ -48,6 +46,7 @@ public class VueComposantElectrique extends Region{
                             bornes.add(borne);
                             Loggeur.logConsole("borne creer", NiveauLog.TOTAL);
                             this.getChildren().add(borne);
+                            borne.toFront();
                         }
                 }
 
@@ -102,7 +101,6 @@ public class VueComposantElectrique extends Region{
                 setOnMouseDragReleased(this::handleOnMouseDragReleased);
                 setOnMouseDragExited(this::handleOnMouseDragExited);
                 setOnKeyPressed(this::handleOnKeyPressed);
-
         }
 
         protected void handleOnMouseDragged(MouseEvent e){
@@ -140,29 +138,31 @@ public class VueComposantElectrique extends Region{
         protected void handleOnMousePressed(MouseEvent e){
                 dernierClick.x = e.getSceneX();
                 dernierClick.y = e.getSceneY();
+
+                e.consume();
         }
 
         protected void handleOnMouseReleased(MouseEvent e){
-                Loggeur.logConsole("Mouse Released", NiveauLog.TOTAL);
-                if(this.getLayoutX() <= 396) {
-                        fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT,
-                                this,
-                                e));
-                }
+
         }
 
         protected void handleOnMouseClicked(MouseEvent e){
                 this.requestFocus();
                 fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
+
+                e.consume();
         }
 
         protected void handleOnKeyPressed(KeyEvent e){
                 switch (e.getCode()){
-                        case UP -> this.setTranslateY(this.getTranslateY()-1);
-                        case DOWN -> this.setTranslateY(this.getTranslateY()+1);
-                        case LEFT -> this.setTranslateX(this.getTranslateX()-1);
-                        case RIGHT -> this.setTranslateX(this.getTranslateX()+1);
+                        case UP -> this.setLayoutY(this.getLayoutY() - 1);
+                        case DOWN -> this.setLayoutY(this.getLayoutY() + 1);
+                        case LEFT -> this.setLayoutX(this.getLayoutX() - 1);
+                        case RIGHT -> this.setLayoutX(this.getLayoutX() + 1);
+                        case DELETE -> fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT, this, null));
                 }
+
+                e.consume();
         }
 
         public String getComposantNom(){

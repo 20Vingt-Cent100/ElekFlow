@@ -178,6 +178,14 @@
     -fx-stroke: orange;
 }
 
+.vue-composant:focused *{
+    -fx-stroke: purple;
+}
+
+.vue-composant:focused .fill{
+    -fx-fill: purple;
+}
+
 .console{
     -fx-background-color: #031927;
     -fx-max-height: 300px;

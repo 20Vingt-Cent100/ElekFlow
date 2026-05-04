@@ -1,9 +1,12 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
+import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 
@@ -42,7 +45,19 @@ public class ZoneSimulation extends Pane {
         setOnMouseDragReleased(this::handleOnMouseDragReleased);
         setOnMouseDragExited(this::handleOnMouseDragExited);
         setOnKeyPressed(this::handleOnKeyPressed);
+        addEventHandler(ComponentEvent.DELETE_COMPONENT, this::handleDeleteComponent);
+        addEventHandler(WireEvent.CREATE_WIRE, this::handleCreateWire);
+    }
 
+    private void handleCreateWire(WireEvent event){
+        var fil = new Line();
+        //fil.startXProperty().bind(event.getStartXproperty());
+
+        simultionGroup.getChildren().add(new Line());
+    }
+
+    private void handleDeleteComponent(ComponentEvent event){
+        this.simultionGroup.getChildren().remove(event.getComposantElectrique());
     }
 
     private void handleOnKeyPressed(KeyEvent keyEvent) {

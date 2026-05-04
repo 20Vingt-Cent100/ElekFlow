@@ -29,6 +29,7 @@ public class ElekFlowStage extends Stage {
     protected void handleOnCloseRequest(WindowEvent event){
         Loggeur.logConsole("ElekFlow requested EXIT", NiveauLog.TOTAL);
         Platform.exit();
+        System.exit(0);
     }
 
     public void setShow(boolean show){
