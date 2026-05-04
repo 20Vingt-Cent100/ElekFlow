@@ -29,10 +29,6 @@ public class SimulationScene extends ElekflowScene {
 
     private void handleCreateNewComponent(ComponentEvent e) {
         VueComposantElectrique vue = e.getComposantElectrique();
-        var scale = zoneSimulation.getGroupScale();
-
-        vue.setScaleX(scale.getX());
-        vue.setScaleY(scale.getY());
 
         OVERLAY_PANE.getChildren().add(vue);
         Loggeur.logConsole(
@@ -57,7 +53,9 @@ public class SimulationScene extends ElekflowScene {
     }
 
     private void handleShowInfoEvent(ShowInfoEvent e) {
-        ROOT.setRight(new InfoMenu(e.compElecGraph.getNOM()));
+        var infoMenu = new InfoMenu(e.compElecGraph.getNOM());
+
+        OVERLAY_PANE.setRight(infoMenu);
     }
 
     private void handleOpenConsole(ConsoleEvent e) {

@@ -72,7 +72,7 @@
     -fx-background-color: medium-blue;
     -fx-max-width: 396px;
     -fx-max-height: 1920;
-    -fx-pref-height: 1000;
+    -fx-pref-height: 1080;
 
     -fx-padding: 23px 25px 23px;
     -fx-spacing: 23px;
@@ -86,6 +86,7 @@
     -fx-background-color: transparent;
     -fx-background: transparent;
 
+    -fx-pref-height: 1000;
 
 }
 
@@ -165,11 +166,11 @@
     -fx-stroke: red;
 }
 
-.vue-composant.svg-fill .svg *{
+.vue-composant .fill{
     -fx-fill: red;
 }
 
-.vue-composant:hover.svg-fill .svg *{
+.vue-composant:hover .fill{
     -fx-fill: orange;
 }
 

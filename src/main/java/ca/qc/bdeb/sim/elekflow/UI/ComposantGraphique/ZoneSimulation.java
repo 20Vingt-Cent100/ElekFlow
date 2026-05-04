@@ -5,14 +5,21 @@ import javafx.scene.Group;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 
 public class ZoneSimulation extends Pane {
     private Group simultionGroup = new Group();
+    private final Pane pane = new Pane();
+    private final Scale zoomScale = new Scale(0, 0);
+
     private Point2D lastClick;
 
     public ZoneSimulation(){
-        this.getChildren().add(simultionGroup);
+        this.getChildren().add(pane);
+        pane.getChildren().add(simultionGroup);
+
         simultionGroup.setManaged(false);
+        simultionGroup.setAutoSizeChildren(false);
 
         Rectangle clip = new Rectangle();
         clip.widthProperty().bind(this.widthProperty());
@@ -60,10 +67,15 @@ public class ZoneSimulation extends Pane {
     private void handleOnZoom(ZoomEvent zoomEvent) {
     }
 
+    //TODO: Zoomer vers le curseur
     private void handleOnScroll(ScrollEvent event) {
         if (event.isControlDown()){
-            simultionGroup.setScaleX(Math.abs(simultionGroup.getScaleX() + event.getDeltaY()/200.));
-            simultionGroup.setScaleY(Math.abs(simultionGroup.getScaleY() + event.getDeltaY()/200.));
+
+            pane.setTranslateX(this.getTranslateX());
+            pane.setTranslateY(this.getTranslateY());
+
+            pane.setScaleX(Math.max(pane.getScaleX() + event.getDeltaY()/100., 0.2));
+            pane.setScaleY(Math.max(pane.getScaleY() + event.getDeltaY()/100., 0.2));
         }
     }
 
@@ -74,8 +86,8 @@ public class ZoneSimulation extends Pane {
     }
 
     private void handleOnMouseDragged(MouseEvent mouseEvent) {
-        simultionGroup.setTranslateX(simultionGroup.getTranslateX() + mouseEvent.getX() - lastClick.getX());
-        simultionGroup.setTranslateY(simultionGroup.getTranslateY() + mouseEvent.getY() - lastClick.getY());
+        simultionGroup.setTranslateX(simultionGroup.getTranslateX() + (mouseEvent.getX() - lastClick.getX()) / pane.getScaleX());
+        simultionGroup.setTranslateY(simultionGroup.getTranslateY() + (mouseEvent.getY() - lastClick.getY()) / pane.getScaleY());
 
         lastClick = new Point2D(mouseEvent.getX(), mouseEvent.getY());
     }

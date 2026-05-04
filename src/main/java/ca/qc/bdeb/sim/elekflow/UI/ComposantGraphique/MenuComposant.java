@@ -82,8 +82,7 @@ public class MenuComposant extends VBox {
         });
 
         ComposantCategorieGrille rechercherGrille = (ComposantCategorieGrille) categorieVBox.getChildren().getLast();
-        rechercherGrille.setManaged(true);
-        rechercherGrille.setVisible(true);
+        rechercherGrille.setShow(true);
 
         rechercher(rechercherGrille, event.getSearchQuerry());
 

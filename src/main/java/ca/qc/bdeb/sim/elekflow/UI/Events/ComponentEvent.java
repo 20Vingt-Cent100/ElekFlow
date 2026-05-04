@@ -24,7 +24,6 @@ public class ComponentEvent extends Event {
 
         this.composantElectrique = composantElectrique;
         this.mouseEvent = mouseEvent;
-        Loggeur.logConsole(this.eventType + " fired", NiveauLog.TOTAL);
     }
 
     public VueComposantElectrique getComposantElectrique() {

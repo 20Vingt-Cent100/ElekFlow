@@ -53,4 +53,9 @@ public class ComposantCategorieGrille extends VBox {
 
         grille.getChildren().add(compBtn);
     }
+
+    public void setShow(boolean show){
+        this.setManaged(show);
+        this.setVisible(show);
+    }
 }
