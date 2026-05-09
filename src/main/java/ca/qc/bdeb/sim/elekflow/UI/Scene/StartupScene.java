@@ -1,6 +1,8 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.ProjectElement;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -15,8 +17,8 @@ import java.util.ArrayList;
 public class StartupScene extends ElekflowScene {
     public StartupScene() {
         super(1090, 550, WindowMode.WINDOWED);
-
         addStyleSheet(App.atlas.getStylesheet("menuDepart"));
+        addStyleSheet(App.atlas.getStylesheet("styleSystem"));
 
         populateScene();
     }
@@ -30,11 +32,11 @@ public class StartupScene extends ElekflowScene {
 
         options.setSpacing(10);
 
-        var createNewBtn = new Button("Créer projet");
+        var createNewBtn = new Button("  Créer projet  ");
         var importBtn = new Button("Importer projet");
 
-        importBtn.setId("bouttons");
-        createNewBtn.setId("bouttons");
+        importBtn.getStyleClass().addAll("no-style-btn", "border-accent", "btn", "cursor");
+        createNewBtn.getStyleClass().addAll("accent-style-btn", "btn", "cursor");
 
         importBtn.setOnAction(this::importNewProject);
 
@@ -55,24 +57,6 @@ public class StartupScene extends ElekflowScene {
 
         options.getChildren().addAll(createNewBtn, importBtn);
 
-        createNewBtn.setOnMouseEntered(e -> {
-            createNewBtn.setId("bouttonsBleu");
-
-        });
-
-        createNewBtn.setOnMouseExited(e -> {
-            createNewBtn.setId("bouttons");
-        });
-
-        importBtn.setOnMouseEntered(e -> {
-            importBtn.setId("bouttonsBleu");
-
-        });
-
-        importBtn.setOnMouseExited(e -> {
-            importBtn.setId("bouttons");
-        });
-
         Label texteProjetRecent = new Label("Projets recents");
         texteProjetRecent.setId("texteProjetsRecents");
 
@@ -84,6 +68,8 @@ public class StartupScene extends ElekflowScene {
 
         ScrollPane scroller = new ScrollPane();
         scroller.setId("scrollPane");
+
+        ProjectElement.loadElements(content);
 
         HBox projet1 = new HBox();
         HBox projet2 = new HBox();

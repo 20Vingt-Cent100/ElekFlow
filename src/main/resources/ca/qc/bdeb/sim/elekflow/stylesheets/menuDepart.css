@@ -1,14 +1,15 @@
 .root {
-    -fx-background-color: #243242;
+    -fx-background-color: medium-blue;
 }
+
 #bouttons {
     -fx-background-color: #243242, rgba(25, 35, 45, 0.9); /* base + overlay */;
-    -fx-font-size: 20;
-    -fx-text-fill: #CCD6E0;
+
+
     -fx-font-weight: bold;
     -fx-pref-width: 212px;
     -fx-pref-height: 50px;
-    -fx-background-radius: 10px;
+
 }
 #textLogo {
    -fx-font-size:70;

@@ -37,7 +37,7 @@ public class BarreRecherche extends HBox {
         var graphic = App.atlas.getSVG("XIcone");
         graphic.getStyleClass().add("light-color");
         cancelButton.setGraphic(graphic);
-        cancelButton.getStyleClass().addAll("cursor", "no-style-button", "grow-animation");
+        cancelButton.getStyleClass().addAll("cursor", "no-style-btn", "grow-animation");
         cancelButton.setOnAction(this::handleOnCancelButtonPressed);
 
         getChildren().addAll(iconeRecherche, rechercheText, cancelButton);

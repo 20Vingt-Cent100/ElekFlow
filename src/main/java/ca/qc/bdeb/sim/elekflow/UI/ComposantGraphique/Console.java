@@ -26,7 +26,7 @@ public class Console extends VBox {
 
         Button hideButton = new Button();
         hideButton.setGraphic(App.atlas.getSVG("XIcone"));
-        hideButton.getStyleClass().addAll("no-style-button", "cursor");
+        hideButton.getStyleClass().addAll("no-style-btn", "cursor");
 
         consoleTitle.getChildren().addAll(new Label("Console"), hideButton);
 

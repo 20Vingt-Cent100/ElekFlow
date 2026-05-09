@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
+import java.nio.file.Path;
 
 public class CreerProjetScene extends ElekflowScene{
     public CreerProjetScene(double width, double height, WindowMode mode) {
@@ -96,6 +98,8 @@ public class CreerProjetScene extends ElekflowScene{
 
         createBtn.setOnAction((e) ->{
             if(!textDebut.getText().isEmpty() && !locationText.getText().isEmpty()){
+                ElekFlowFile.createNewFile(textDebut.getText(), Path.of(locationText.getText()));
+
                 App.addStage(
                         ElekFlowStage.createStage("Elekflow: " + textDebut.getText(), App.atlas.getIMG("LogoDark"), true, true),
                         "Simulation",

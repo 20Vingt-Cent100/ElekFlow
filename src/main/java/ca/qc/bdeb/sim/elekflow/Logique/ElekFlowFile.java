@@ -2,40 +2,54 @@ package ca.qc.bdeb.sim.elekflow.Logique;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class ElekFlowFile {
-    public static boolean createNewFile(String fileName, Path path) throws IOException {
-        File projectFile = new File(path.toAbsolutePath() + "/" + fileName);
+    private final static File projects = new File("./projets");
 
-        return projectFile.createNewFile();
+    public static void createNewFile(String fileName, Path path){
+        File projectFile = new File(path.toAbsolutePath() + "/" + fileName + ".elk");
+
+        try {
+
+            projectFile.createNewFile();
+            addToRecentProject(projectFile.toPath());
+
+        }catch (IOException ex){
+            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+        }
+
     }
 
-    public static String[][] loadProjetsList(){
-        File projectFile = new File("projets/ProjectPaths");
+    public static void addToRecentProject(Path path){
+        try{
+            File projetRecent = new File(projects.getPath() + "ProjectPaths");
+            FileOutputStream writableFile = new FileOutputStream(projetRecent);
 
-        if(projectFile.exists()) {
-            try {
-                var scanner = new Scanner(projectFile);
-                while (scanner.hasNext()) {
+            writableFile.write(path.getFileName().toString().getBytes());
+            writableFile.write("\n".getBytes());
+            writableFile.write(path.toAbsolutePath().toString().getBytes());
 
-                }
-            } catch (FileNotFoundException ex) {
-                Loggeur.logConsole("File was not found", NiveauLog.ERREUR);
-            }
+            writableFile.close();
+
+        }catch (NullPointerException | IOException ex){
+            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
         }
-        else {
-            Loggeur.logConsole("The project's path file doesn't exist", NiveauLog.ALERTE);
-            try {
-                projectFile.createNewFile();
-            }catch (IOException ex){
-                Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
-            }catch (SecurityException ex) {
-                Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+    }
+
+    public static HashMap<String, Path> loadRecentProjetsList(){
+        HashMap<String, Path> recentProjectsPaths = new HashMap<>();
+
+        for (String str : projects.list()){
+            if(!str.endsWith(".elk")){
+                continue;
             }
+
+            recentProjectsPaths.put(str.substring(0, str.length()-4), Path.of(projects.getAbsolutePath() + str));
+            Loggeur.logConsole(str + " was put in recent project hash", NiveauLog.TOTAL);
         }
 
-        return null;
+        return recentProjectsPaths;
     }
 
 
