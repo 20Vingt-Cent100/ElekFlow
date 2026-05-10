@@ -13,6 +13,7 @@ public class ComponentEvent extends Event {
     public static final EventType<ComponentEvent> PLACED = new EventType<>(Event.ANY, "PLACED");
     public static final EventType<ComponentEvent> DELETE_GHOST_COMPONENT = new EventType<>(Event.ANY, "DELETE_GHOST_COMPONENT");
     public static final EventType<ComponentEvent> DELETE_COMPONENT = new EventType<>(Event.ANY, "DELETE_COMPONENT");
+    public static final EventType<ComponentEvent> SHOW_DESCRIPTION = new EventType<>(Event.ANY, "SHOW_DESCRIPTION");
 
 
     private final VueComposantElectrique composantElectrique;

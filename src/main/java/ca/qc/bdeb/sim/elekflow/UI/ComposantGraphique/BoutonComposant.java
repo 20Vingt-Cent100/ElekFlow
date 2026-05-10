@@ -178,5 +178,6 @@ public class BoutonComposant extends Button {
      * @param event évènement reçu
      */
     protected void handleOnMouseEntered(MouseEvent event) {
+        //fireEvent(new ComponentEvent(ComponentEvent.SHOW_DESCRIPTION, ));
     }
 }

@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.SearchEvent;
 import com.github.cliftonlabs.json_simple.*;
 import javafx.scene.control.Label;
@@ -73,6 +74,12 @@ public class MenuComposant extends VBox {
 
         this.addEventHandler(SearchEvent.SEARCH_ENGAGED, this::handleSearchEngaged);
         this.addEventHandler(SearchEvent.SEARCH_CANCELED, this::handleSearchCanceled);
+        this.addEventHandler(ComponentEvent.SHOW_DESCRIPTION, this::handleShowDescription);
+
+    }
+
+    private void handleShowDescription(ComponentEvent event){
+
     }
 
     private void handleSearchEngaged(SearchEvent event){

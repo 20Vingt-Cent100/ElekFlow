@@ -4,6 +4,7 @@ module ca.qc.bdeb.sim.elekflow.UI {
     requires org.girod.javafx.svgimage;
     requires json.simple;
     requires javafx.graphics;
+    requires java.desktop;
 
     exports ca.qc.bdeb.sim.elekflow.UI;
     exports ca.qc.bdeb.sim.elekflow.Logique;
