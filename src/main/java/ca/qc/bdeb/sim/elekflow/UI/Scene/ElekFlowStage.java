@@ -17,7 +17,7 @@ public class ElekFlowStage extends Stage {
         stage.getIcons().add(icon);
         stage.centerOnScreen();
         stage.setResizable(isRezisable);
-        stage.initStyle(StageStyle.UNIFIED);
+        stage.initStyle(StageStyle.DECORATED);
         stage.setTitle(title);
 
         if(closeAllOnExit)
