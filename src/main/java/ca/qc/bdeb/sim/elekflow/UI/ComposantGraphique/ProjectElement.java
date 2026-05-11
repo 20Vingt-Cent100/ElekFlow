@@ -4,6 +4,8 @@ import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.StartupScene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -34,6 +36,8 @@ public class ProjectElement extends HBox {
         this.getStyleClass().addAll("hbox-projet", "cursor", "center");
         nomProjet = new Label(name);
         nomProjet.getStyleClass().addAll("text-white", "medium-text", "center-left", "medium-text");
+        nomProjet.setPrefWidth(nomProjet.getWidth());
+        nomProjet.setMinWidth(200);
 
         MenuButton optionProjet = new MenuButton();
         optionProjet.getStyleClass().addAll("no-style-btn", "grow-animation", "accent-hover", "gray-light", "project-menu");
@@ -42,7 +46,7 @@ public class ProjectElement extends HBox {
         option1.getStyleClass().addAll("menu-item");
         option1.setOnAction((e) ->{openFile();});
 
-        MenuItem option2 = new MenuItem("Renommer");
+        MenuItem option2 = new MenuItem("Déplacer");
         option2.getStyleClass().addAll("menu-item");
         option2.setOnAction((e) ->{renameFile();});
 
@@ -59,6 +63,8 @@ public class ProjectElement extends HBox {
         nomPath = new Label(path.toAbsolutePath().toString());
         nomPath.getStyleClass().addAll("gray", "medium-text");
         nomPath.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
+        nomPath.setPrefWidth(nomPath.getWidth());
+        nomPath.setMinWidth(250);
 
         Region spacerLeft = new Region();
         Region spacerRight = new Region();
@@ -91,7 +97,7 @@ public class ProjectElement extends HBox {
     }
 
     private void openFile(){
-
+        ((StartupScene)this.getScene()).openFile(file);
     }
 
     private void renameFile(){
@@ -111,7 +117,6 @@ public class ProjectElement extends HBox {
 
     private void deleteFile() {
         try {
-            // Utilise l'API moderne NIO.2
             Files.delete(file.toPath());
 
             Loggeur.logConsole("File was deleted successfully", NiveauLog.TOTAL);

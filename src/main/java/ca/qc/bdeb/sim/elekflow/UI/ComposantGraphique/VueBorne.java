@@ -60,10 +60,7 @@ public class VueBorne extends Circle {
     }
 
     private void handleOnMousePressed(MouseEvent event) {
-        event.consume();
 
-        fireEvent(new WireEvent(WireEvent.CREATE_WIRE, this.layoutXProperty(), this.layoutYProperty(),
-                event.getSceneX(), event.getSceneY()));
     }
 
     private void handleOnZoom(ZoomEvent event) {
@@ -80,8 +77,6 @@ public class VueBorne extends Circle {
     }
 
     private void handleOnMouseDragged(MouseEvent event) {
-        event.consume();
-        fireEvent(new WireEvent(WireEvent.MOVE_END_POINT, this.layoutXProperty(), this.layoutYProperty(),
-                event.getSceneX(), event.getSceneY()));
+
     }
 }

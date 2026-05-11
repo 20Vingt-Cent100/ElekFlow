@@ -130,11 +130,11 @@ public class BoutonComposant extends Button {
             tooltip.hide();
         });
 
-        // sécurité si le bouton est détruit / drag
+        /* sécurité si le bouton est détruit / drag
         this.setOnMouseDragExited(e -> {
             mouseInside = false;
             tooltip.hide();
-        });
+        });*/
     }
 
     private void setHandles() {
@@ -173,13 +173,13 @@ public class BoutonComposant extends Button {
 
         if (vueCreer == null) return;
 
-        if (this.getParent().contains(
+        if (this.getParent().getParent().contains(
                 vueCreer.getTranslateX() + vueCreer.getCenterX(),
                 vueCreer.getTranslateY() + vueCreer.getCenterY()
         )) {
 
             fireEvent(new ComponentEvent(
-                    ComponentEvent.DELETE_COMPONENT,
+                    ComponentEvent.DELETE_GHOST_COMPONENT,
                     vueCreer,
                     event
             ));
@@ -195,7 +195,6 @@ public class BoutonComposant extends Button {
             ));
         }
     }
-
     protected void handleOnKeyPressed(KeyEvent event) {}
     protected void handleOnMouseClicked(MouseEvent event) {}
     protected void handleOnScroll(ScrollEvent event) {}

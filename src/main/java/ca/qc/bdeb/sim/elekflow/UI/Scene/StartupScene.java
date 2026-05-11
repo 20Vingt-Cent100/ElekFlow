@@ -1,19 +1,14 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
-import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.ProjectElement;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import java.io.File;
-import java.util.ArrayList;
 
 public class StartupScene extends ElekflowScene {
     public StartupScene() {
@@ -91,11 +86,25 @@ public class StartupScene extends ElekflowScene {
 
         var ioFile = file.showOpenDialog(ROOT.getScene().getWindow());
 
+        openFile(ioFile);
+
     }
 
     private void createNewProject(ActionEvent actionEvent){
-        App.addStage(ElekFlowStage.createStage("Créer projet",App.atlas.getIMG("logoAdapte"), false, false), "createProjectStage", false);
-        App.changeScene(new CreerProjetScene(), "createProjectStage");
+        App.addStage(ElekFlowStage.createStage("Créer projet",App.atlas.getIMG("logoAdapte"), false, false), ElekFlowStage.CREATE_NEW_PROJECT, false);
+        App.changeScene(new CreerProjetScene(), ElekFlowStage.CREATE_NEW_PROJECT);
+    }
+
+    public void openFile(File file){
+        App.addStage(
+                ElekFlowStage.createStage("Elekflow: " + file.getName().replace(".elk", ""), App.atlas.getIMG("LogoDark"), true, true),
+                ElekFlowStage.SIMULATION,
+                false
+        );
+
+        App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, file), ElekFlowStage.SIMULATION);
+        App.getStage(ElekFlowStage.SIMULATION).setShow(true);
+        App.removeStage(ElekFlowStage.STARTUP_SCREEN);
     }
 
 }

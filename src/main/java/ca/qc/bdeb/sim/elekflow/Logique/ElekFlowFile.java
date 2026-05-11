@@ -7,16 +7,18 @@ import java.util.HashMap;
 public class ElekFlowFile {
     private final static File projects = new File("./projets");
 
-    public static void createNewFile(String fileName, Path path){
+    public static boolean createNewFile(String fileName, Path path){
         File projectFile = new File(path.toAbsolutePath() + "/" + fileName + ".elk");
 
         try {
 
             projectFile.createNewFile();
             addToRecentProject(projectFile.toPath());
+            return true;
 
         }catch (IOException ex){
             Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+            return false;
         }
 
     }

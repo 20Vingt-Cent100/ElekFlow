@@ -25,6 +25,8 @@ public class SimulationScene extends ElekflowScene {
 
         this.file = file;
 
+        loadSimulation();
+
         this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);
         this.addEventHandler(ComponentEvent.BUTTON_DRAGGED, this::handleMoveComponent);
         this.addEventHandler(ComponentEvent.PLACED, this::handlePlacedComponent);
@@ -85,5 +87,9 @@ public class SimulationScene extends ElekflowScene {
 
         zoneSimulation = new ZoneSimulation();
         ROOT.setCenter(zoneSimulation);
+    }
+
+    private void loadSimulation(){
+
     }
 }

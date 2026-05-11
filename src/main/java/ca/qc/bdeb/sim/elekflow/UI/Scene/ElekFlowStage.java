@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Platform;
@@ -11,6 +12,10 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class ElekFlowStage extends Stage {
+    public static String SIMULATION = "Simulation";
+    public static String STARTUP_SCREEN = "StartupStage";
+    public static String CREATE_NEW_PROJECT = "CreateProjectStage";
+
     public static ElekFlowStage createStage(String title, Image icon, boolean closeAllOnExit, boolean isRezisable){
         var stage = new ElekFlowStage();
         stage.setFullScreenExitHint("");

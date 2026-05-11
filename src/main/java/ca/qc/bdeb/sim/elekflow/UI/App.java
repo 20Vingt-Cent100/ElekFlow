@@ -75,6 +75,11 @@ public class App extends Application {
         stage.setShow(show);
     }
 
+    public static void removeStage(String key){
+        ElekFlowStage stage =  STAGES.remove(key);
+        stage.close();
+    }
+
     /**
      * Obtenir un stage grâce à sa clé
      * @param cle

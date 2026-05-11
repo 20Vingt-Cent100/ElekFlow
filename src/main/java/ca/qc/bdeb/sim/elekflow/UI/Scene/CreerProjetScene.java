@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -20,6 +21,9 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class CreerProjetScene extends ElekflowScene{
+    private TextField projectName;
+    private TextField projectPath;
+
     public CreerProjetScene() {
         super(260, 250, WindowMode.WINDOWED);
         addStyleSheet(App.atlas.getStylesheet("menuCreerProjet"));
@@ -44,25 +48,32 @@ public class CreerProjetScene extends ElekflowScene{
         var dir = new DirectoryChooser();
         dir.setInitialDirectory(new File("./projets"));
 
-        TextField textDebut = new TextField();
-        textDebut.setPromptText("Nom du projet");
+        projectName = new TextField();
+        projectName.setPromptText("Nom du projet");
+
+        projectName.setOnKeyPressed((e) ->{
+            if(e.getCode() == KeyCode.ENTER){
+                projectName.commitValue();
+                createNew();
+            }
+        });
 
         var saveLocation = new HBox();
 
         saveLocation.setSpacing(5);
 
-        var locationText = new TextField(dir.getInitialDirectory().getAbsolutePath());
-        locationText.setMinWidth(100);
+        projectPath = new TextField(dir.getInitialDirectory().getAbsolutePath());
+        projectPath.setMinWidth(100);
 
         var locationBtn = new Button("Parcourir...");
         locationBtn.getStyleClass().addAll("no-style-btn", "border-accent", "btn", "cursor");
 
 
-        saveLocation.getChildren().addAll(locationText, locationBtn);
+        saveLocation.getChildren().addAll(projectPath, locationBtn);
 
         locationBtn.setOnAction((e) ->{
             try {
-                locationText.setText((dir.showDialog(App.getStage("createProjectStage").getOwner())).getAbsolutePath());
+                projectPath.setText((dir.showDialog(App.getStage(ElekFlowStage.CREATE_NEW_PROJECT).getOwner())).getAbsolutePath());
             }catch (NullPointerException ex){
                 Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
             }
@@ -73,28 +84,35 @@ public class CreerProjetScene extends ElekflowScene{
         createBtn.getStyleClass().addAll("accent-style-btn", "btn", "cursor");
 
         createBtn.setOnAction((e) ->{
-            if(!textDebut.getText().isEmpty() && !locationText.getText().isEmpty()){
-                ElekFlowFile.createNewFile(textDebut.getText(), Path.of(locationText.getText()));
-
-                App.addStage(
-                        ElekFlowStage.createStage("Elekflow: " + textDebut.getText(), App.atlas.getIMG("LogoDark"), true, true),
-                        "Simulation",
-                        false
-                );
-
-                App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, new File(locationText.getText())), "Simulation");
-                App.getStage("Simulation").setShow(true);
-                App.getStage("createProjectStage").close();
-                App.getStage("StartupStage").close();
-            }
+            createNew();
         });
 
 
-        conteneur.getChildren().addAll(nomProjet, textDebut, emplacement, saveLocation, createBtn);
+        conteneur.getChildren().addAll(nomProjet, projectName, emplacement, saveLocation, createBtn);
         ROOT.setCenter(conteneur);
 
-        App.getStage("createProjectStage").setX(750);
-        App.getStage("createProjectStage").setY(350);
-        App.getStage("createProjectStage").setShow(true);
+        App.getStage(ElekFlowStage.CREATE_NEW_PROJECT).setX(750);
+        App.getStage(ElekFlowStage.CREATE_NEW_PROJECT).setY(350);
+        App.getStage(ElekFlowStage.CREATE_NEW_PROJECT).setShow(true);
+    }
+
+    private void createNew(){
+        if(!projectName.getText().isEmpty() && !projectPath.getText().isEmpty()) {
+            if (ElekFlowFile.createNewFile(projectName.getText(), Path.of(projectPath.getText()))) {
+
+
+                App.addStage(
+                        ElekFlowStage.createStage("Elekflow: " + projectName.getText(), App.atlas.getIMG("LogoDark"), true, true),
+                        ElekFlowStage.SIMULATION,
+                        false
+                );
+
+                App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, new File(projectPath.getText())), ElekFlowStage.SIMULATION);
+                App.getStage(ElekFlowStage.SIMULATION).setShow(true);
+
+                App.removeStage(ElekFlowStage.CREATE_NEW_PROJECT);
+                App.removeStage(ElekFlowStage.STARTUP_SCREEN);
+            }
+        }
     }
 }
