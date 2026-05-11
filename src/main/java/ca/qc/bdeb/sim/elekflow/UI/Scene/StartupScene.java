@@ -73,7 +73,7 @@ public class StartupScene extends ElekflowScene {
         recentProjectLabel.getStyleClass().addAll("text-white", "h2");
 
         VBox recentProjectList = new VBox();
-        recentProjectList.getStyleClass().addAll("liste-projet");
+        recentProjectList.getStyleClass().addAll("liste-projet", "center-top");
 
         ProjectElement.loadElements(recentProjectList);
 

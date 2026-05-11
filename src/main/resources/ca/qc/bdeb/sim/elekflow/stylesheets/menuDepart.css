@@ -85,6 +85,31 @@
 }
 
 
-.menu-context{
+.project-menu .arrow-button {
+    visibility: hidden;
+}
 
+.context-menu {
+    -fx-background-color: dark-blue;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.menu-item{
+    -fx-text-fill: text-color;
+    -fx-font-size: 13px;
+}
+
+.menu-item .label{
+    -fx-underline: false;
+    -fx-text-fill: text-color;
+}
+
+.menu-item:hover, .menu-item:focused{
+    -fx-background: #04111A;
+}
+
+.menu-item:hover .label, .menu-item:focused .label{
+    -fx-text-fill: accent-color;
+    -fx-underline: true;
 }

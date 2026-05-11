@@ -45,7 +45,7 @@ public class ElekFlowFile {
                 continue;
             }
 
-            recentProjectsPaths.put(str.substring(0, str.length()-4), Path.of(projects.getAbsolutePath() + str));
+            recentProjectsPaths.put(str.substring(0, str.length()-4), Path.of(projects.getAbsolutePath() + "/" + str));
             Loggeur.logConsole(str + " was put in recent project hash", NiveauLog.TOTAL);
         }
 
