@@ -48,8 +48,11 @@
 .btn{
     -fx-border-radius: 8px;
    -fx-background-radius: 8px;
-   -fx-font-size: 20;
    -fx-text-fill: text-color;
+}
+
+.font-20{
+    -fx-font-size: 20px;
 }
 
 .border-accent{

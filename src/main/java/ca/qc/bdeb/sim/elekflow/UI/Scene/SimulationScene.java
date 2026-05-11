@@ -22,7 +22,6 @@ public class SimulationScene extends ElekflowScene {
     public SimulationScene(double width, double height, WindowMode mode, File file) {
         super(width, height, mode);
         addStyleSheet(App.atlas.getStylesheet("simulationStyle"));
-        addStyleSheet(App.atlas.getStylesheet("styleSystem"));
 
         this.file = file;
 

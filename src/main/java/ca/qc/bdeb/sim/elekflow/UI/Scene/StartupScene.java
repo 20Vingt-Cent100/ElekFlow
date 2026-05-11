@@ -19,7 +19,6 @@ public class StartupScene extends ElekflowScene {
     public StartupScene() {
         super(1090, 550, WindowMode.WINDOWED);
         addStyleSheet(App.atlas.getStylesheet("menuDepart"));
-        addStyleSheet(App.atlas.getStylesheet("styleSystem"));
 
         populateScene();
     }
@@ -57,8 +56,8 @@ public class StartupScene extends ElekflowScene {
         var createNewBtn = new Button("  Créer projet  ");
         var importBtn = new Button("Importer projet");
 
-        importBtn.getStyleClass().addAll("no-style-btn", "border-accent", "btn", "cursor");
-        createNewBtn.getStyleClass().addAll("accent-style-btn", "btn", "cursor");
+        importBtn.getStyleClass().addAll("no-style-btn", "border-accent", "btn", "cursor", "font-20");
+        createNewBtn.getStyleClass().addAll("accent-style-btn", "btn", "cursor", "font-20");
 
         importBtn.setOnAction(this::importNewProject);
 
@@ -91,13 +90,12 @@ public class StartupScene extends ElekflowScene {
         file.setInitialDirectory(new File("./projets"));
 
         var ioFile = file.showOpenDialog(ROOT.getScene().getWindow());
-        //if (ioFile != null)
-            //changeScene(ioFile);
+
     }
 
     private void createNewProject(ActionEvent actionEvent){
         App.addStage(ElekFlowStage.createStage("Créer projet",App.atlas.getIMG("logoAdapte"), false, false), "createProjectStage", false);
-        App.changeScene(new CreerProjetScene(260, 250, WindowMode.WINDOWED), "createProjectStage");
+        App.changeScene(new CreerProjetScene(), "createProjectStage");
     }
 
 }

@@ -20,8 +20,9 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class CreerProjetScene extends ElekflowScene{
-    public CreerProjetScene(double width, double height, WindowMode mode) {
-        super(width, height, mode);
+    public CreerProjetScene() {
+        super(260, 250, WindowMode.WINDOWED);
+        addStyleSheet(App.atlas.getStylesheet("menuCreerProjet"));
     }
 
     @Override
@@ -35,23 +36,16 @@ public class CreerProjetScene extends ElekflowScene{
         conteneur.setFocusTraversable(true);
         conteneur.requestFocus();
 
-        addStyleSheet(App.atlas.getStylesheet("menuCreerProjet"));
-
         Label nomProjet = new Label("Nom du projet");
         nomProjet.setId("texte");
         Label emplacement = new Label("Emplacement");
         emplacement.setId("texte");
-        Label creation = new Label("Créer maintenant?");
-        creation.setId("texte");
 
         var dir = new DirectoryChooser();
         dir.setInitialDirectory(new File("./projets"));
 
         TextField textDebut = new TextField();
         textDebut.setPromptText("Nom du projet");
-
-        // Sélectionner tout le texte après affichage
-        //Platform.runLater(textDebut::selectAll);
 
         var saveLocation = new HBox();
 
@@ -61,16 +55,7 @@ public class CreerProjetScene extends ElekflowScene{
         locationText.setMinWidth(100);
 
         var locationBtn = new Button("Parcourir...");
-        locationBtn.setId("bouttons");
-
-        locationBtn.setOnMouseEntered(e -> {
-            locationBtn.setId("bouttonsBleu");
-
-        });
-
-        locationBtn.setOnMouseExited(e -> {
-            locationBtn.setId("bouttons");
-        });
+        locationBtn.getStyleClass().addAll("no-style-btn", "border-accent", "btn", "cursor");
 
 
         saveLocation.getChildren().addAll(locationText, locationBtn);
@@ -85,16 +70,7 @@ public class CreerProjetScene extends ElekflowScene{
         });
 
         var createBtn = new Button("Créer le projet");
-        createBtn.setId("bouttons");
-
-        createBtn.setOnMouseEntered(e -> {
-            createBtn.setId("bouttonsBleu");
-
-        });
-
-        createBtn.setOnMouseExited(e -> {
-            createBtn.setId("bouttons");
-        });
+        createBtn.getStyleClass().addAll("accent-style-btn", "btn", "cursor");
 
         createBtn.setOnAction((e) ->{
             if(!textDebut.getText().isEmpty() && !locationText.getText().isEmpty()){
@@ -114,7 +90,7 @@ public class CreerProjetScene extends ElekflowScene{
         });
 
 
-        conteneur.getChildren().addAll(nomProjet, textDebut, emplacement, saveLocation, creation, createBtn);
+        conteneur.getChildren().addAll(nomProjet, textDebut, emplacement, saveLocation, createBtn);
         ROOT.setCenter(conteneur);
 
         App.getStage("createProjectStage").setX(750);

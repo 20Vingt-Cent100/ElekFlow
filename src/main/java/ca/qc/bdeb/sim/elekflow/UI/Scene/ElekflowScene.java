@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -28,6 +29,8 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
 
         ROOT.setFocusTraversable(true);
         ROOT.setOnMouseClicked((e)->{ROOT.requestFocus();});
+
+        addStyleSheet(App.atlas.getStylesheet("styleSystem"));
 
         populateScene();
     }
