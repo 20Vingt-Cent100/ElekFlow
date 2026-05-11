@@ -2,182 +2,202 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.*;
-import javafx.scene.text.Text;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import org.girod.javafx.svgimage.SVGImage;
 
 public class BoutonComposant extends Button {
-    //Texte décrivant le composant électrique du bouton
-    private final Text DESCRIPTION = new Text();
 
-    //Structure de donnée correspondant à un entrée JSON du fichier "Composants.json"
     private final ComposantJSON composantJSON;
-
-    //Vue créer lorsque le bouton est appuyé
     private VueComposantElectrique vueCreer = null;
 
-    /**
-     * Crée un bouton qui permet de copier la vue graphique d'un composant électrique
-     * @param compElec Composant électrique qui sera représenté par le bouton
-     *
-     * @cssValue: btn-composant
-     */
-    public BoutonComposant(ComposantJSON compElec){
+    private final Tooltip tooltip;
+    private boolean mouseInside = false;
+
+    public BoutonComposant(ComposantJSON compElec) {
+
         super("");
 
         this.composantJSON = compElec;
-        this.getStyleClass().addAll("btn-composant", "cursor", "grow-animation");
+
+        this.getStyleClass().addAll(
+                "btn-composant",
+                "cursor",
+                "grow-animation"
+        );
 
         SVGImage svg = App.atlas.getSVG(compElec.getCLE_SVG());
-        svg.getStyleClass().addAll("light-color");
+        svg.getStyleClass().add("light-color");
 
         this.setGraphic(svg);
         this.setWidth(svg.getWidth());
         this.setHeight(svg.getHeight());
 
-        DESCRIPTION.setText(compElec.getDESCRIPTION());
+        this.tooltip = createCustomTooltip();
 
-        setTooltip(new Tooltip(composantJSON.getNOM()));
+        setTooltipBehavior();
+
         setHandles();
     }
 
     /**
-     * Met un tooltip qui indique le nom du composant lorsque celui-ci est survolé
+     * TOOLTIP STYLE THEME
      */
-    private void setTooltip(){
-        var tooltip = new Tooltip(composantJSON.getNOM());
-        tooltip.getStyleClass().addAll("tooltip", "medium-text");
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setHideDelay(Duration.ZERO);
-        tooltip.setShowDuration(Duration.INDEFINITE);
+    private Tooltip createCustomTooltip() {
+
+        Label titre = new Label(composantJSON.getNOM());
+        titre.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+        titre.setTextFill(Color.web("#FFFFFF"));
+
+        Label description = new Label(composantJSON.getDESCRIPTION());
+        description.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 13));
+        description.setTextFill(Color.web("#B8C7D9"));
+        description.setWrapText(true);
+        description.setMaxWidth(260);
+
+        Region sep = new Region();
+        sep.setMinHeight(1);
+        sep.setPrefHeight(1);
+        sep.setMaxHeight(1);
+        sep.setStyle("-fx-background-color: rgba(255,255,255,0.08);");
+
+        VBox content = new VBox(titre, sep, description);
+        content.setSpacing(10);
+        content.setPadding(new Insets(12));
+
+        content.setBackground(new Background(
+                new BackgroundFill(
+                        Color.web("#0B1623"),
+                        new CornerRadii(14),
+                        Insets.EMPTY
+                )
+        ));
+
+        content.setBorder(new Border(
+                new BorderStroke(
+                        Color.web("#1F2A38"),
+                        BorderStrokeStyle.SOLID,
+                        new CornerRadii(14),
+                        new BorderWidths(1)
+                )
+        ));
+
+        content.setEffect(new DropShadow(
+                18,
+                Color.rgb(0, 0, 0, 0.45)
+        ));
+
+        Tooltip tt = new Tooltip();
+        tt.setGraphic(content);
+
+        tt.setShowDelay(Duration.millis(150));
+        tt.setHideDelay(Duration.millis(80));
+        tt.setShowDuration(Duration.INDEFINITE);
+
+        tt.setStyle("""
+            -fx-background-color: transparent;
+            -fx-padding: 0;
+        """);
+
+        return tt;
     }
 
-    /**
-     * Assigne une méthode pour chaque évènement qu'écoute le bouton
-     */
-    private void setHandles(){
+    private void setTooltipBehavior() {
+
+        this.setOnMouseEntered(e -> {
+            mouseInside = true;
+            tooltip.show(this, e.getScreenX() + 10, e.getScreenY() + 10);
+        });
+
+        this.setOnMouseMoved(e -> {
+            if (mouseInside) {
+                tooltip.setX(e.getScreenX() + 10);
+                tooltip.setY(e.getScreenY() + 10);
+            }
+        });
+
+        this.setOnMouseExited(e -> {
+            mouseInside = false;
+            tooltip.hide();
+        });
+
+        // sécurité si le bouton est détruit / drag
+        this.setOnMouseDragExited(e -> {
+            mouseInside = false;
+            tooltip.hide();
+        });
+    }
+
+    private void setHandles() {
         setOnMouseDragged(this::handleOnMouseDragged);
-        setOnMouseEntered(this::handleOnMouseEntered);
+        setOnMousePressed(this::handleOnMousePressed);
+        setOnMouseReleased(this::handleOnMouseReleased);
         setOnMouseClicked(this::handleOnMouseClicked);
         setOnScroll(this::handleOnScroll);
         setOnZoom(this::handleOnZoom);
-        setOnMousePressed(this::handleOnMousePressed);
-        setOnMouseReleased(this::handleOnMouseReleased);
-        setOnMouseExited(this::handleOnMouseExited);
-        setOnMouseDragReleased(this::handleOnMouseDragReleased);
-        setOnMouseDragExited(this::handleOnMouseDragExited);
         setOnKeyPressed(this::handleOnKeyPressed);
     }
 
-    /**
-     * Gère lorsque le bouton est appuyé
-     * @param event évènement de la souris
-     * @Description: Crée une nouvelle VueComposante du composant associé au bouton
-     * puis lance un CREATE_NEW_COMPONENT event
-     */
     protected void handleOnMousePressed(MouseEvent event) {
-        vueCreer = new VueComposantElectrique(composantJSON,
+        vueCreer = new VueComposantElectrique(
+                composantJSON,
                 event.getSceneX() - event.getX(),
-                event.getSceneY() - event.getY());
+                event.getSceneY() - event.getY()
+        );
 
         fireEvent(new ComponentEvent(
                 ComponentEvent.CREATE_NEW_COMPONENT,
                 vueCreer,
-                event));
+                event
+        ));
     }
 
-    /**
-     * Gère lorsque le bouton est glissé
-     * @param event évènement du glissage
-     * @Description: Lance un BUTTON_DRAGGED event
-     */
     protected void handleOnMouseDragged(MouseEvent event) {
         fireEvent(new ComponentEvent(
-                ComponentEvent.BUTTON_DRAGGED, vueCreer,
-                event));
+                ComponentEvent.BUTTON_DRAGGED,
+                vueCreer,
+                event
+        ));
     }
 
-    /**
-     * Gère lorsque la souris est lachée.
-     * @param event évènement de la souris
-     * @Description: Si le composant est laché au dessus du menu de composants, celui-ci sera détruit.
-     * Sinon, il sera initialisé dans le groupe de la zone de simulation.
-     */
     protected void handleOnMouseReleased(MouseEvent event) {
-        if (this.getParent().contains(vueCreer.getTranslateX() + vueCreer.getCenterX(),
-                vueCreer.getTranslateY() + vueCreer.getCenterY())){
-            fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT,
+
+        if (vueCreer == null) return;
+
+        if (this.getParent().contains(
+                vueCreer.getTranslateX() + vueCreer.getCenterX(),
+                vueCreer.getTranslateY() + vueCreer.getCenterY()
+        )) {
+
+            fireEvent(new ComponentEvent(
+                    ComponentEvent.DELETE_COMPONENT,
                     vueCreer,
-                    event));
+                    event
+            ));
+
             vueCreer = null;
 
-        }else{
-            fireEvent(new ComponentEvent(ComponentEvent.PLACED,
+        } else {
+
+            fireEvent(new ComponentEvent(
+                    ComponentEvent.PLACED,
                     vueCreer,
-                    event));
+                    event
+            ));
         }
     }
 
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnKeyPressed(KeyEvent event) {
-
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnMouseDragExited(MouseDragEvent event) {
-
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnMouseDragReleased(MouseDragEvent event) {
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnMouseExited(MouseEvent event) {
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnZoom(ZoomEvent event) {
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnScroll(ScrollEvent event) {
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnMouseClicked(MouseEvent event) {
-
-    }
-
-    /**
-     * Inutilisé par défaut
-     * @param event évènement reçu
-     */
-    protected void handleOnMouseEntered(MouseEvent event) {
-        //fireEvent(new ComponentEvent(ComponentEvent.SHOW_DESCRIPTION, ));
-    }
+    protected void handleOnKeyPressed(KeyEvent event) {}
+    protected void handleOnMouseClicked(MouseEvent event) {}
+    protected void handleOnScroll(ScrollEvent event) {}
+    protected void handleOnZoom(ZoomEvent event) {}
 }

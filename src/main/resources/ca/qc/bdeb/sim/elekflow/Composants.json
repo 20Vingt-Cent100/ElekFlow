@@ -3,28 +3,28 @@
     "nom": "Source de tension continue",
     "cle_svg": "SourceTensionContinue",
     "category": "Générateurs",
-    "description": "",
+    "description": "Composante qui fournit une tension électrique continue et stable afin d’alimenter un circuit. La polarité reste constante dans le temps.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
   {
     "nom": "Pile",
     "cle_svg": "Pile",
     "category": "Générateurs",
-    "description": "",
+    "description": "Générateur électrochimique transformant l’énergie chimique en énergie électrique pour alimenter un circuit en courant continu.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Source de courant",
     "cle_svg": "SourceCourant",
     "category": "Générateurs",
-    "description": "",
+    "description": "Composante fournissant un courant électrique constant, peu importe la résistance ou la charge connectée au circuit.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
   {
     "nom": "Source de tension alternative",
     "cle_svg": "SourceTensionAlternative",
     "category": "Générateurs",
-    "description": "",
+    "description": "Source produisant une tension variant périodiquement dans le temps, généralement sous forme sinusoïdale.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
 
@@ -32,70 +32,70 @@
     "nom": "Résistance électrique",
     "cle_svg": "Resistance",
     "category": "Passifs",
-    "description": "",
+    "description": "Composante passive qui limite le passage du courant électrique et dissipe une partie de l’énergie sous forme de chaleur.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Inductance",
     "cle_svg": "Inductance",
     "category": "Passifs",
-    "description": "",
+    "description": "Bobine conductrice qui emmagasine de l’énergie sous forme de champ magnétique lorsqu’un courant la traverse.",
     "bornes": [[0.0, 0.96], [1.0, 0.96]]
   },
   {
     "nom": "Condensateur",
     "cle_svg": "Condensateur",
     "category": "Passifs",
-    "description": "",
+    "description": "Composante capable d’emmagasiner temporairement des charges électriques et de les restituer plus tard dans le circuit.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
   {
     "nom": "Condensateur Polarisé",
     "cle_svg": "CondensateurPolarise",
     "category": "Passifs",
-    "description": "",
+    "description": "Condensateur possédant une borne positive et une borne négative qui doivent être respectées lors du branchement.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
   {
     "nom": "Potentiomètre",
     "cle_svg": "Potentiometre",
     "category": "Passifs",
-    "description": "",
+    "description": "Résistance variable permettant d’ajuster manuellement la valeur de résistance dans un circuit.",
     "bornes": [[0.0, 0.8], [1.0, 0.8]]
   },
   {
     "nom": "Résistance ajustable",
     "cle_svg": "ResistanceAjustable",
     "category": "Passifs",
-    "description": "",
+    "description": "Résistance dont la valeur peut être réglée afin de modifier le courant ou la tension dans un circuit.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Quartz",
     "cle_svg": "Quartz",
     "category": "Passifs",
-    "description": "",
+    "description": "Composante utilisant les propriétés mécaniques du cristal de quartz pour produire une fréquence très précise.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]]
   },
   {
     "nom": "Fusible",
     "cle_svg": "Fusible",
     "category": "Passifs",
-    "description": "",
+    "description": "Dispositif de protection qui coupe automatiquement le courant lorsqu’une intensité trop élevée est détectée.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Élément chauffant",
     "cle_svg": "ElementChauffant",
     "category": "Passifs",
-    "description": "",
+    "description": "Composante transformant l’énergie électrique en chaleur grâce à l’effet Joule.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Photorésistance",
     "cle_svg": "PhotoResistance",
     "category": "Passifs",
-    "description": "",
+    "description": "Résistance dont la valeur varie selon l’intensité de la lumière reçue.",
     "bornes": [[0.0, 0.8], [1.0, 0.8]]
   },
 
@@ -103,49 +103,49 @@
     "nom": "Diode",
     "cle_svg": "Diode",
     "category": "Semi-conducteurs",
-    "description": "",
+    "description": "Composante semi-conductrice laissant circuler le courant dans une seule direction.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Diode Schottky",
     "cle_svg": "DiodeSchottky",
     "category": "Semi-conducteurs",
-    "description": "",
+    "description": "Diode caractérisée par une faible chute de tension et une commutation très rapide.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Diode Zener",
     "cle_svg": "DiodeZener",
     "category": "Semi-conducteurs",
-    "description": "",
+    "description": "Diode utilisée principalement pour stabiliser ou réguler une tension électrique.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Diode électroluminescente",
     "cle_svg": "DiodeElectroluminescente",
     "category": "Semi-conducteurs",
-    "description": "",
+    "description": "Diode émettant de la lumière lorsqu’un courant électrique la traverse.",
     "bornes": [[0.0, 0.7], [1.0, 0.7]]
   },
   {
     "nom": "Diode varicap",
     "cle_svg": "DiodeVaricap",
     "category": "Semi-conducteurs",
-    "description": "",
+    "description": "Diode dont la capacité électrique varie en fonction de la tension appliquée.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Photodiode",
     "cle_svg": "Photodiode",
     "category": "Semi-conducteurs",
-    "description": "",
+    "description": "Diode sensible à la lumière qui convertit l’énergie lumineuse en signal électrique.",
     "bornes": [[0.0, 0.7], [1.0, 0.7]]
   },
   {
     "nom": "Boutton poussoir",
     "cle_svg": "BouttonPoussoir",
     "category": "Interrupteurs",
-    "description": "",
+    "description": "Interrupteur temporaire qui établit ou coupe un circuit seulement lorsqu’il est pressé.",
     "bornes": [[0.0, 0.7], [1.0, 0.7]]
   },
 
@@ -153,21 +153,21 @@
     "nom": "Interrupteur simple",
     "cle_svg": "InterrupteurSimple",
     "category": "Interrupteurs",
-    "description": "",
+    "description": "Dispositif permettant d’ouvrir ou de fermer manuellement un circuit électrique.",
     "bornes": [[0.0, 0.69], [1.0, 0.69]]
   },
   {
     "nom": "Interrupteur double",
     "cle_svg": "InterrupteurDouble",
     "category": "Interrupteurs",
-    "description": "",
+    "description": "Interrupteur contrôlant deux circuits électriques distincts à partir d’un même dispositif.",
     "bornes": [[0.0, 0.35], [1.0, 0.35], [0.0, 0.88], [1.0, 0.88]]
   },
   {
     "nom": "Commutateur",
     "cle_svg": "Commutateur",
     "category": "Interrupteurs",
-    "description": "",
+    "description": "Dispositif permettant de rediriger le courant électrique entre différentes connexions possibles.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
 
@@ -175,21 +175,21 @@
     "nom": "Moteur",
     "cle_svg": "Moteur",
     "category": "Actionneurs",
-    "description": "",
+    "description": "Appareil convertissant l’énergie électrique en énergie mécanique de rotation.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Haut-parleur",
     "cle_svg": "HautParleur",
     "category": "Actionneurs",
-    "description": "",
+    "description": "Composante transformant un signal électrique en ondes sonores audibles.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
   {
     "nom": "Avertisseur sonore",
     "cle_svg": "AvertisseurSonore",
     "category": "Actionneurs",
-    "description": "",
+    "description": "Dispositif émettant un signal sonore afin d’avertir ou d’indiquer une information.",
     "bornes": [[0.0, 0.97], [1.0, 0.97]]
   },
 
@@ -197,7 +197,7 @@
     "nom": "Ampoule",
     "cle_svg": "Ampoule",
     "category": "Actionneurs",
-    "description": "",
+    "description": "Composante convertissant l’énergie électrique en lumière pour l’éclairage ou l’indication visuelle.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]]
   },
 
@@ -205,9 +205,7 @@
     "nom": "Point équipotentiel",
     "cle_svg": "MiseALaTerre",
     "category": "Divers",
-    "description": "",
+    "description": "Connexion servant de référence électrique commune ou de liaison sécuritaire vers la terre.",
     "bornes": [[0.5, 0.0]]
   }
-
-
 ]
