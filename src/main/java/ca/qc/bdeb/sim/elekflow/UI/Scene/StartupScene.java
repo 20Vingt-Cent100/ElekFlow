@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.*;
@@ -24,13 +25,34 @@ public class StartupScene extends ElekflowScene {
     }
 
     public void populateScene(){
-        AnchorPane sceneLayout = new AnchorPane();
-        HBox options = new HBox();
+        var leftVBox = new VBox();
+        leftVBox.getStyleClass().addAll("left-vbox");
+        var rightVBox = new VBox();
+        rightVBox.getStyleClass().addAll("right-vbox", "center-top");
 
-        AnchorPane.setTopAnchor(options, 450.0); //Y
-        AnchorPane.setLeftAnchor(options, 50.0); //X
+        fillLeftVbox(leftVBox);
+        fillRightVbox(rightVBox);
 
-        options.setSpacing(10);
+        ROOT.setLeft(leftVBox);
+        ROOT.setCenter(rightVBox);
+    }
+
+    private void fillLeftVbox(VBox box){
+        HBox logoArea = new HBox();
+        logoArea.getStyleClass().addAll("center");
+
+        ImageView logo = new ImageView(App.atlas.getIMG("logo"));
+        logo.setPreserveRatio(true);
+        logo.setFitWidth(196.5);
+        logo.setFitHeight(307);
+
+        Label logoTitle = new Label("ElekFlow");
+        logoTitle.getStyleClass().addAll("text-white", "text-big");
+
+        logoArea.getChildren().addAll(logo, logoTitle);
+
+        HBox btnBox = new HBox();
+        btnBox.getStyleClass().addAll("btn-box");
 
         var createNewBtn = new Button("  Créer projet  ");
         var importBtn = new Button("Importer projet");
@@ -42,125 +64,24 @@ public class StartupScene extends ElekflowScene {
 
         createNewBtn.setOnAction(this::createNewProject);
 
-        ImageView image = new ImageView(App.atlas.getIMG("logo"));
-        image.setFitHeight(1228.0/4);
-        image.setFitWidth(786.0/4);
+        btnBox.getChildren().addAll(createNewBtn, importBtn);
 
-        AnchorPane.setTopAnchor(image, 60.0); //Y
-        AnchorPane.setLeftAnchor(image, 50.0); //X
+        box.getChildren().addAll(logoArea, btnBox);
+    }
 
-        Label textLogo = new Label("ElekFlow");
-        textLogo.setId("textLogo");
+    private void fillRightVbox(VBox box){
+        Label recentProjectLabel = new Label("Projets récents");
+        recentProjectLabel.getStyleClass().addAll("text-white", "h2");
 
-        AnchorPane.setTopAnchor(textLogo, 165.0); //Y
-        AnchorPane.setLeftAnchor(textLogo, 180.0); //X
+        VBox recentProjectList = new VBox();
+        recentProjectList.getStyleClass().addAll("liste-projet");
 
-        options.getChildren().addAll(createNewBtn, importBtn);
+        ProjectElement.loadElements(recentProjectList);
 
-        Label texteProjetRecent = new Label("Projets recents");
-        texteProjetRecent.setId("texteProjetsRecents");
+        ScrollPane recentProjectScroll = new ScrollPane(recentProjectList);
+        recentProjectScroll.getStyleClass().addAll("project-scroll");
 
-        AnchorPane.setTopAnchor(texteProjetRecent, 80.0);
-        AnchorPane.setLeftAnchor(texteProjetRecent, 653.0);
-
-        VBox content = new VBox();
-        content.setSpacing(10);
-
-        ScrollPane scroller = new ScrollPane();
-        scroller.setId("scrollPane");
-
-        ProjectElement.loadElements(content);
-
-        HBox projet1 = new HBox();
-        HBox projet2 = new HBox();
-        HBox projet3 = new HBox();
-        HBox projet4 = new HBox();
-        HBox projet5 = new HBox();
-        HBox projet6 = new HBox();
-        HBox projet7 = new HBox();
-        HBox projet8 = new HBox();
-        HBox projet9 = new HBox();
-        HBox projet10 = new HBox();
-
-        ArrayList<HBox> listeProjet = new ArrayList<>();
-
-        listeProjet.add(projet1);
-        listeProjet.add(projet2);
-        listeProjet.add(projet3);
-        listeProjet.add(projet4);
-        listeProjet.add(projet5);
-        listeProjet.add(projet6);
-        listeProjet.add(projet7);
-        listeProjet.add(projet8);
-        listeProjet.add(projet9);
-        listeProjet.add(projet10);
-
-        for(HBox projet : listeProjet){
-
-            projet.setId("HBoxProjet");
-            projet.setPadding(new Insets(10));
-            projet.setSpacing(15);
-
-            Label nomProjet = new Label("Nom du projet");
-            nomProjet.setId("textProjetListe");
-
-            Button optionProjet = new Button();
-            ContextMenu menu = new ContextMenu();
-            menu.setId("menuFenetre");
-
-            MenuItem option1 = new MenuItem("Ouvrir");
-            MenuItem option2 = new MenuItem("Renommer");
-            MenuItem option3 = new MenuItem("Supprimer");
-
-            menu.getItems().addAll(option1, option2, option3);
-
-            optionProjet.setOnAction((e -> {
-
-                menu.show(optionProjet,
-                        optionProjet.localToScreen(0, optionProjet.getHeight()).getX(),
-                        optionProjet.localToScreen(0, optionProjet.getHeight()).getY());
-            }));
-
-            optionProjet.setGraphic(App.atlas.getSVG("Menu"));
-
-            optionProjet.setOnMouseEntered(e -> {
-                optionProjet.setGraphic(App.atlas.getSVG("MenuBleu"));
-
-            });
-
-            optionProjet.setOnMouseExited(e -> {
-                optionProjet.setGraphic(App.atlas.getSVG("Menu"));
-            });
-
-            optionProjet.setAlignment(Pos.CENTER);
-            optionProjet.setId("bouttonMenu");
-
-            Label nomPath = new Label("E:\\ElekFlow\\projets\\ProjectPaths");
-            nomPath.setId("nomPath");
-            nomPath.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
-            nomPath.setPadding(new Insets(5));
-
-            // deux spacers pour centrer le bouton
-            Region spacerLeft = new Region();
-            Region spacerRight = new Region();
-
-            HBox.setHgrow(spacerLeft, Priority.ALWAYS);
-            HBox.setHgrow(spacerRight, Priority.ALWAYS);
-
-            nomPath.setMaxWidth(200);
-
-            projet.getChildren().addAll(nomProjet, spacerLeft, optionProjet, spacerRight, nomPath);
-
-            content.getChildren().add(projet);
-
-        }
-
-        scroller.setContent(content);
-        AnchorPane.setTopAnchor(scroller, 155.0);
-        AnchorPane.setLeftAnchor(scroller, 550.0);
-
-        sceneLayout.getChildren().addAll(options, image, textLogo, scroller, texteProjetRecent);
-        ROOT.getChildren().addAll(sceneLayout);
+        box.getChildren().addAll(recentProjectLabel, recentProjectScroll);
     }
 
     private void importNewProject(ActionEvent actionEvent){

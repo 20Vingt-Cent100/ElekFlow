@@ -97,8 +97,10 @@ public class ZoneSimulation extends Pane {
         var fil = new Line();
         fil.startXProperty().bind(event.getStartXproperty());
         fil.startYProperty().bind(event.getStartYproperty());
+        fil.setEndY(event.getSceneY());
+        fil.setEndX(event.getSceneX());
 
-        simultionGroup.getChildren().add(new Line());
+        simultionGroup.getChildren().add(fil);
     }
 
     private void handleDeleteComponent(ComponentEvent event) {

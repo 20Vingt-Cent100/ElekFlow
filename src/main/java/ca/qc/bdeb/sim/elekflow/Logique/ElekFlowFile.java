@@ -23,7 +23,7 @@ public class ElekFlowFile {
 
     public static void addToRecentProject(Path path){
         try{
-            File projetRecent = new File(projects.getPath() + "ProjectPaths");
+            File projetRecent = new File(projects.getPath() + "/ProjectPaths");
             FileOutputStream writableFile = new FileOutputStream(projetRecent);
 
             writableFile.write(path.getFileName().toString().getBytes());
