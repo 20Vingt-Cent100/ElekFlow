@@ -1,46 +1,36 @@
 package ca.qc.bdeb.sim.elekflow.UI.Events;
 
+import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.VueFil;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventType;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 public class WireEvent extends Event {
     public static EventType<WireEvent> CREATE_WIRE = new EventType<>(Event.ANY, "CREATE_WIRE");
-    public static EventType<WireEvent> MOVE_END_POINT = new EventType<>(Event.ANY, "MOVE_END_POINT");
+    public static EventType<WireEvent> MOUSE_MOVING = new EventType<>(Event.ANY, "MOUSE_MOVING");
+    public static EventType<WireEvent> DELETE_WIRE = new EventType<>(Event.ANY, "DELETE_WIRE");
+    public static EventType<WireEvent> SHOW_NODE = new EventType<>(Event.ANY, "SHOW_NODE");
+    public static EventType<WireEvent> HIDE_NODE = new EventType<>(Event.ANY, "HIDE_NODE");
 
-    private final ObservableValue<Number> startXproperty;
-    private final ObservableValue<Number> startYproperty;
+    private final VueFil fil;
+    private final MouseEvent event;
 
-    private final double sceneX;
-    private final double sceneY;
-
-    public WireEvent(EventType<? extends Event> eventType,
-                     DoubleProperty startXproperty, DoubleProperty startYproperty,
-                     double sceneX, double sceneY
-                     ) {
+    public WireEvent(EventType<? extends Event> eventType, VueFil fil, MouseEvent event) {
         super(eventType);
+        this.fil = fil;
+        this.event = event;
 
-        this.startXproperty = startXproperty;
-        this.startYproperty = startYproperty;
-
-        this.sceneX = sceneX;
-        this.sceneY = sceneY;
     }
 
-    public ObservableValue<Number> getStartXproperty() {
-        return startXproperty;
+
+    public VueFil getFil() {
+        return fil;
     }
 
-    public ObservableValue<Number> getStartYproperty() {
-        return startYproperty;
-    }
-
-    public double getSceneX(){
-        return sceneX;
-    }
-
-    public double getSceneY() {
-        return sceneY;
+    public MouseEvent getEvent() {
+        return event;
     }
 }

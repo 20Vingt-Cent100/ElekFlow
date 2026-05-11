@@ -147,3 +147,18 @@
     -fx-background-color: #031927;
     -fx-max-height: 300px;
 }
+
+.fil{
+    -fx-stroke: red;
+    -fx-stroke-width: 3.5;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: bevel;
+}
+
+.fil:hover{
+    -fx-stroke: orange;
+}
+
+.fil:focused{
+    -fx-stroke: purple;
+}

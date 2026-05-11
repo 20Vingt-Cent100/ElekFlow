@@ -139,7 +139,7 @@
     "cle_svg": "Photodiode",
     "category": "Semi-conducteurs",
     "description": "Diode sensible à la lumière qui convertit l’énergie lumineuse en signal électrique.",
-    "bornes": [[0.0, 0.7], [1.0, 0.7]]
+    "bornes": [[0.0, 0.68], [1.0, 0.68]]
   },
   {
     "nom": "Boutton poussoir",
@@ -168,7 +168,7 @@
     "cle_svg": "Commutateur",
     "category": "Interrupteurs",
     "description": "Dispositif permettant de rediriger le courant électrique entre différentes connexions possibles.",
-    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+    "bornes": [[0.0, 0.5], [1.0, 0.17], [1.0, 0.84]]
   },
 
   {

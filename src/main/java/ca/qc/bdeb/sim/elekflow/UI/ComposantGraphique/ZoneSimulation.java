@@ -64,7 +64,8 @@ public class ZoneSimulation extends Pane {
         setOnKeyPressed(this::handleOnKeyPressed);
         addEventHandler(ComponentEvent.DELETE_COMPONENT, this::handleDeleteComponent);
         addEventHandler(WireEvent.CREATE_WIRE, this::handleCreateWire);
-        addEventHandler(WireEvent.MOVE_END_POINT, this::handleWireMoveEndPoint);
+        addEventHandler(WireEvent.DELETE_WIRE, this::handleDeleteWire);
+        addEventHandler(WireEvent.MOUSE_MOVING, this::handleMouseMoving);
     }
 
     /**
@@ -82,29 +83,20 @@ public class ZoneSimulation extends Pane {
 
     }
 
-    private void handleWireMoveEndPoint(WireEvent event) {
-        var fil = new Line();
-        fil.startXProperty().bind(event.getStartXproperty());
-        fil.startYProperty().bind(event.getStartYproperty());
-
-        fil.setEndX(event.getSceneX());
-        fil.setEndY(event.getSceneY());
-
-        simultionGroup.getChildren().add(new Line());
+    private void handleMouseMoving(WireEvent event) {
+        fireEvent(new WireEvent(WireEvent.SHOW_NODE, null, null));
     }
 
     private void handleCreateWire(WireEvent event) {
-        var fil = new Line();
-        fil.startXProperty().bind(event.getStartXproperty());
-        fil.startYProperty().bind(event.getStartYproperty());
-        fil.setEndY(event.getSceneY());
-        fil.setEndX(event.getSceneX());
-
-        simultionGroup.getChildren().add(fil);
+        simultionGroup.getChildren().add(event.getFil());
     }
 
     private void handleDeleteComponent(ComponentEvent event) {
         this.simultionGroup.getChildren().remove(event.getComposantElectrique());
+    }
+
+    private void handleDeleteWire(WireEvent event) {
+        this.simultionGroup.getChildren().remove(event.getFil());
     }
 
     private void handleOnKeyPressed(KeyEvent keyEvent) {}
