@@ -1,5 +1,7 @@
 package ca.qc.bdeb.sim.elekflow.Logique;
 
-public class Simulation {
+import org.ejml.data.DMatrixRMaj;
 
+public class Simulation {
+    DMatrixRMaj test = new DMatrixRMaj();
 }
