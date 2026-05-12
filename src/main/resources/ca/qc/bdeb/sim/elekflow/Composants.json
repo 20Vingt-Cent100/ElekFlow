@@ -139,7 +139,7 @@
     "cle_svg": "Photodiode",
     "category": "Semi-conducteurs",
     "description": "Diode sensible à la lumière qui convertit l’énergie lumineuse en signal électrique.",
-    "bornes": [[0.0, 0.68], [1.0, 0.68]]
+    "bornes": [[0.0, 0.675], [1.0, 0.675]]
   },
   {
     "nom": "Boutton poussoir",

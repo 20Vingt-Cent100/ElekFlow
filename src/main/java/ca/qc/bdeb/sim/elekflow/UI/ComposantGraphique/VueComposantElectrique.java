@@ -87,6 +87,10 @@ public class VueComposantElectrique extends Region{
                 dernierClick.y = newPosY;
         }
 
+        public ArrayList<VueBorne> getBornes() {
+                return bornes;
+        }
+
         private void setHandles(){
                 setOnMouseDragged(this::handleOnMouseDragged);
                 setOnMouseEntered(this::handleOnMouseEntered);

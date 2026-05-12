@@ -1,20 +1,20 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.shape.Circle;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class VueBorne extends Circle {
-    private static int nodeIndex = 0;
-
     private VueFil vueFil;
-    private final int index;
+    private VueBorne hovered;
 
     public VueBorne(BigDecimal[] coordinate, double[] parentSize){
-        index = nodeIndex ++;
+
         setRadius(4);
         this.setLayoutX(coordinate[0].doubleValue() * parentSize[0]);
         this.setLayoutY(coordinate[1].doubleValue() * parentSize[1]);
@@ -26,8 +26,6 @@ public class VueBorne extends Circle {
     }
 
     public VueBorne(double layoutX, double layoutY){
-        index = nodeIndex ++;
-
         setRadius(4);
         this.setLayoutX(layoutX);
         this.setLayoutY(layoutY);
@@ -77,7 +75,12 @@ public class VueBorne extends Circle {
     }
 
     private void handleOnMouseReleased(MouseEvent event) {
+        if(hovered != null && hovered != this){
+            vueFil.addEndNode(hovered);
+        }
+
         vueFil = null;
+        fireEvent(new WireEvent(WireEvent.HIDE_NODE, null, 0 ,0));
     }
 
     private void handleOnMousePressed(MouseEvent event) {
@@ -86,9 +89,10 @@ public class VueBorne extends Circle {
         if (vueFil == null){
             Point2D center = this.getParent().localToParent(this.localToParent(getCenterX(), getCenterY()));
 
-            vueFil = new VueFil(center.getX(), center.getY(), index, this);
+            vueFil = new VueFil(center.getX(), center.getY(), this);
 
-            fireEvent(new WireEvent(WireEvent.CREATE_WIRE, vueFil, null));
+            fireEvent(new WireEvent(WireEvent.CREATE_WIRE, vueFil, 0, 0));
+            fireEvent(new WireEvent(WireEvent.SHOW_NODE, null, 0, 0));
         }
     }
 
@@ -107,6 +111,22 @@ public class VueBorne extends Circle {
 
     private void handleOnMouseDragged(MouseEvent event) {
         event.consume();
-        vueFil.changeEndPoint(event.getSceneX(), event.getSceneY());
+        //vueFil.changeEndPoint(event.getSceneX(), event.getSceneY());
+
+        double mx = event.getSceneX();
+        double my = event.getSceneY();
+
+        hovered = ((ZoneSimulation)vueFil.getParent().getParent().getParent()).findHoveredNode(mx, my);
+
+        if (hovered != null) {
+            // Snap the visual wire to the EXACT center of the hovered node
+            Point2D snapPt = hovered.localToScene(hovered.getCenterX(), hovered.getCenterY());
+
+            vueFil.changeEndPoint(snapPt.getX(), snapPt.getY());
+        } else {
+            vueFil.changeEndPoint(event.getSceneX(), event.getSceneY());
+        }
     }
+
+
 }

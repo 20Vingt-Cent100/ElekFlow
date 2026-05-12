@@ -4,16 +4,20 @@ import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import org.girod.javafx.svgimage.tosvg.ConverterParameters;
 import org.girod.javafx.svgimage.tosvg.SVGConverter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class ZoneSimulation extends Pane {
@@ -25,6 +29,8 @@ public class ZoneSimulation extends Pane {
     private final SVGConverter converter = new SVGConverter();
 
     private Point2D lastClick;
+
+    private ArrayList<VueBorne> listeBorne = new ArrayList<>();
 
     /**
      * Extension de JavaFX pane qui affiche les composants électriques affichés à l'écran
@@ -65,8 +71,10 @@ public class ZoneSimulation extends Pane {
         addEventHandler(ComponentEvent.DELETE_COMPONENT, this::handleDeleteComponent);
         addEventHandler(WireEvent.CREATE_WIRE, this::handleCreateWire);
         addEventHandler(WireEvent.DELETE_WIRE, this::handleDeleteWire);
-        addEventHandler(WireEvent.MOUSE_MOVING, this::handleMouseMoving);
+        addEventHandler(WireEvent.SHOW_NODE, this::handleShowNode);
+        addEventHandler(WireEvent.HIDE_NODE, this::handleHideNode);
     }
+
 
     /**
      * Export l'ensemble des éléments constituants la zone de simulation vers une fichier svg
@@ -83,8 +91,12 @@ public class ZoneSimulation extends Pane {
 
     }
 
-    private void handleMouseMoving(WireEvent event) {
-        fireEvent(new WireEvent(WireEvent.SHOW_NODE, null, null));
+    private void handleShowNode(WireEvent wireEvent) {
+        listeBorne.forEach(VueBorne::show);
+    }
+
+    private void handleHideNode(WireEvent wireEvent) {
+        listeBorne.forEach(VueBorne::hide);
     }
 
     private void handleCreateWire(WireEvent event) {
@@ -147,5 +159,19 @@ public class ZoneSimulation extends Pane {
         simultionGroup.getChildren().add(composantElectrique);
         composantElectrique.setLayoutX(mousePosition.getX() - composantElectrique.getCenterX());
         composantElectrique.setLayoutY(mousePosition.getY() - composantElectrique.getCenterY());
+
+        listeBorne.addAll(composantElectrique.getBornes());
+    }
+
+    public VueBorne findHoveredNode(double sceneX, double sceneY) {
+        for (VueBorne node : listeBorne) {
+            // Convert the node's bounds to Scene coordinates for a fair comparison
+            Bounds bounds = node.localToScene(node.getBoundsInLocal());
+
+            if (bounds.contains(sceneX, sceneY)) {
+                return node; // We found the node the mouse is over
+            }
+        }
+        return null;
     }
 }

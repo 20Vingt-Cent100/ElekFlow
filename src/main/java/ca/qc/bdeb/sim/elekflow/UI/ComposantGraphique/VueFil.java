@@ -6,40 +6,40 @@ import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Polyline;
 
 import java.util.ArrayList;
 
 
-public class VueFil extends Polyline{
-    private final int nodeIndex;
-
+public class VueFil extends Region{
     private final ArrayList<VueBorne> listBorne;
+    Polyline fil = new Polyline();
 
     private int elbowOrientation;
 
-    public VueFil(double startX, double startY, int nodeIndex, VueBorne borne){
-        this.getStyleClass().addAll("fil", "cursor");
+    public VueFil(double startX, double startY, VueBorne borne){
+        fil.getStyleClass().addAll("fil", "cursor");
         listBorne = new ArrayList<>();
         listBorne.addFirst(borne);
 
         borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) ->{updateInitialPosition();});
 
         this.setFocusTraversable(true);
+        this.setPickOnBounds(false);
 
-        this.nodeIndex = nodeIndex;
-
-        this.getPoints().addAll(startX, startY, startX, startY, startX, startY);
+        fil.getPoints().addAll(startX, startY, startX, startY, startX, startY);
 
         setHandles();
+        this.getChildren().add(fil);
     }
 
     public void changeEndPoint(double endX, double endY) {
         Point2D newEndPoint = getParent().sceneToLocal(endX, endY);
 
-        double startX = this.getPoints().get(0);
-        double startY = this.getPoints().get(1);
+        double startX = fil.getPoints().get(0);
+        double startY = fil.getPoints().get(1);
         double curEndX = newEndPoint.getX();
         double curEndY = newEndPoint.getY();
 
@@ -57,35 +57,57 @@ public class VueFil extends Polyline{
         // 3. Set Points based on the Sticky Priority
         if (elbowOrientation == 0) {
             // Path: Start -> Horizontal Elbow -> End
-            this.getPoints().set(2, targetEndX);
-            this.getPoints().set(3, startY);
+            fil.getPoints().set(2, targetEndX);
+            fil.getPoints().set(3, startY);
         } else {
             // Path: Start -> Vertical Elbow -> End
-            this.getPoints().set(2, startX);
-            this.getPoints().set(3, targetEndY);
+            fil.getPoints().set(2, startX);
+            fil.getPoints().set(3, targetEndY);
         }
 
-        this.getPoints().set(4, targetEndX);
-        this.getPoints().set(5, targetEndY);
+        fil.getPoints().set(4, targetEndX);
+        fil.getPoints().set(5, targetEndY);
     }
 
-    private void updateInitialPosition(){
-        var borne = listBorne.getFirst();
+    private void updateInitialPosition() {
+        Point2D startPos = getGlobalBornePos(listBorne.getFirst());
+        fil.getPoints().set(0, startPos.getX());
+        fil.getPoints().set(1, startPos.getY());
 
-        double centerX = borne.getCenterX();
-        double centerY = borne.getCenterY();
+        syncElbow(); // Call a shared method to fix the middle point
+    }
 
-        Point2D posGlobal = borne.getParent().localToParent(borne.localToParent(centerX, centerY));
+    public void updateEndPosition() {
+        Point2D endPos = getGlobalBornePos(listBorne.getLast());
+        fil.getPoints().set(4, endPos.getX());
+        fil.getPoints().set(5, endPos.getY());
 
-        this.getPoints().set(0, posGlobal.getX());
-        this.getPoints().set(1, posGlobal.getY());
+        syncElbow(); // Call a shared method to fix the middle point
+    }
 
-        if (elbowOrientation != 0){
-            this.getPoints().set(2, posGlobal.getX());
+    private void syncElbow() {
+        // We need both points to define the elbow
+        double startX = fil.getPoints().get(0);
+        double startY = fil.getPoints().get(1);
+        double endX = fil.getPoints().get(4);
+        double endY = fil.getPoints().get(5);
+
+        if (elbowOrientation == 0) {
+            // Mode: Horizontal then Vertical
+            // Elbow X comes from End, Elbow Y comes from Start
+            fil.getPoints().set(2, endX);
+            fil.getPoints().set(3, startY);
+        } else {
+            // Mode: Vertical then Horizontal
+            // Elbow X comes from Start, Elbow Y comes from End
+            fil.getPoints().set(2, startX);
+            fil.getPoints().set(3, endY);
         }
-        else {
-            this.getPoints().set(3, posGlobal.getY());
-        }
+    }
+
+    // Helper to keep code clean
+    private Point2D getGlobalBornePos(VueBorne b) {
+        return b.getParent().localToParent(b.localToParent(b.getCenterX(), b.getCenterY()));
     }
 
     private void setHandles(){
@@ -105,7 +127,7 @@ public class VueFil extends Polyline{
 
     private void handleOnKeyPressed(KeyEvent event) {
         switch (event.getCode()){
-            case DELETE -> fireEvent(new WireEvent(WireEvent.DELETE_WIRE, this, null));
+            case DELETE -> fireEvent(new WireEvent(WireEvent.DELETE_WIRE, this, 0, 0));
         }
     }
 
@@ -116,13 +138,15 @@ public class VueFil extends Polyline{
     }
 
     private void handleOnMouseExited(MouseEvent event) {
-        listBorne.forEach((borne) -> {borne.hide();});
+        listBorne.forEach(VueBorne::hide);
     }
 
     private void handleOnMouseReleased(MouseEvent event) {
     }
 
     private void handleOnMousePressed(MouseEvent event) {
+        this.requestFocus();
+        event.consume();
     }
 
     private void handleOnZoom(ZoomEvent event) {
@@ -137,9 +161,15 @@ public class VueFil extends Polyline{
     }
 
     private void handleOnMouseEntered(MouseEvent event) {
-        listBorne.forEach((borne) -> {borne.show();});
+        listBorne.forEach(VueBorne::show);
     }
 
     private void handleOnMouseDragged(MouseEvent event) {
+    }
+
+    public void addEndNode(VueBorne borne){
+        listBorne.addLast(borne);
+
+        borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> updateEndPosition());
     }
 }
