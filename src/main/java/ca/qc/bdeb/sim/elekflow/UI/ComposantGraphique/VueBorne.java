@@ -76,7 +76,10 @@ public class VueBorne extends Circle {
 
     private void handleOnMouseReleased(MouseEvent event) {
         if(hovered != null && hovered != this){
-            vueFil.addEndNode(hovered);
+            vueFil.addEndNode(hovered, true);
+        }else {
+            Point2D pos = vueFil.getParent().sceneToLocal(event.getSceneX(), event.getSceneY());
+            vueFil.addEndNode(new VueBorne(pos.getX(), pos.getY()), false);
         }
 
         vueFil = null;

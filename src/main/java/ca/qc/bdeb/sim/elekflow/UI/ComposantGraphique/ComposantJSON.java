@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.Logique.ProprieteElectrique;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles;
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
@@ -15,6 +16,7 @@ public class ComposantJSON {
     private final String CATEGORY;
     private final String DESCRIPTION;
     private final BigDecimal[][] BORNES;
+    private final ProprieteElectrique[] PROPRIETES;
 
     public ComposantJSON(JsonObject obj){
         this.NOM = obj.getString(JsonCles.NOM);
@@ -34,6 +36,23 @@ public class ComposantJSON {
             }
         }else{
             BORNES = null;
+        }
+
+
+        JsonArray proprietes = obj.getCollection(JsonCles.PROPRIETES);
+
+        if (proprietes != null){
+
+            PROPRIETES = new ProprieteElectrique[proprietes.size()];
+
+            for (int i = 0; i < proprietes.size(); i++){
+                JsonArray propriete = (JsonArray) proprietes.get(i);
+
+                PROPRIETES[i] = new ProprieteElectrique(propriete.getString(0), propriete.getDouble(1));
+            }
+
+        }else{
+            PROPRIETES = null;
         }
 
         Loggeur.logConsole("The electrical component " + this + " was created", NiveauLog.TOTAL);
@@ -63,5 +82,9 @@ public class ComposantJSON {
 
     public BigDecimal[][] getBORNES() {
         return BORNES;
+    }
+
+    public ProprieteElectrique[] getPROPRIETES() {
+        return PROPRIETES;
     }
 }

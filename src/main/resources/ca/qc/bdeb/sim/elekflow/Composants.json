@@ -33,7 +33,8 @@
     "cle_svg": "Resistance",
     "category": "Passifs",
     "description": "Composante passive qui limite le passage du courant électrique et dissipe une partie de l’énergie sous forme de chaleur.",
-    "bornes": [[0.0, 0.5], [1.0, 0.5]]
+    "bornes": [[0.0, 0.5], [1.0, 0.5]],
+    "proprietes": [["Résistance", 5]]
   },
   {
     "nom": "Inductance",
@@ -154,7 +155,8 @@
     "cle_svg": "InterrupteurSimple",
     "category": "Interrupteurs",
     "description": "Dispositif permettant d’ouvrir ou de fermer manuellement un circuit électrique.",
-    "bornes": [[0.0, 0.69], [1.0, 0.69]]
+    "bornes": [[0.0, 0.69], [1.0, 0.69]],
+    "proprietes": [["Ouvert", 0.0]]
   },
   {
     "nom": "Interrupteur double",

@@ -3,6 +3,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -18,6 +19,7 @@ import org.girod.javafx.svgimage.tosvg.SVGConverter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class ZoneSimulation extends Pane {
@@ -139,7 +141,9 @@ public class ZoneSimulation extends Pane {
         }
     }
 
-    private void handleOnMouseClicked(MouseEvent mouseEvent) {}
+    private void handleOnMouseClicked(MouseEvent mouseEvent) {
+        fireEvent(new ShowInfoEvent(ShowInfoEvent.HIDE_INFO, null, null));
+    }
 
     private void handleOnMouseEntered(MouseEvent mouseEvent) {}
 
@@ -160,7 +164,7 @@ public class ZoneSimulation extends Pane {
         composantElectrique.setLayoutX(mousePosition.getX() - composantElectrique.getCenterX());
         composantElectrique.setLayoutY(mousePosition.getY() - composantElectrique.getCenterY());
 
-        listeBorne.addAll(composantElectrique.getBornes());
+        addBorne(composantElectrique.getBornes());
     }
 
     public VueBorne findHoveredNode(double sceneX, double sceneY) {
@@ -173,5 +177,9 @@ public class ZoneSimulation extends Pane {
             }
         }
         return null;
+    }
+
+    public void addBorne(Collection<VueBorne> bornes){
+        listeBorne.addAll(bornes);
     }
 }

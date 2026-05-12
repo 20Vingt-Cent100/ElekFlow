@@ -21,6 +21,7 @@ public class VueFil extends Region{
 
     public VueFil(double startX, double startY, VueBorne borne){
         fil.getStyleClass().addAll("fil", "cursor");
+        fil.setFill(null);
         listBorne = new ArrayList<>();
         listBorne.addFirst(borne);
 
@@ -165,11 +166,13 @@ public class VueFil extends Region{
     }
 
     private void handleOnMouseDragged(MouseEvent event) {
+        event.consume();
     }
 
-    public void addEndNode(VueBorne borne){
+    public void addEndNode(VueBorne borne, boolean isLinked){
         listBorne.addLast(borne);
 
-        borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> updateEndPosition());
+        if (isLinked) borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> updateEndPosition());
+        else this.getChildren().add(borne);
     }
 }

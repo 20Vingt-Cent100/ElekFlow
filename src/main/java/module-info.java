@@ -5,7 +5,10 @@ module ca.qc.bdeb.sim.elekflow.UI {
     requires json.simple;
     requires javafx.graphics;
     requires java.desktop;
+
     requires ejml.core;
+    requires ejml.simple;
+    requires ejml.ddense;
 
     exports ca.qc.bdeb.sim.elekflow.UI;
     exports ca.qc.bdeb.sim.elekflow.Logique;

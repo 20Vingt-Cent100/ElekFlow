@@ -32,6 +32,8 @@ public class SimulationScene extends ElekflowScene {
         this.addEventHandler(ComponentEvent.PLACED, this::handlePlacedComponent);
         this.addEventHandler(ComponentEvent.DELETE_GHOST_COMPONENT, this::handleDeleteComponent);
         this.addEventHandler(ShowInfoEvent.SHOW_INFO, this::handleShowInfoEvent);
+        this.addEventHandler(ShowInfoEvent.HIDE_INFO, this::handleHideInfoEvent);
+
         this.addEventHandler(ConsoleEvent.OPEN_CONSOLE, this::handleOpenConsole);
         this.addEventHandler(ConsoleEvent.HIDE_CONSOLE, this::handleHideConsole);
         this.addEventHandler(ExportEvent.EXPORT_SVG, this::handleExportSVG);
@@ -67,9 +69,13 @@ public class SimulationScene extends ElekflowScene {
     }
 
     private void handleShowInfoEvent(ShowInfoEvent e) {
-        var infoMenu = new InfoMenu(e.compElecGraph.getNOM());
+        var infoMenu = new InfoMenu(e.compElecGraph);
 
-        OVERLAY_PANE.setRight(infoMenu);
+        ROOT.setRight(infoMenu);
+    }
+
+    private void handleHideInfoEvent(ShowInfoEvent e) {
+        ROOT.setRight(null);
     }
 
     private void handleOpenConsole(ConsoleEvent e) {

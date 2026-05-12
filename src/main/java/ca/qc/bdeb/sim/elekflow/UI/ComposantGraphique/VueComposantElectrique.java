@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class VueComposantElectrique extends Region{
+        boolean isMovable = false;
 
         private final Rotate rotate;
         private final double centerX;
@@ -107,7 +108,16 @@ public class VueComposantElectrique extends Region{
 
         protected void handleOnMouseDragged(MouseEvent e){
                 e.consume();
-                moveComponent(e);
+                Point2D coord = this.getParent().sceneToLocal(e.getSceneX(), e.getSceneY());
+                Point2D center = this.localToParent(getCenterX(), getCenterY());
+
+                if(Math.abs(coord.getX() - center.getX()) > 15 || Math.abs(coord.getY() - center.getY()) > 15){
+                       isMovable = true;
+                }
+
+                if(isMovable){
+                        moveComponent(e);
+                }
         }
 
         protected void handleOnMouseDragReleased(MouseEvent e){
@@ -145,14 +155,14 @@ public class VueComposantElectrique extends Region{
         }
 
         protected void handleOnMouseReleased(MouseEvent e){
-
+                isMovable = false;
         }
 
         protected void handleOnMouseClicked(MouseEvent e){
                 this.requestFocus();
-                fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
-
                 e.consume();
+
+                fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
         }
 
         protected void handleOnKeyPressed(KeyEvent e){
