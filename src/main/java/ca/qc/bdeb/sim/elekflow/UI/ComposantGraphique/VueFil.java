@@ -3,6 +3,8 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
+import ca.qc.bdeb.sim.elekflow.proto.Point;
+import ca.qc.bdeb.sim.elekflow.proto.Wire;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
@@ -12,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class VueFil extends Region{
@@ -19,6 +22,8 @@ public class VueFil extends Region{
     Polyline fil = new Polyline();
 
     private int elbowOrientation;
+
+    private Wire.Builder wire;
 
     public VueFil(double startX, double startY, VueBorne borne){
         this.getStyleClass().add("vue-fil");
@@ -32,6 +37,35 @@ public class VueFil extends Region{
         this.setPickOnBounds(false);
 
         fil.getPoints().addAll(startX, startY, startX, startY, startX, startY);
+
+        fil.setFocusTraversable(true);
+        fil.setPickOnBounds(false);
+        fil.setFill(null);
+
+        setHandles();
+        this.getChildren().add(fil);
+
+
+        this.wire = Wire.newBuilder();
+        this.wire.addPoints(Point.newBuilder().setX(startX).setY(startY).build());
+        this.wire.addPoints(Point.newBuilder().setX(startX).setY(startY).build());
+        this.wire.addPoints(Point.newBuilder().setX(startX).setY(startY).build());
+    }
+
+    public VueFil(Wire.Builder wire){
+        this.wire = wire;
+        listBorne = new ArrayList<>();
+        this.getStyleClass().add("vue-fil");
+        fil.getStyleClass().addAll("fil", "cursor");
+
+        //vueBornes.getFirst().getParent().localToParentTransformProperty().addListener((o, oldV, newV) ->{updateInitialPosition();});
+        this.setFocusTraversable(true);
+        this.setPickOnBounds(false);
+
+        fil.getPoints().setAll(this.wire.getPoints(0).getX(), this.wire.getPoints(0).getY(),
+                this.wire.getPoints(1).getX(), this.wire.getPoints(1).getY(),
+                this.wire.getPoints(2).getX(), this.wire.getPoints(2).getY()
+                );
 
         fil.setFocusTraversable(true);
         fil.setPickOnBounds(false);
@@ -73,6 +107,9 @@ public class VueFil extends Region{
 
         fil.getPoints().set(4, targetEndX);
         fil.getPoints().set(5, targetEndY);
+
+        wire.setPoints(1, Point.newBuilder().setX(fil.getPoints().get(2)).setY(fil.getPoints().get(3)).build());
+        wire.setPoints(2, Point.newBuilder().setX(fil.getPoints().get(4)).setY(fil.getPoints().get(5)).build());
     }
 
     private void updateInitialPosition() {
@@ -80,7 +117,12 @@ public class VueFil extends Region{
         fil.getPoints().set(0, startPos.getX());
         fil.getPoints().set(1, startPos.getY());
 
+        wire.setPoints(0, Point.newBuilder().setX(fil.getPoints().get(0)).setY(fil.getPoints().get(1)).build());
+
+
         syncElbow(); // Call a shared method to fix the middle point
+
+        wire.setPoints(1, Point.newBuilder().setX(fil.getPoints().get(2)).setY(fil.getPoints().get(3)).build());
     }
 
     public void updateEndPosition() {
@@ -88,7 +130,11 @@ public class VueFil extends Region{
         fil.getPoints().set(4, endPos.getX());
         fil.getPoints().set(5, endPos.getY());
 
+        wire.setPoints(2, Point.newBuilder().setX(fil.getPoints().get(4)).setY(fil.getPoints().get(5)).build());
+
         syncElbow(); // Call a shared method to fix the middle point
+
+        wire.setPoints(1, Point.newBuilder().setX(fil.getPoints().get(2)).setY(fil.getPoints().get(3)).build());
     }
 
     private void syncElbow() {
@@ -190,5 +236,9 @@ public class VueFil extends Region{
             borne.addToAll((ZoneSimulation) this.getParent().getParent().getParent());
             borne.toFront();
         }
+    }
+
+    public Wire getWire() {
+        return wire.build();
     }
 }

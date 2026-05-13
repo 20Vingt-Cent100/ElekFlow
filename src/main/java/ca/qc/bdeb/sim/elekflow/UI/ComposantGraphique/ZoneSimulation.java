@@ -195,10 +195,14 @@ public class ZoneSimulation extends Pane {
         circuit.setTranslateY(simultionGroup.getTranslateY());
 
         circuit.clearComponents();
+        circuit.clearWires();
 
         simultionGroup.getChildren().forEach((child)->{
             if(child instanceof VueComposantElectrique vue)
                 circuit.addComponents(vue.getComponent());
+
+            if(child instanceof VueFil wire)
+                circuit.addWires(wire.getWire());
         });
 
         return circuit.build();
@@ -229,6 +233,14 @@ public class ZoneSimulation extends Pane {
                         simultionGroup.getChildren().add(vue);
                     }
             );
+
+            circuit.getWiresList().forEach((wire) ->{
+                var fil = new VueFil(
+                        wire.toBuilder()
+                );
+
+                simultionGroup.getChildren().add(fil);
+            });
         }
     }
 }

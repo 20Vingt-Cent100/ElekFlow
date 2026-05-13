@@ -29,10 +29,12 @@ message Content{
 
 message Circuit{
     repeated Component components = 1;
-    double translate_x = 2;
-    double translate_y = 3;
+    repeated Wire wires = 2;
 
-    double zoom_factor = 4;
+    double translate_x = 3;
+    double translate_y = 4;
+
+    double zoom_factor = 5;
 }
 
 message Component{
@@ -53,6 +55,16 @@ message Borne{
 message Propriete{
     string nom = 1;
     double value = 2;
+}
+
+message Wire{
+    repeated Borne bornes = 1;
+    repeated Point points = 2;;
+}
+
+message Point{
+    double x = 1;
+    double y = 2;
 }
 
 
