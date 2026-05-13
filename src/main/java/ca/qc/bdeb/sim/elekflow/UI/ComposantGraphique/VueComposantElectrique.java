@@ -5,9 +5,7 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
-import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionComposant;
-import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionListe;
-import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.*;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.layout.Region;
@@ -19,6 +17,8 @@ import java.util.ArrayList;
 
 public class VueComposantElectrique extends Region{
         boolean isMovable = false;
+
+        private long clickTime = 0;
 
         private final Rotate rotate;
         private final double centerX;
@@ -33,6 +33,7 @@ public class VueComposantElectrique extends Region{
         private double[] size;
 
         private InteractionComposant interactionComposant;
+        private Behavior behavior;
 
         public VueComposantElectrique(ComposantJSON composantElecGraphique, double posX, double posY){
                 composantElecGraphique.getCLE_SVG().forEach((str)->{
@@ -40,6 +41,7 @@ public class VueComposantElectrique extends Region{
                 });
 
                 interactionComposant = InteractionListe.getInteraction(composantElecGraphique.getCLE_SVG().getFirst());
+                behavior = BehaviorList.getBehavior(composantElecGraphique.getCLE_SVG().getFirst());
 
                 svgComposantTop = listSvgs.getFirst();
                 this.getChildren().addAll(svgComposantTop);
@@ -172,6 +174,7 @@ public class VueComposantElectrique extends Region{
         protected void handleOnMousePressed(MouseEvent e){
                 dernierClick.x = e.getSceneX();
                 dernierClick.y = e.getSceneY();
+                clickTime = System.currentTimeMillis();
 
                 e.consume();
         }
@@ -186,8 +189,8 @@ public class VueComposantElectrique extends Region{
 
                 fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
 
-                if(interactionComposant != null)
-                        interactionComposant.execute(e, this);
+                if(interactionComposant != null && System.currentTimeMillis() - clickTime < 400)
+                        interactionComposant.executeOnClick(e, this);
         }
 
         protected void handleOnKeyPressed(KeyEvent e){
@@ -220,5 +223,17 @@ public class VueComposantElectrique extends Region{
 
         public Point2D getCenter(){
                 return new Point2D(centerX, centerY);
+        }
+
+        public void setCurrent(double newCurrent){
+
+        }
+
+        public double getCurrent(){
+                return 1.0;
+        }
+
+        public void addBornes(){
+                bornes.forEach(VueBorne::addToAll);
         }
 }

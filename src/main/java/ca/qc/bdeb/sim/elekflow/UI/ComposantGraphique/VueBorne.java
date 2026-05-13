@@ -4,6 +4,8 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 
 import java.math.BigDecimal;
@@ -14,14 +16,13 @@ public class VueBorne extends Circle {
     private VueBorne hovered;
 
     public VueBorne(BigDecimal[] coordinate, double[] parentSize){
-
         setRadius(4);
         this.setLayoutX(coordinate[0].doubleValue() * parentSize[0]);
         this.setLayoutY(coordinate[1].doubleValue() * parentSize[1]);
         this.setFocusTraversable(true);
         this.setPickOnBounds(true);
 
-        this.getStyleClass().add("fill");
+        this.getStyleClass().addAll("fill", "cursor");
         setHandles();
     }
 
@@ -32,8 +33,12 @@ public class VueBorne extends Circle {
         this.setFocusTraversable(true);
         this.setPickOnBounds(true);
 
-        this.getStyleClass().add("fill");
+        this.getStyleClass().addAll("fill", "cursor");
         setHandles();
+    }
+
+    public void addToAll(){
+        ((ZoneSimulation)((BorderPane)((StackPane)this.getScene().getRoot()).getChildren().getFirst()).getCenter()).addBorne(this);
     }
 
     public void hide(){

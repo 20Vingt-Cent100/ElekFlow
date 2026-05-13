@@ -171,8 +171,6 @@ public class BoutonComposant extends Button {
 
     protected void handleOnMouseReleased(MouseEvent event) {
 
-        if (vueCreer == null) return;
-
         if (this.getParent().getParent().contains(
                 vueCreer.getTranslateX() + vueCreer.getCenterX(),
                 vueCreer.getTranslateY() + vueCreer.getCenterY()

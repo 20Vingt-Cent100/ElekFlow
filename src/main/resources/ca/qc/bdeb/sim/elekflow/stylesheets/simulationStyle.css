@@ -1,6 +1,14 @@
 /*Root and variables used througout the code*/
 .root{
     -fx-background-color: white;
+    /*default-color: #08141f;
+    hover-color: #0D1F31;
+    focus-color: #021425;*/
+
+    default-color: #08141f;
+    hover-color: #0D1F31;
+    focus-color: #021425;
+
 }
 
 /*Search Bar CSS*/
@@ -120,27 +128,27 @@
 }
 
 .vue-composant *{
-    -fx-stroke: red;
+    -fx-stroke: default-color;
 }
 
 .vue-composant .fill{
-    -fx-fill: red;
+    -fx-fill: default-color;
 }
 
 .vue-composant:hover .fill{
-    -fx-fill: orange;
+    -fx-fill: hover-color;
 }
 
 .vue-composant:hover *{
-    -fx-stroke: orange;
+    -fx-stroke: hover-color;
 }
 
 .vue-composant:focused *{
-    -fx-stroke: purple;
+    -fx-stroke: focus-color;
 }
 
 .vue-composant:focused .fill{
-    -fx-fill: purple;
+    -fx-fill: focus-color;
 }
 
 .console{
@@ -149,16 +157,28 @@
 }
 
 .fil{
-    -fx-stroke: red;
+    -fx-stroke: default-color;
     -fx-stroke-width: 3.5;
     -fx-stroke-line-cap: round;
     -fx-stroke-line-join: bevel;
 }
 
 .fil:hover{
-    -fx-stroke: orange;
+    -fx-stroke: hover-color;
 }
 
 .fil:focused{
-    -fx-stroke: purple;
+    -fx-stroke: focus-color;
+}
+
+.vue-fil .fill{
+   -fx-fill: default-color;
+}
+
+.vue-fil:hover .fill{
+   -fx-fill: hover-color;
+}
+
+.vue-fil:focused .fill{
+   -fx-fill: focus-color;
 }

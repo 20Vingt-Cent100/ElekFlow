@@ -8,6 +8,7 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ConsoleEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.BehaviorList;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionListe;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.VueComposantElectrique;
@@ -27,6 +28,7 @@ public class SimulationScene extends ElekflowScene {
         this.file = file;
 
         InteractionListe.loadListe();
+        BehaviorList.loadBehaviors();
         loadSimulation();
 
         this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);
@@ -59,11 +61,11 @@ public class SimulationScene extends ElekflowScene {
     private void handlePlacedComponent(ComponentEvent e) {
         OVERLAY_PANE.getChildren().remove(e.getComposantElectrique());
         zoneSimulation.addComponent(e.getComposantElectrique(), e.getMouseEvent());
+        e.getComposantElectrique().addBornes();
     }
 
     private void handleMoveComponent(ComponentEvent e) {
-        ((VueComposantElectrique) OVERLAY_PANE.getChildren().get(OVERLAY_PANE.getChildren().indexOf(e.getComposantElectrique())))
-                .moveOnDrag(e.getMouseEvent());
+        e.getComposantElectrique().moveOnDrag(e.getMouseEvent());
     }
 
     private void handleDeleteComponent(ComponentEvent e) {
