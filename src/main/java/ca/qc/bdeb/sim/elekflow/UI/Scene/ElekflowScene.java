@@ -33,6 +33,8 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
         addStyleSheet(App.atlas.getStylesheet("styleSystem"));
 
         populateScene();
+
+
     }
 
 
