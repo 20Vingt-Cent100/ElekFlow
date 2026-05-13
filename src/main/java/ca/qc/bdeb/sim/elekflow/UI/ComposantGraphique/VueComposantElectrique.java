@@ -5,11 +5,14 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionComposant;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionListe;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.layout.Region;
 import javafx.scene.transform.Rotate;
+import org.girod.javafx.svgimage.SVGImage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,19 +27,29 @@ public class VueComposantElectrique extends Region{
         private ArrayList<VueBorne> bornes = new ArrayList<>();
 
         private final ComposantJSON composantElecGraphique;
+        private SVGImage svgComposantTop;
+        private ArrayList<SVGImage> listSvgs = new ArrayList<>();
 
-        private final double[] size;
+        private double[] size;
+
+        private InteractionComposant interactionComposant;
 
         public VueComposantElectrique(ComposantJSON composantElecGraphique, double posX, double posY){
-                var svg = App.atlas.getSVG(composantElecGraphique.getCLE_SVG());
-                this.getChildren().addAll(svg);
+                composantElecGraphique.getCLE_SVG().forEach((str)->{
+                        listSvgs.add(App.atlas.getSVG(str));
+                });
+
+                interactionComposant = InteractionListe.getInteraction(composantElecGraphique.getCLE_SVG().getFirst());
+
+                svgComposantTop = listSvgs.getFirst();
+                this.getChildren().addAll(svgComposantTop);
                 this.setLayoutX(posX);
                 this.setLayoutY(posY);
                 this.setHandles();
                 this.setSnapToPixel(true);
                 this.setFocusTraversable(true);
 
-                size = new double[]{svg.getWidth(), svg.getHeight()};
+                calculateSize();
 
                 if(composantElecGraphique.getBORNES() != null){
                     BigDecimal[][] listBorne = composantElecGraphique.getBORNES();
@@ -61,6 +74,15 @@ public class VueComposantElectrique extends Region{
                 this.getTransforms().add(rotate);
 
                 this.getStyleClass().addAll("vue-composant", "cursor");
+        }
+
+        private void calculateSize(){
+                size = new double[]{svgComposantTop.getWidth(), svgComposantTop.getHeight()};
+        }
+
+        public void changeSVG(){
+                int index = listSvgs.indexOf(svgComposantTop);
+                svgComposantTop = listSvgs.get(index + 1 >= listSvgs.size() ? 0 : index + 1);
         }
 
         public void moveOnDrag(MouseEvent e){
@@ -163,6 +185,9 @@ public class VueComposantElectrique extends Region{
                 e.consume();
 
                 fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
+
+                if(interactionComposant != null)
+                        interactionComposant.execute(e, this);
         }
 
         protected void handleOnKeyPressed(KeyEvent e){
@@ -179,6 +204,10 @@ public class VueComposantElectrique extends Region{
 
         public String getComposantNom(){
                 return composantElecGraphique.getNOM();
+        }
+
+        public ComposantJSON getComposantElecGraphique() {
+                return composantElecGraphique;
         }
 
         public double getCenterX() {

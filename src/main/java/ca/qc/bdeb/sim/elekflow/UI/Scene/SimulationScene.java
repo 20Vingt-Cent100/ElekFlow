@@ -8,6 +8,7 @@ import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ConsoleEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionListe;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.VueComposantElectrique;
 
@@ -25,6 +26,7 @@ public class SimulationScene extends ElekflowScene {
 
         this.file = file;
 
+        InteractionListe.loadListe();
         loadSimulation();
 
         this.addEventHandler(ComponentEvent.CREATE_NEW_COMPONENT, this::handleCreateNewComponent);

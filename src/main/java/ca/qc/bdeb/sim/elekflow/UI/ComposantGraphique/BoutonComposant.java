@@ -35,7 +35,7 @@ public class BoutonComposant extends Button {
                 "grow-animation"
         );
 
-        SVGImage svg = App.atlas.getSVG(compElec.getCLE_SVG());
+        SVGImage svg = App.atlas.getSVG(compElec.getCLE_SVG().getFirst());
         svg.getStyleClass().add("light-color");
 
         this.setGraphic(svg);

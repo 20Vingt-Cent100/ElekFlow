@@ -5,6 +5,7 @@ module ca.qc.bdeb.sim.elekflow.UI {
     requires json.simple;
     requires javafx.graphics;
     requires java.desktop;
+    requires javafx.media;
 
     requires ejml.core;
     requires ejml.simple;

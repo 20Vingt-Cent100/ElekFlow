@@ -9,10 +9,11 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 import javafx.scene.layout.Pane;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class ComposantJSON {
     private final String NOM;
-    private final String CLE_SVG;
+    private final ArrayList<String> CLE_SVG = new ArrayList<>();
     private final String CATEGORY;
     private final String DESCRIPTION;
     private final BigDecimal[][] BORNES;
@@ -20,7 +21,15 @@ public class ComposantJSON {
 
     public ComposantJSON(JsonObject obj){
         this.NOM = obj.getString(JsonCles.NOM);
-        this.CLE_SVG = obj.getString(JsonCles.CLE_SVG);
+
+
+        var svg = ((JsonArray)obj.getCollection(JsonCles.CLE_SVG));
+
+        for (int i = 0; i < svg.size(); i++) {
+            CLE_SVG.add(svg.getString(i));
+        }
+
+
         this.CATEGORY = obj.getString(JsonCles.CATEGORIES);
         this.DESCRIPTION = obj.getString(JsonCles.DESCRIPTION);
 
@@ -64,7 +73,7 @@ public class ComposantJSON {
                 NOM, CLE_SVG, CATEGORY, DESCRIPTION);
     }
 
-    public String getCLE_SVG() {
+    public ArrayList<String> getCLE_SVG() {
         return CLE_SVG;
     }
 

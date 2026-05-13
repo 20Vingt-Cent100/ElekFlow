@@ -33,7 +33,7 @@ application {
 
 javafx {
     version = '21'
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', "javafx.media"]
 }
 
 dependencies {
@@ -45,6 +45,8 @@ dependencies {
     implementation 'org.ejml:ejml-core:0.44.0'
     implementation 'org.ejml:ejml-ddense:0.44.0'
     implementation 'org.ejml:ejml-dsparse:0.44.0'
+
+    //implementation 'org.openjfx:javafx-media:21.0.2'
 
     implementation 'com.google.protobuf:protobuf-java:4.28.2'
 

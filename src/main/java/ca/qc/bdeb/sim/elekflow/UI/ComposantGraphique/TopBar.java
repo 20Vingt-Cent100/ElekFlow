@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 public class TopBar extends HBox {
+    private static double son = 1.0;
     private boolean consoleActivated = false;
 
     public TopBar(){
@@ -52,7 +53,10 @@ public class TopBar extends HBox {
         var close = new MenuItem("Close");
         close.setOnAction(this::handleClose);
 
+        var son = new MenuItem("son");
+
         fichier.getItems().addAll(save, saveAs, importF, export, exportAsSvg, close);
+        parametres.getItems().add(son);
 
         this.getChildren().add(menuBar);
     }
