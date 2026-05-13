@@ -8,6 +8,7 @@ import com.github.cliftonlabs.json_simple.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.FileReader;
@@ -75,6 +76,7 @@ public class MenuComposant extends VBox {
         this.addEventHandler(SearchEvent.SEARCH_ENGAGED, this::handleSearchEngaged);
         this.addEventHandler(SearchEvent.SEARCH_CANCELED, this::handleSearchCanceled);
         this.addEventHandler(ComponentEvent.SHOW_DESCRIPTION, this::handleShowDescription);
+        this.setOnMouseClicked(this::handleOnMouseClick);
 
     }
 
@@ -152,5 +154,9 @@ public class MenuComposant extends VBox {
         }catch (JsonException | NullPointerException | IOException ex){
             Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
         }
+    }
+
+    private void handleOnMouseClick(MouseEvent event){
+        event.consume();
     }
 }

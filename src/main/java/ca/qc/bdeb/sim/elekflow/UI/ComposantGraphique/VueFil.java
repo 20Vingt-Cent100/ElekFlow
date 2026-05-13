@@ -8,6 +8,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ public class VueFil extends Region{
     private int elbowOrientation;
 
     public VueFil(double startX, double startY, VueBorne borne){
+        this.getStyleClass().add("vue-fil");
         fil.getStyleClass().addAll("fil", "cursor");
-        fil.setFill(null);
         listBorne = new ArrayList<>();
         listBorne.addFirst(borne);
 
@@ -31,6 +32,9 @@ public class VueFil extends Region{
         this.setPickOnBounds(false);
 
         fil.getPoints().addAll(startX, startY, startX, startY, startX, startY);
+
+        fil.setFocusTraversable(true);
+        fil.setPickOnBounds(false);
 
         setHandles();
         this.getChildren().add(fil);
@@ -173,6 +177,10 @@ public class VueFil extends Region{
         listBorne.addLast(borne);
 
         if (isLinked) borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> updateEndPosition());
-        else this.getChildren().add(borne);
+        else{
+            this.getChildren().add(borne);
+            borne.addToAll();
+            borne.toFront();
+        }
     }
 }

@@ -42,16 +42,18 @@ public class ElekFlowFile {
     public static HashMap<String, Path> loadRecentProjetsList(){
         HashMap<String, Path> recentProjectsPaths = new HashMap<>();
 
-        for (String str : projects.list()){
-            if(!str.endsWith(".elk")){
-                continue;
-            }
+        if(projects.list() != null) {
+            for (String str : projects.list()) {
+                if (!str.endsWith(".elk")) {
+                    continue;
+                }
 
-            recentProjectsPaths.put(str.substring(0, str.length()-4), Path.of(projects.getAbsolutePath() + "/" + str));
-            Loggeur.logConsole(str + " was put in recent project hash", NiveauLog.TOTAL);
+                recentProjectsPaths.put(str.substring(0, str.length() - 4), Path.of(projects.getAbsolutePath() + "/" + str));
+                Loggeur.logConsole(str + " was put in recent project hash", NiveauLog.TOTAL);
+            }
         }
 
-        return recentProjectsPaths;
+            return recentProjectsPaths;
     }
 
 

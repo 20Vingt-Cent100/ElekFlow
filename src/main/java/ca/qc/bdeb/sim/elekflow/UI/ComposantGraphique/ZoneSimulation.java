@@ -30,7 +30,7 @@ public class ZoneSimulation extends Pane {
 
     private final SVGConverter converter = new SVGConverter();
 
-    private Point2D lastClick;
+    private Point2D lastClick = new Point2D(0,0);
 
     private ArrayList<VueBorne> listeBorne = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class ZoneSimulation extends Pane {
 
     public void exportToSVG(File file) {
         try {
-            converter.convert(pane, file.toURI().toURL());
+            converter.convert(this, file.toURI().toURL());
             Loggeur.logConsole("Svg exporter", NiveauLog.TOTAL);
         } catch (IOException e) {
             Loggeur.logConsole(e.getMessage(), NiveauLog.ERREUR);
@@ -163,8 +163,6 @@ public class ZoneSimulation extends Pane {
         simultionGroup.getChildren().add(composantElectrique);
         composantElectrique.setLayoutX(mousePosition.getX() - composantElectrique.getCenterX());
         composantElectrique.setLayoutY(mousePosition.getY() - composantElectrique.getCenterY());
-
-        addBorne(composantElectrique.getBornes());
     }
 
     public VueBorne findHoveredNode(double sceneX, double sceneY) {
@@ -179,7 +177,7 @@ public class ZoneSimulation extends Pane {
         return null;
     }
 
-    public void addBorne(Collection<VueBorne> bornes){
-        listeBorne.addAll(bornes);
+    public void addBorne(VueBorne bornes){
+        listeBorne.add(bornes);
     }
 }
