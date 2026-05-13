@@ -98,15 +98,16 @@ public class BoutonComposant extends Button {
 
         Tooltip tt = new Tooltip();
         tt.setGraphic(content);
+        tt.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-insets: 0;" +
+                        "-fx-padding: 0;"
+        );
+
 
         tt.setShowDelay(Duration.millis(150));
         tt.setHideDelay(Duration.millis(80));
         tt.setShowDuration(Duration.INDEFINITE);
-
-        tt.setStyle("""
-            -fx-background-color: transparent;
-            -fx-padding: 0;
-        """);
 
         return tt;
     }
