@@ -1,58 +1,162 @@
 package ca.qc.bdeb.sim.elekflow.Logique;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 
 public class ElekFlowFile {
-    private final static File projects = new File("./projets");
 
-    public static boolean createNewFile(String fileName, Path path){
-        File projectFile = new File(path.toAbsolutePath() + "/" + fileName + ".elk");
+    private static final File projects = new File("./projets");
+
+    // Création automatique du dossier projets
+    static {
+        if (!projects.exists()) {
+
+            boolean created = projects.mkdirs();
+
+            if (created) {
+                Loggeur.logConsole(
+                        "Le dossier projets a été créé",
+                        NiveauLog.TOTAL
+                );
+            } else {
+                Loggeur.logConsole(
+                        "Impossible de créer le dossier projets",
+                        NiveauLog.ERREUR
+                );
+            }
+        }
+    }
+
+    public static boolean createNewFile(String fileName, Path path) {
+
+        File projectFile = new File(
+                path.toAbsolutePath() + "/" + fileName + ".elk"
+        );
 
         try {
 
-            projectFile.createNewFile();
+            boolean created = projectFile.createNewFile();
+
+            if (!created) {
+                Loggeur.logConsole(
+                        "Le fichier existe déjà",
+                        NiveauLog.ERREUR
+                );
+
+                return false;
+            }
+
             addToRecentProject(projectFile.toPath());
+
             return true;
 
-        }catch (IOException ex){
-            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+        } catch (IOException ex) {
+
+            Loggeur.logConsole(
+                    ex.getMessage(),
+                    NiveauLog.ERREUR
+            );
+
             return false;
         }
-
     }
 
-    public static void addToRecentProject(Path path){
-        try{
-            File projetRecent = new File(projects.getPath() + "/ProjectPaths");
-            FileOutputStream writableFile = new FileOutputStream(projetRecent);
+    public static void addToRecentProject(Path path) {
 
-            writableFile.write(path.getFileName().toString().getBytes());
+        try {
+
+            // Vérifie encore que le dossier existe
+            if (!projects.exists()) {
+                projects.mkdirs();
+            }
+
+            File projetRecent = new File(
+                    projects.getPath() + "/ProjectPaths"
+            );
+
+            FileOutputStream writableFile =
+                    new FileOutputStream(projetRecent);
+
+            writableFile.write(
+                    path.getFileName().toString().getBytes()
+            );
+
             writableFile.write("\n".getBytes());
-            writableFile.write(path.toAbsolutePath().toString().getBytes());
+
+            writableFile.write(
+                    path.toAbsolutePath().toString().getBytes()
+            );
 
             writableFile.close();
 
-        }catch (NullPointerException | IOException ex){
-            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+            Loggeur.logConsole(
+                    "Projet récent sauvegardé",
+                    NiveauLog.TOTAL
+            );
+
+        } catch (IOException ex) {
+
+            Loggeur.logConsole(
+                    ex.getMessage(),
+                    NiveauLog.ERREUR
+            );
         }
     }
 
-    public static HashMap<String, Path> loadRecentProjetsList(){
-        HashMap<String, Path> recentProjectsPaths = new HashMap<>();
+    public static HashMap<String, Path> loadRecentProjetsList() {
 
-        for (String str : projects.list()){
-            if(!str.endsWith(".elk")){
+        HashMap<String, Path> recentProjectsPaths =
+                new HashMap<>();
+
+        // Sécurise le dossier
+        if (!projects.exists()) {
+
+            boolean created = projects.mkdirs();
+
+            if (!created) {
+
+                Loggeur.logConsole(
+                        "Impossible d'accéder au dossier projets",
+                        NiveauLog.ERREUR
+                );
+
+                return recentProjectsPaths;
+            }
+        }
+
+        String[] files = projects.list();
+
+        // Empêche le NullPointerException
+        if (files == null) {
+
+            Loggeur.logConsole(
+                    "Le dossier projets est vide ou inaccessible",
+                    NiveauLog.ERREUR
+            );
+
+            return recentProjectsPaths;
+        }
+
+        for (String str : files) {
+
+            if (!str.endsWith(".elk")) {
                 continue;
             }
 
-            recentProjectsPaths.put(str.substring(0, str.length()-4), Path.of(projects.getAbsolutePath() + "/" + str));
-            Loggeur.logConsole(str + " was put in recent project hash", NiveauLog.TOTAL);
+            recentProjectsPaths.put(
+                    str.substring(0, str.length() - 4),
+                    Path.of(projects.getAbsolutePath() + "/" + str)
+            );
+
+            Loggeur.logConsole(
+                    str + " was put in recent project hash",
+                    NiveauLog.TOTAL
+            );
         }
 
         return recentProjectsPaths;
     }
-
-
 }
