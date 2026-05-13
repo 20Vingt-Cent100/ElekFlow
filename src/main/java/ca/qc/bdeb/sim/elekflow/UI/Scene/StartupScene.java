@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.ProjectElement;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
@@ -60,7 +61,9 @@ public class StartupScene extends ElekflowScene {
 
         btnBox.getChildren().addAll(createNewBtn, importBtn);
 
-        var githubLogo = App.atlas.getSVG("githubLogo", 0.3);
+        var githubLogo = App.atlas.getSVG("githubLogo");
+        githubLogo.scale(0.1);
+
         githubLogo.getStyleClass().addAll("cursor", "github-logo");
         githubLogo.setPickOnBounds(true);
         githubLogo.setOnMouseClicked((e) ->{
@@ -106,15 +109,31 @@ public class StartupScene extends ElekflowScene {
     }
 
     public void openFile(File file){
-        App.addStage(
-                ElekFlowStage.createStage("Elekflow: " + file.getName().replace(".elk", ""), App.atlas.getIMG("LogoDark"), true, true),
-                ElekFlowStage.SIMULATION,
-                false
-        );
+        ElekFlowFile elekFlowFile = ElekFlowFile.loadElekFlowFile(file);
 
-        App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, file), ElekFlowStage.SIMULATION);
-        App.getStage(ElekFlowStage.SIMULATION).setShow(true);
-        App.removeStage(ElekFlowStage.STARTUP_SCREEN);
+        if(elekFlowFile != null) {
+            App.addStage(
+                    ElekFlowStage.createStage("Elekflow: " + file.getName().replace(".elk", ""), App.atlas.getIMG("LogoDark"), true, true),
+                    ElekFlowStage.SIMULATION,
+                    false
+            );
+
+            App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, elekFlowFile), ElekFlowStage.SIMULATION);
+            App.getStage(ElekFlowStage.SIMULATION).setShow(true);
+            App.removeStage(ElekFlowStage.STARTUP_SCREEN);
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de chargement de fichier");
+            alert.setHeaderText(file.getName() + "  est corrompu");
+
+            alert.setWidth(100);
+            alert.setHeight(30);
+
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+        }
+
+
     }
 
 }

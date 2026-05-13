@@ -3,42 +3,56 @@ syntax = "proto3";
 package ca.qc.bdeb.sim.elekflow.proto;
 option java_multiple_files = true;
 
-message Circuit {
+message Elk{
+    MetaData meta_data = 1;
+    Content content = 2;
+}
+
+message MetaData{
+    uint64 magic_number = 1;
+    uint32 app_version = 2;
+    string project_name = 3;
+    Date last_modified = 4;
+}
+
+message Date{
+    uint32 hour = 4;
+    uint32 minute = 5;
+    uint32 day = 1;
+    uint32 month = 2;
+    uint32 year = 3;
+}
+
+message Content{
+    Circuit circuit = 1;
+}
+
+message Circuit{
     repeated Component components = 1;
-    repeated Node nodes = 2;
-    repeated Wire wires = 3;
+    double translate_x = 2;
+    double translate_y = 3;
+
+    double zoom_factor = 4;
 }
 
-message Component {
-    string id = 1;
-    string type = 2; // e.g., "RESISTOR", "CAPACITOR"
-    double value = 3;
-    double x = 4;
-    double y = 5;
-    double rotation = 6;
+message Component{
+    double layout_x = 1;
+    double layout_y = 2;
+    double rotation = 3;
+
+    string key = 4;
+
+    repeated Borne bornes = 5;
 }
 
-message Node {
-    int32 id = 1; // This matches your MNA matrix index (Row/Col)
-    double x = 2; // Visual position of the junction dot
-    double y = 3;
-    repeated Connection connections = 4;
+message Borne{
+    double layout_x = 1;
+    double layout_y = 2;
 }
 
-message Connection {
-    string component_id = 1;
-    int32 pin_index = 2;
+message Propriete{
+    string nom = 1;
+    double value = 2;
 }
 
-message Wire {
-    string from_component_id = 1;
-    int32 from_pin = 2;
-    string to_component_id = 3;
-    int32 to_pin = 4;
-    repeated Point points = 5; // The "elbow" points of your Polyline
-}
 
-message Point {
-    double x = 1;
-    double y = 2;
-}

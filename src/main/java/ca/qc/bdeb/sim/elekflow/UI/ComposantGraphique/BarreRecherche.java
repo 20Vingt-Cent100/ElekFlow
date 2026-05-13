@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 public class BarreRecherche extends HBox {
-    private TextField rechercheText = new TextField();
+    private final TextField rechercheText = new TextField();
 
     /**
      * Barre de recherche

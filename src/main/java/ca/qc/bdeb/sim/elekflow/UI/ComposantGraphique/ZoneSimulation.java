@@ -5,6 +5,10 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
+import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
+import ca.qc.bdeb.sim.elekflow.proto.Circuit;
+import ca.qc.bdeb.sim.elekflow.proto.Component;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -24,6 +28,8 @@ import java.util.Collection;
 
 public class ZoneSimulation extends Pane {
 
+    private Circuit.Builder circuit;
+
     private final Group simultionGroup = new Group();
 
     private final Pane pane = new Pane();
@@ -32,13 +38,14 @@ public class ZoneSimulation extends Pane {
 
     private Point2D lastClick = new Point2D(0,0);
 
-    private ArrayList<VueBorne> listeBorne = new ArrayList<>();
+    private final ArrayList<VueBorne> listeBorne = new ArrayList<>();
 
     /**
      * Extension de JavaFX pane qui affiche les composants électriques affichés à l'écran
      */
 
     public ZoneSimulation() {
+        circuit = Circuit.newBuilder();
         this.getChildren().add(pane);
         pane.getChildren().add(simultionGroup);
 
@@ -179,5 +186,49 @@ public class ZoneSimulation extends Pane {
 
     public void addBorne(VueBorne bornes){
         listeBorne.add(bornes);
+    }
+
+
+    public Circuit getCircuit(){
+        circuit.setZoomFactor(pane.getScaleX());
+        circuit.setTranslateX(simultionGroup.getTranslateX());
+        circuit.setTranslateY(simultionGroup.getTranslateY());
+
+        circuit.clearComponents();
+
+        simultionGroup.getChildren().forEach((child)->{
+            if(child instanceof VueComposantElectrique vue)
+                circuit.addComponents(vue.getComponent());
+        });
+
+        return circuit.build();
+    }
+
+    public void setCircuit(Circuit.Builder circuit) {
+        if (!circuit.getComponentsList().isEmpty()) {
+            this.circuit = circuit;
+            pane.setScaleX(circuit.getZoomFactor());
+            pane.setScaleY(circuit.getZoomFactor());
+
+            simultionGroup.setTranslateX(circuit.getTranslateX());
+            simultionGroup.setTranslateY(circuit.getTranslateY());
+
+            circuit.getComponentsList().forEach(
+                    (comp) ->
+                    {
+                        var vue = new VueComposantElectrique(
+                                ((SimulationScene) this.getScene()).getComposantJson(comp.getKey()),
+                                comp.getLayoutX(),
+                                comp.getLayoutY(),
+                                comp.getRotation(),
+                                comp.toBuilder()
+                        );
+
+                        vue.addBornes(this);
+
+                        simultionGroup.getChildren().add(vue);
+                    }
+            );
+        }
     }
 }

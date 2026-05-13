@@ -21,8 +21,8 @@ import java.util.regex.Pattern;
 import static ca.qc.bdeb.sim.elekflow.UI.Utils.JsonCles.*;
 
 public class MenuComposant extends VBox {
-    private HashMap<String, ComposantJSON> COMPOSANTS_ELECTRIQUES = new HashMap<>();
-    private HashSet<String> categoriesSet = new HashSet<>();
+    private final HashMap<String, ComposantJSON> COMPOSANTS_ELECTRIQUES = new HashMap<>();
+    private final HashSet<String> categoriesSet = new HashSet<>();
 
     private final ArrayList<String> COMPOSANT_NOM = new ArrayList<>();
 
@@ -158,5 +158,9 @@ public class MenuComposant extends VBox {
 
     private void handleOnMouseClick(MouseEvent event){
         event.consume();
+    }
+
+    public ComposantJSON getComposantJson(String key){
+        return COMPOSANTS_ELECTRIQUES.get(key);
     }
 }

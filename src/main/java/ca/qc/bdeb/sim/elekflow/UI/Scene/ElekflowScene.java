@@ -1,13 +1,16 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
 import ca.qc.bdeb.sim.elekflow.UI.App;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.OnStageClose;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public abstract class ElekflowScene extends javafx.scene.Scene {
-    private WindowMode mode;
+
+    private OnStageClose onStageClose;
+    private final WindowMode mode;
     protected final StackPane STACK_PANE;
     protected final BorderPane ROOT = new BorderPane();
     protected final BorderPane OVERLAY_PANE = new BorderPane();
@@ -17,7 +20,8 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
 
         STACK_PANE = (StackPane) getRoot();
 
-        OVERLAY_PANE.setMouseTransparent(true);
+        OVERLAY_PANE.setMouseTransparent(false);
+        OVERLAY_PANE.setFocusTraversable(true);
         OVERLAY_PANE.setPickOnBounds(false);
 
         STACK_PANE.getChildren().addAll(ROOT, OVERLAY_PANE);
@@ -46,5 +50,14 @@ public abstract class ElekflowScene extends javafx.scene.Scene {
 
     public WindowMode getMode(){
         return mode;
+    }
+
+    protected void setOnStageClose(OnStageClose onStageClose){
+        this.onStageClose = onStageClose;
+    }
+
+    public void executeOnStageClose(){
+        if (onStageClose != null)
+            onStageClose.execute();
     }
 }

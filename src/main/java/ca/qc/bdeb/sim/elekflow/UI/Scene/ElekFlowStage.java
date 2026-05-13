@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
@@ -15,6 +16,8 @@ public class ElekFlowStage extends Stage {
     public static String SIMULATION = "Simulation";
     public static String STARTUP_SCREEN = "StartupStage";
     public static String CREATE_NEW_PROJECT = "CreateProjectStage";
+
+    private ElekFlowStage(){}
 
     public static ElekFlowStage createStage(String title, Image icon, boolean closeAllOnExit, boolean isRezisable){
         var stage = new ElekFlowStage();
@@ -33,9 +36,14 @@ public class ElekFlowStage extends Stage {
     }
 
     protected void handleOnCloseRequest(WindowEvent event){
-        Loggeur.logConsole("ElekFlow requested EXIT", NiveauLog.TOTAL);
+        handleExit();
         Platform.exit();
         System.exit(0);
+    }
+
+    public void handleExit(){
+        ((ElekflowScene)this.getScene()).executeOnStageClose();
+        Loggeur.logConsole("ElekFlow requested EXIT", NiveauLog.TOTAL);
     }
 
     public void setShow(boolean show){

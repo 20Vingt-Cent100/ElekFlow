@@ -39,12 +39,13 @@ javafx {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    implementation('com.github.hervegirod:fxsvgimage:1.7')
+    implementation('com.github.hervegirod:fxsvgimage:1.7.1')
     implementation('com.github.cliftonlabs:json-simple:4.0.1')
 
     implementation 'org.ejml:ejml-core:0.44.0'
     implementation 'org.ejml:ejml-ddense:0.44.0'
     implementation 'org.ejml:ejml-dsparse:0.44.0'
+    implementation 'com.google.protobuf:protobuf-java-util:3.25.1'
 
     //implementation 'org.openjfx:javafx-media:21.0.2'
 

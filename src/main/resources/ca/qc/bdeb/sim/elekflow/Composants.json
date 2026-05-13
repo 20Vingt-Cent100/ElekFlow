@@ -161,15 +161,6 @@
     "bornes": [[0.0, 0.675], [1.0, 0.675]],
     "proprietes": [["Sensibilité: ", 1.0]]
   },
-
-  {
-    "nom": "Boutton poussoir",
-    "cle_svg": ["BouttonPoussoir"],
-    "category": "Interrupteurs",
-    "description": "Interrupteur temporaire qui établit ou coupe un circuit seulement lorsqu’il est pressé.",
-    "bornes": [[0.0, 0.7], [1.0, 0.7]],
-    "proprietes": [["Fermé: ", 0.0]]
-  },
   {
     "nom": "Interrupteur simple",
     "cle_svg": ["InterrupteurSimple", "InterrupteurFerme"],

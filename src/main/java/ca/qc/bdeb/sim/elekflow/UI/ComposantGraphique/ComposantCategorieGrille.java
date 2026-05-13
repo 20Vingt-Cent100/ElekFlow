@@ -10,7 +10,7 @@ import java.util.List;
 public class ComposantCategorieGrille extends VBox {
 
     //Grille de composants
-    private FlowPane grille = new FlowPane();
+    private final FlowPane grille = new FlowPane();
 
     /**
      * Créer une grille qui affiche les composants présents dans un catégorie donnée

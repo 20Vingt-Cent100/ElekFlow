@@ -1,14 +1,27 @@
 package ca.qc.bdeb.sim.elekflow.Logique;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import ca.qc.bdeb.sim.elekflow.proto.*;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.TextFormat;
+import com.google.protobuf.util.JsonFormat;
+
+import java.io.*;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 public class ElekFlowFile {
 
     private static final File projects = new File("./projets");
+    private static final Long magicNumber = 6762053594109791614L;
+    private static final int appVersion = 1;
+
+    private Path pathAtCreation;
+
+    private Elk data;
+    private MetaData metaData;
+    private final Date currentDate;
 
     // Création automatique du dossier projets
     static {
@@ -30,15 +43,11 @@ public class ElekFlowFile {
         }
     }
 
-    public static boolean createNewFile(String fileName, Path path) {
-
-        File projectFile = new File(
-                path.toAbsolutePath() + "/" + fileName + ".elk"
-        );
+    public static boolean createNewFile(File file) {
 
         try {
 
-            boolean created = projectFile.createNewFile();
+            boolean created = file.createNewFile();
 
             if (!created) {
                 Loggeur.logConsole(
@@ -48,8 +57,6 @@ public class ElekFlowFile {
 
                 return false;
             }
-
-            addToRecentProject(projectFile.toPath());
 
             return true;
 
@@ -64,52 +71,8 @@ public class ElekFlowFile {
         }
     }
 
-    public static void addToRecentProject(Path path) {
-
-        try {
-
-            // Vérifie encore que le dossier existe
-            if (!projects.exists()) {
-                projects.mkdirs();
-            }
-
-            File projetRecent = new File(
-                    projects.getPath() + "/ProjectPaths"
-            );
-
-            FileOutputStream writableFile =
-                    new FileOutputStream(projetRecent);
-
-            writableFile.write(
-                    path.getFileName().toString().getBytes()
-            );
-
-            writableFile.write("\n".getBytes());
-
-            writableFile.write(
-                    path.toAbsolutePath().toString().getBytes()
-            );
-
-            writableFile.close();
-
-            Loggeur.logConsole(
-                    "Projet récent sauvegardé",
-                    NiveauLog.TOTAL
-            );
-
-        } catch (IOException ex) {
-
-            Loggeur.logConsole(
-                    ex.getMessage(),
-                    NiveauLog.ERREUR
-            );
-        }
-    }
-
     public static HashMap<String, Path> loadRecentProjetsList() {
-
-        HashMap<String, Path> recentProjectsPaths =
-                new HashMap<>();
+        HashMap<String, Path> recentProjectsPaths = new HashMap<>();
 
         // Sécurise le dossier
         if (!projects.exists()) {
@@ -147,7 +110,7 @@ public class ElekFlowFile {
             }
 
             recentProjectsPaths.put(
-                    str.substring(0, str.length() - 4),
+                    str,
                     Path.of(projects.getAbsolutePath() + "/" + str)
             );
 
@@ -158,5 +121,118 @@ public class ElekFlowFile {
         }
 
         return recentProjectsPaths;
+    }
+
+    public static ElekFlowFile loadElekFlowFile(File file) {
+        if (!file.getName().endsWith(".elk")) {
+            return null;
+        }
+
+        ElekFlowFile elekFlowFile = new ElekFlowFile();
+        elekFlowFile.pathAtCreation = file.toPath();
+
+        if (elekFlowFile.verifyMetadata(file)) {
+
+
+            return elekFlowFile;
+        } else {
+            return null;
+        }
+    }
+
+    public static ElekFlowFile createNewElekFlowFile(String fileName, Path path) {
+        ElekFlowFile elekFlowFile = new ElekFlowFile(fileName, path);
+        return elekFlowFile;
+    }
+
+    public ElekFlowFile() {
+        currentDate = getCurrentDate();
+    }
+
+    public ElekFlowFile(String fileName, Path path) {
+        currentDate = getCurrentDate();
+
+        pathAtCreation = Path.of(path.toString() + "/" + fileName + ".elk");
+        metaData = MetaData.newBuilder()
+                .setAppVersion(appVersion)
+                .setMagicNumber(magicNumber)
+                .setProjectName(fileName + ".elk")
+                .setLastModified(currentDate)
+                .build();
+
+        data = Elk.newBuilder()
+                .setMetaData(metaData)
+                .build();
+    }
+
+    private Date getCurrentDate() {
+        var newDate = Date.newBuilder()
+                .setDay(LocalDate.now().getDayOfMonth())
+                .setMonth(LocalDate.now().getMonthValue())
+                .setYear(LocalDate.now().getYear())
+                .setHour(LocalTime.now().getHour())
+                .setMinute(LocalTime.now().getMinute())
+                .build();
+
+        return newDate;
+    }
+
+
+    private boolean verifyMetadata(File file) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            this.data = Elk.parseFrom(fileInputStream);
+            metaData = data.getMetaData();
+            fileInputStream.close();
+            return metaData.getMagicNumber() == magicNumber && metaData.getAppVersion() == appVersion;
+
+        } catch (IOException ex) {
+            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+            return false;
+        }
+    }
+
+    public boolean saveFile(File file, Content content) {
+
+        File saveFile = file == null ? pathAtCreation.toFile() : new File(file.getPath() + ".elk");
+
+        if (!currentDate.equals(getCurrentDate())) {
+            metaData.toBuilder().setLastModified(getCurrentDate());
+        }
+
+        if (!saveFile.exists()) {
+            if (!createNewFile(saveFile))
+                return false;
+        }
+
+        try {
+
+            data = data.toBuilder().setContent(content).build();
+
+            FileOutputStream outputStream = new FileOutputStream(saveFile);
+            outputStream.write(data.toByteArray());
+            outputStream.close();
+
+            debugPrintAsJson();
+            return true;
+
+
+        } catch (IOException ex) {
+            Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
+            return false;
+        }
+    }
+
+    public Circuit getCircuit(){
+        return data.getContent().getCircuit();
+    }
+
+    public void debugPrintAsJson() {
+        // Le printer permet de rendre le JSON "beau" (indentation)
+        String debugString = TextFormat.printer().printToString(data);
+
+        System.out.println("--- STRUCTURE DU FICHIER ---");
+        System.out.println(debugString);
+
     }
 }

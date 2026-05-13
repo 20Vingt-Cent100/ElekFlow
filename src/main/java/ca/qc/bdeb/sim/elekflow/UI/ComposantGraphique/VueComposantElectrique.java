@@ -6,6 +6,7 @@ import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.*;
+import ca.qc.bdeb.sim.elekflow.proto.Component;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.scene.layout.Region;
@@ -25,18 +26,20 @@ public class VueComposantElectrique extends Region{
         private final double centerX;
         private final double centerY;
         private final Vec2 dernierClick = new Vec2();
-        private ArrayList<VueBorne> bornes = new ArrayList<>();
+        private final ArrayList<VueBorne> bornes = new ArrayList<>();
 
         private final ComposantJSON composantElecGraphique;
         private SVGImage svgComposantTop;
-        private ArrayList<SVGImage> listSvgs = new ArrayList<>();
+        private final ArrayList<SVGImage> listSvgs = new ArrayList<>();
 
         private double[] size;
 
-        private InteractionComposant interactionComposant;
-        private Behavior behavior;
+        private final InteractionComposant interactionComposant;
+        private final Behavior behavior;
 
-        public VueComposantElectrique(ComposantJSON composantElecGraphique, double posX, double posY){
+        private Component.Builder component;
+
+        public VueComposantElectrique(ComposantJSON composantElecGraphique, double posX, double posY, double rotation, Component.Builder component){
                 composantElecGraphique.getCLE_SVG().forEach((str)->{
                         listSvgs.add(App.atlas.getSVG(str));
                 });
@@ -51,6 +54,7 @@ public class VueComposantElectrique extends Region{
                 this.setHandles();
                 this.setSnapToPixel(true);
                 this.setFocusTraversable(true);
+
 
                 calculateSize();
 
@@ -76,16 +80,25 @@ public class VueComposantElectrique extends Region{
                 rotate = new Rotate(0, centerX, centerY);
                 this.getTransforms().add(rotate);
 
+                this.component = component;
+                if (this.component == null){
+                        this.component = Component.newBuilder();
+
+                        this.component.setLayoutX(getLayoutX())
+                                .setLayoutY(getLayoutY())
+                                .setRotation(getRotate())
+                                .setKey(getComposantNom());
+                }
+
+                this.rotate.setAngle(rotation);
+
+
+
                 this.getStyleClass().addAll("vue-composant", "cursor");
         }
 
         private void calculateSize(){
                 size = new double[]{svgComposantTop.getWidth(), svgComposantTop.getHeight()};
-        }
-
-        public void changeSVG(){
-                int index = listSvgs.indexOf(svgComposantTop);
-                svgComposantTop = listSvgs.get(index + 1 >= listSvgs.size() ? 0 : index + 1);
         }
 
         public void moveOnDrag(MouseEvent e){
@@ -167,6 +180,8 @@ public class VueComposantElectrique extends Region{
                 if(!e.isControlDown()) {
                         rotate.setAngle(rotate.getAngle() + (e.getDeltaY() * 9) / 12.);
                         e.consume();
+
+                        component.setRotation(this.rotate.getAngle());
                 }
         }
 
@@ -184,6 +199,8 @@ public class VueComposantElectrique extends Region{
 
         protected void handleOnMouseReleased(MouseEvent e){
                 isMovable = false;
+                component.setLayoutX(getLayoutX());
+                component.setLayoutY(getLayoutY());
         }
 
         protected void handleOnMouseClicked(MouseEvent e){
@@ -207,6 +224,8 @@ public class VueComposantElectrique extends Region{
                         case DELETE, BACK_SPACE -> fireEvent(new ComponentEvent(ComponentEvent.DELETE_COMPONENT, this, null));
                 }
 
+                component.setLayoutX(getLayoutX());
+                component.setLayoutY(getLayoutY());
                 e.consume();
         }
 
@@ -238,7 +257,11 @@ public class VueComposantElectrique extends Region{
                 return 1.0;
         }
 
-        public void addBornes(){
-                bornes.forEach(VueBorne::addToAll);
+        public void addBornes(ZoneSimulation zoneSimulation){
+                bornes.forEach((v) -> v.addToAll(zoneSimulation));
+        }
+
+        public Component getComponent(){
+                return component.build();
         }
 }

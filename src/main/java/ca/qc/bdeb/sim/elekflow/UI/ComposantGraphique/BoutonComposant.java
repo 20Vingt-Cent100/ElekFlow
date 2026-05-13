@@ -152,7 +152,7 @@ public class BoutonComposant extends Button {
         vueCreer = new VueComposantElectrique(
                 composantJSON,
                 event.getSceneX() - event.getX(),
-                event.getSceneY() - event.getY()
+                event.getSceneY() - event.getY(), 0.0, null
         );
 
         fireEvent(new ComponentEvent(

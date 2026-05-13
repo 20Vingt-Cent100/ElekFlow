@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -98,7 +100,10 @@ public class CreerProjetScene extends ElekflowScene{
 
     private void createNew(){
         if(!projectName.getText().isEmpty() && !projectPath.getText().isEmpty()) {
-            if (ElekFlowFile.createNewFile(projectName.getText(), Path.of(projectPath.getText()))) {
+
+            ElekFlowFile elekFlowFile = ElekFlowFile.createNewElekFlowFile(projectName.getText(), Path.of(projectPath.getText()));
+
+            if (elekFlowFile != null) {
 
 
                 App.addStage(
@@ -107,11 +112,18 @@ public class CreerProjetScene extends ElekflowScene{
                         false
                 );
 
-                App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, new File(projectPath.getText())), ElekFlowStage.SIMULATION);
+                App.changeScene(new SimulationScene(1920, 1080, WindowMode.MAXIMISED, elekFlowFile), ElekFlowStage.SIMULATION);
                 App.getStage(ElekFlowStage.SIMULATION).setShow(true);
 
                 App.removeStage(ElekFlowStage.CREATE_NEW_PROJECT);
                 App.removeStage(ElekFlowStage.STARTUP_SCREEN);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(projectName.getText() + " n'a pas pu être créer");
+                alert.setHeaderText("Erreur de création");
+
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
             }
         }
     }

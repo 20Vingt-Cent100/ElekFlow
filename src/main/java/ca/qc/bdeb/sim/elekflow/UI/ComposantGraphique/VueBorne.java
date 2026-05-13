@@ -39,8 +39,8 @@ public class VueBorne extends Circle {
         setHandles();
     }
 
-    public void addToAll(){
-        ((ZoneSimulation)((BorderPane)((StackPane)this.getScene().getRoot()).getChildren().getFirst()).getCenter()).addBorne(this);
+    public void addToAll(ZoneSimulation simulation){
+        simulation.addBorne(this);
     }
 
     public void hide(boolean isPriority){

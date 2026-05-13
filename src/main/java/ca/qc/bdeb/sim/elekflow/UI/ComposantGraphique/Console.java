@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class Console extends VBox {
-    private static VBox textVBox = new VBox();
+    private static final VBox textVBox = new VBox();
 
 
     public Console(){

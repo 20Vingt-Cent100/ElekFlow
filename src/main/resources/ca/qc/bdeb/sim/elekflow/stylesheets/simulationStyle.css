@@ -161,6 +161,7 @@
     -fx-stroke-width: 3.5;
     -fx-stroke-line-cap: round;
     -fx-stroke-line-join: bevel;
+    -fx-fill: none;
 }
 
 .fil:hover{

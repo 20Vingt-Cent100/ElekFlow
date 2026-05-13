@@ -35,6 +35,7 @@ public class VueFil extends Region{
 
         fil.setFocusTraversable(true);
         fil.setPickOnBounds(false);
+        fil.setFill(null);
 
         setHandles();
         this.getChildren().add(fil);
@@ -186,7 +187,7 @@ public class VueFil extends Region{
         if (isLinked) borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> updateEndPosition());
         else{
             this.getChildren().add(borne);
-            borne.addToAll();
+            borne.addToAll((ZoneSimulation) this.getParent().getParent().getParent());
             borne.toFront();
         }
     }

@@ -80,7 +80,7 @@ public class ProjectElement extends HBox {
         HashMap<String, Path> projects = ElekFlowFile.loadRecentProjetsList();
 
         projects.forEach((name, path) ->{
-            ProjectElement newElement = new ProjectElement(name, path);
+            ProjectElement newElement = new ProjectElement(name.replace(".elk", ""), path);
             newElement.setPrefWidth(parent.getPrefWidth());
             parent.getChildren().add(newElement);
         });
@@ -120,14 +120,14 @@ public class ProjectElement extends HBox {
             Files.delete(file.toPath());
 
             Loggeur.logConsole("File was deleted successfully", NiveauLog.TOTAL);
-            if (this.getParent() instanceof VBox) {
-                VBox parent = ((VBox)this.getParent());
+            if (this.getParent() instanceof VBox parent) {
                 parent.getChildren().remove(this);
 
                 if(parent.getChildren().isEmpty()){
                     loadIfEmpty(parent);
                 }
             }
+
         } catch (IOException e) {
             // Ça va te dire précisément si c'est "Access Denied" ou "File in use"
             Loggeur.logConsole("Failed to delete file: " + e.getMessage(), NiveauLog.TOTAL);

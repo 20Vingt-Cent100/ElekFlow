@@ -5,6 +5,7 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ConsoleEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.FileEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekFlowStage;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.StartupScene;
 import javafx.event.ActionEvent;
@@ -19,10 +20,10 @@ import javafx.stage.Popup;
 import java.io.File;
 
 public class TopBar extends HBox {
-    private static double son = 1.0;
+    private static final double son = 1.0;
     private boolean consoleActivated = false;
 
-    private VolumePopup volumePopup;
+    private final VolumePopup volumePopup;
 
     public TopBar(){
         this.getStyleClass().add("top-hbox");
@@ -78,19 +79,17 @@ public class TopBar extends HBox {
     }
 
     private void handleConsoleEvent(ConsoleEvent e){
-        if(e.getEventType() == ConsoleEvent.OPEN_CONSOLE){
-            consoleActivated = true;
-        }else{
-            consoleActivated = false;
-        }
+        consoleActivated = e.getEventType() == ConsoleEvent.OPEN_CONSOLE;
     }
 
     private void handleSave(ActionEvent event){
-
+        fireEvent(new FileEvent(FileEvent.SAVE_EVENT, null));
     }
 
     private void handleSaveAs(ActionEvent event){
+        File file = new FileChooser().showSaveDialog(this.getScene().getWindow());
 
+        fireEvent(new FileEvent(FileEvent.SAVE_EVENT, file));
     }
 
     private void handleImport(ActionEvent event){
@@ -103,9 +102,14 @@ public class TopBar extends HBox {
 
     private void handleClose(ActionEvent event){
         App.addStage(ElekFlowStage.createStage("Liste projets", App.atlas.getIMG("LogoDark"), true, false), ElekFlowStage.STARTUP_SCREEN, false);
-        App.changeScene(new StartupScene(), ElekFlowStage.STARTUP_SCREEN);
+
+        var stageToClose = App.getStage(ElekFlowStage.SIMULATION);
 
         App.removeStage(ElekFlowStage.SIMULATION);
+
+        stageToClose.handleExit();
+
+        App.changeScene(new StartupScene(), ElekFlowStage.STARTUP_SCREEN);
 
         App.getStage(ElekFlowStage.STARTUP_SCREEN).setShow(true);
     }

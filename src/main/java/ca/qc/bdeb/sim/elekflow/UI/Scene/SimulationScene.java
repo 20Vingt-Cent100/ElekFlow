@@ -1,27 +1,33 @@
 package ca.qc.bdeb.sim.elekflow.UI.Scene;
 
+import ca.qc.bdeb.sim.elekflow.Logique.ElekFlowFile;
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.*;
-import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
-import ca.qc.bdeb.sim.elekflow.UI.Events.ConsoleEvent;
-import ca.qc.bdeb.sim.elekflow.UI.Events.ExportEvent;
-import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
+import ca.qc.bdeb.sim.elekflow.UI.Events.*;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.BehaviorList;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.InteractionListe;
+import ca.qc.bdeb.sim.elekflow.UI.Utils.OnStageClose;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique.VueComposantElectrique;
+import ca.qc.bdeb.sim.elekflow.proto.Component;
+import ca.qc.bdeb.sim.elekflow.proto.Content;
+import javafx.geometry.Pos;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.BorderPane;
 
 import java.io.File;
 
 public class SimulationScene extends ElekflowScene {
     private final Console console = new Console();
     private ZoneSimulation zoneSimulation;
+    private MenuComposant menuComposant;
 
-    private final File file;
+    private final ElekFlowFile file;
 
-    public SimulationScene(double width, double height, WindowMode mode, File file) {
+    public SimulationScene(double width, double height, WindowMode mode, ElekFlowFile file) {
         super(width, height, mode);
         addStyleSheet(App.atlas.getStylesheet("simulationStyle"));
 
@@ -41,6 +47,36 @@ public class SimulationScene extends ElekflowScene {
         this.addEventHandler(ConsoleEvent.OPEN_CONSOLE, this::handleOpenConsole);
         this.addEventHandler(ConsoleEvent.HIDE_CONSOLE, this::handleHideConsole);
         this.addEventHandler(ExportEvent.EXPORT_SVG, this::handleExportSVG);
+        this.addEventHandler(FileEvent.SAVE_EVENT, this::handleSaveFile);
+
+        this.setOnKeyPressed((e) ->{
+            if(e.getCode() == KeyCode.S && e.isControlDown()){
+                saveFile(null);
+            }
+        });
+
+        this.setOnStageClose(new OnStageClose() {
+            @Override
+            public void execute() {
+                saveFile(null);
+            }
+        });
+    }
+
+    private void handleSaveFile(FileEvent fileEvent) {
+        saveFile(fileEvent.file);
+    }
+
+
+    private void saveFile(File file){
+        Content content = Content.newBuilder()
+                .setCircuit(zoneSimulation.getCircuit())
+                .build();
+
+        if(!this.file.saveFile(file, content))
+            Loggeur.logConsole("File could not be saved", NiveauLog.ERREUR);
+        else
+            Loggeur.logConsole("File is being saved", NiveauLog.TOTAL);
     }
 
     private void handleExportSVG(ExportEvent event){
@@ -61,7 +97,7 @@ public class SimulationScene extends ElekflowScene {
     private void handlePlacedComponent(ComponentEvent e) {
         OVERLAY_PANE.getChildren().remove(e.getComposantElectrique());
         zoneSimulation.addComponent(e.getComposantElectrique(), e.getMouseEvent());
-        e.getComposantElectrique().addBornes();
+        e.getComposantElectrique().addBornes(zoneSimulation);
     }
 
     private void handleMoveComponent(ComponentEvent e) {
@@ -75,11 +111,11 @@ public class SimulationScene extends ElekflowScene {
     private void handleShowInfoEvent(ShowInfoEvent e) {
         var infoMenu = new InfoMenu(e.compElecGraph);
 
-        ROOT.setRight(infoMenu);
+        OVERLAY_PANE.setRight(infoMenu);
     }
 
     private void handleHideInfoEvent(ShowInfoEvent e) {
-        ROOT.setRight(null);
+        OVERLAY_PANE.setRight(null);
     }
 
     private void handleOpenConsole(ConsoleEvent e) {
@@ -92,7 +128,8 @@ public class SimulationScene extends ElekflowScene {
 
     @Override
     public void populateScene() {
-        ROOT.setLeft(new MenuComposant());
+        menuComposant = new MenuComposant();
+        ROOT.setLeft(menuComposant);
         ROOT.setTop(new TopBar());
 
         zoneSimulation = new ZoneSimulation();
@@ -100,6 +137,10 @@ public class SimulationScene extends ElekflowScene {
     }
 
     private void loadSimulation(){
+        zoneSimulation.setCircuit(file.getCircuit().toBuilder());
+    }
 
+    public ComposantJSON getComposantJson(String key){
+        return menuComposant.getComposantJson(key);
     }
 }
