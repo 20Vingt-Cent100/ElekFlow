@@ -8,6 +8,7 @@ import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.StartupScene;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.WindowMode;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 
 public class App extends Application {
     public static Atlas atlas;
+    public static HostServices hostService;
     private static final HashMap<String, ElekFlowStage> STAGES = new HashMap<>();
 
 
@@ -29,6 +31,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         //Configurations initiales
+        hostService = getHostServices();
         loadAtlas();
         setLoggeur(NiveauLog.TOTAL);
 

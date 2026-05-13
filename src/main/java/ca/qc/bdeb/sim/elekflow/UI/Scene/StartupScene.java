@@ -60,7 +60,16 @@ public class StartupScene extends ElekflowScene {
 
         btnBox.getChildren().addAll(createNewBtn, importBtn);
 
-        box.getChildren().addAll(logoArea, btnBox);
+        var githubLogo = App.atlas.getSVG("githubLogo", 0.3);
+        githubLogo.getStyleClass().addAll("cursor", "github-logo");
+        githubLogo.setPickOnBounds(true);
+        githubLogo.setOnMouseClicked((e) ->{
+            if(App.hostService != null){
+                App.hostService.showDocument("https://github.com/20Vingt-Cent100/ElekFlow");
+            }
+        });
+
+        box.getChildren().addAll(logoArea, githubLogo,btnBox);
     }
 
     private void fillRightVbox(VBox box){
@@ -85,6 +94,7 @@ public class StartupScene extends ElekflowScene {
         file.setInitialDirectory(new File("./projets"));
 
         var ioFile = file.showOpenDialog(ROOT.getScene().getWindow());
+        ioFile.renameTo(new File("./projets/" + ioFile.getName()));
 
         openFile(ioFile);
 

@@ -14,7 +14,7 @@
 
 .left-vbox{
     -fx-padding: 30px;
-    -fx-spacing: 130px
+    -fx-spacing: 35px
 }
 
 .btn-box{
@@ -112,4 +112,8 @@
 .menu-item:hover .label, .menu-item:focused .label{
     -fx-text-fill: accent-color;
     -fx-underline: true;
+}
+
+.github-logo *{
+    -fx-fill: text-color;
 }
