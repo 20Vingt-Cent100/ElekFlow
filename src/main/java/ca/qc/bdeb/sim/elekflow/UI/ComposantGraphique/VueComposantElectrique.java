@@ -19,6 +19,7 @@ public class VueComposantElectrique extends Region{
         boolean isMovable = false;
 
         private long clickTime = 0;
+        private boolean isDrag = false;
 
         private final Rotate rotate;
         private final double centerX;
@@ -132,6 +133,8 @@ public class VueComposantElectrique extends Region{
 
         protected void handleOnMouseDragged(MouseEvent e){
                 e.consume();
+                isDrag = true;
+
                 Point2D coord = this.getParent().sceneToLocal(e.getSceneX(), e.getSceneY());
                 Point2D center = this.localToParent(getCenterX(), getCenterY());
 
@@ -153,11 +156,11 @@ public class VueComposantElectrique extends Region{
         }
 
         protected void handleOnMouseEntered(MouseEvent e){
-                bornes.forEach(VueBorne::show);
+                bornes.forEach((b) -> b.show(false));
         }
 
         protected void handleOnMouseExited(MouseEvent e){
-                bornes.forEach(VueBorne::hide);
+                bornes.forEach((b) -> b.hide(false));
         }
 
         protected void handleOnScroll(ScrollEvent e){
@@ -189,8 +192,10 @@ public class VueComposantElectrique extends Region{
 
                 fireEvent(new ShowInfoEvent(ShowInfoEvent.SHOW_INFO, null, composantElecGraphique));
 
-                if(interactionComposant != null && System.currentTimeMillis() - clickTime < 400)
+                if(interactionComposant != null && System.currentTimeMillis() - clickTime < 400 && !isDrag)
                         interactionComposant.executeOnClick(e, this);
+
+                isDrag = false;
         }
 
         protected void handleOnKeyPressed(KeyEvent e){

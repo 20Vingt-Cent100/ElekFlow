@@ -62,7 +62,7 @@
     "category": "Passifs",
     "description": "Condensateur possédant une borne positive et une borne négative qui doivent être respectées lors du branchement.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]],
-    "proprietes": [["Capacite", 0.00001]]
+    "proprietes": [["Capacité: ", 0.00001]]
   },
   {
     "nom": "Potentiomètre",
@@ -70,7 +70,7 @@
     "category": "Passifs",
     "description": "Résistance variable permettant d’ajuster manuellement la valeur de résistance dans un circuit.",
     "bornes": [[0.0, 0.8], [1.0, 0.8]],
-    "proprietes": [["Resistance", 1000.0]]
+    "proprietes": [["Résistance: ", 1000.0]]
   },
   {
     "nom": "Résistance ajustable",
@@ -78,7 +78,7 @@
     "category": "Passifs",
     "description": "Résistance dont la valeur peut être réglée afin de modifier le courant ou la tension dans un circuit.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Resistance", 1000.0]]
+    "proprietes": [["Résistance: ", 1000.0]]
   },
   {
     "nom": "Quartz",
@@ -86,7 +86,7 @@
     "category": "Passifs",
     "description": "Composante utilisant les propriétés mécaniques du cristal de quartz pour produire une fréquence très précise.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]],
-    "proprietes": [["Frequence", 16000000.0]]
+    "proprietes": [["Fréquence: ", 16000000.0]]
   },
   {
     "nom": "Fusible",
@@ -94,7 +94,7 @@
     "category": "Passifs",
     "description": "Dispositif de protection qui coupe automatiquement le courant lorsqu’une intensité trop élevée est détectée.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["CourantMax", 10.0]]
+    "proprietes": [["Courant maximum: ", 10.0]]
   },
   {
     "nom": "Élément chauffant",
@@ -102,7 +102,7 @@
     "category": "Passifs",
     "description": "Composante transformant l’énergie électrique en chaleur grâce à l’effet Joule.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Resistance", 50.0]]
+    "proprietes": [["Résistance: ", 50.0]]
   },
   {
     "nom": "Photorésistance",
@@ -110,7 +110,7 @@
     "category": "Passifs",
     "description": "Résistance dont la valeur varie selon l’intensité de la lumière reçue.",
     "bornes": [[0.0, 0.8], [1.0, 0.8]],
-    "proprietes": [["Resistance", 1000.0]]
+    "proprietes": [["Résistance: ", 1000.0]]
   },
 
   {
@@ -119,7 +119,7 @@
     "category": "Semi-conducteurs",
     "description": "Composante semi-conductrice laissant circuler le courant dans une seule direction.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["TensionSeuil", 0.7]]
+    "proprietes": [["Tension seuil: ", 0.7]]
   },
   {
     "nom": "Diode Schottky",
@@ -127,7 +127,7 @@
     "category": "Semi-conducteurs",
     "description": "Diode caractérisée par une faible chute de tension et une commutation très rapide.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["TensionSeuil", 0.3]]
+    "proprietes": [["Tension seuil: ", 0.3]]
   },
   {
     "nom": "Diode Zener",
@@ -135,7 +135,7 @@
     "category": "Semi-conducteurs",
     "description": "Diode utilisée principalement pour stabiliser ou réguler une tension électrique.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["TensionZener", 5.1]]
+    "proprietes": [["Tension Zener: ", 5.1]]
   },
   {
     "nom": "Diode électroluminescente",
@@ -143,7 +143,7 @@
     "category": "Semi-conducteurs",
     "description": "Diode émettant de la lumière lorsqu’un courant électrique la traverse.",
     "bornes": [[0.0, 0.7], [1.0, 0.7]],
-    "proprietes": [["TensionSeuil", 2.0]]
+    "proprietes": [["Tension seuil: ", 2.0]]
   },
   {
     "nom": "Diode varicap",
@@ -151,7 +151,7 @@
     "category": "Semi-conducteurs",
     "description": "Diode dont la capacité électrique varie en fonction de la tension appliquée.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Capacite", 0.000000001]]
+    "proprietes": [["Capacité: ", 0.000000001]]
   },
   {
     "nom": "Photodiode",
@@ -159,7 +159,7 @@
     "category": "Semi-conducteurs",
     "description": "Diode sensible à la lumière qui convertit l’énergie lumineuse en signal électrique.",
     "bornes": [[0.0, 0.675], [1.0, 0.675]],
-    "proprietes": [["Sensibilite", 1.0]]
+    "proprietes": [["Sensibilité: ", 1.0]]
   },
 
   {
@@ -168,7 +168,7 @@
     "category": "Interrupteurs",
     "description": "Interrupteur temporaire qui établit ou coupe un circuit seulement lorsqu’il est pressé.",
     "bornes": [[0.0, 0.7], [1.0, 0.7]],
-    "proprietes": [["Ferme", 0.0]]
+    "proprietes": [["Fermé: ", 0.0]]
   },
   {
     "nom": "Interrupteur simple",
@@ -176,7 +176,7 @@
     "category": "Interrupteurs",
     "description": "Dispositif permettant d’ouvrir ou de fermer manuellement un circuit électrique.",
     "bornes": [[0.0, 0.69], [1.0, 0.69]],
-    "proprietes": [["Ferme", 1.0]]
+    "proprietes": [["Fermé: ", 1.0]]
   },
   {
     "nom": "Interrupteur double",
@@ -184,7 +184,7 @@
     "category": "Interrupteurs",
     "description": "Interrupteur contrôlant deux circuits électriques distincts à partir d’un même dispositif.",
     "bornes": [[0.0, 0.35], [1.0, 0.35], [0.0, 0.88], [1.0, 0.88]],
-    "proprietes": [["Ferme", 1.0]]
+    "proprietes": [["Fermé: ", 1.0]]
   },
   {
     "nom": "Commutateur",
@@ -192,7 +192,7 @@
     "category": "Interrupteurs",
     "description": "Dispositif permettant de rediriger le courant électrique entre différentes connexions possibles.",
     "bornes": [[0.0, 0.5], [1.0, 0.17], [1.0, 0.84]],
-    "proprietes": [["Ferme", 1.0]]
+    "proprietes": [["Fermé: ", 1.0]]
   },
 
   {
@@ -201,7 +201,7 @@
     "category": "Actionneurs",
     "description": "Appareil convertissant l’énergie électrique en énergie mécanique de rotation.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Resistance", 10.0]]
+    "proprietes": [["Résistance: ", 10.0]]
   },
   {
     "nom": "Haut-parleur",
@@ -209,7 +209,7 @@
     "category": "Actionneurs",
     "description": "Composante transformant un signal électrique en ondes sonores audibles.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Resistance", 8.0]]
+    "proprietes": [["Résistance: ", 8.0]]
   },
   {
     "nom": "Avertisseur sonore",
@@ -217,7 +217,7 @@
     "category": "Actionneurs",
     "description": "Dispositif émettant un signal sonore afin d’avertir ou d’indiquer une information.",
     "bornes": [[0.0, 0.97], [1.0, 0.97]],
-    "proprietes": [["Resistance", 30.0]]
+    "proprietes": [["Résistance: ", 30.0]]
   },
   {
     "nom": "Ampoule",
@@ -225,7 +225,7 @@
     "category": "Actionneurs",
     "description": "Composante convertissant l’énergie électrique en lumière pour l’éclairage ou l’indication visuelle.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Resistance", 100.0]]
+    "proprietes": [["Résistance: ", 100.0]]
   },
 
   {

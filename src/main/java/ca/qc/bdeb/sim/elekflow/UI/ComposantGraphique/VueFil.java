@@ -143,7 +143,7 @@ public class VueFil extends Region{
     }
 
     private void handleOnMouseExited(MouseEvent event) {
-        listBorne.forEach(VueBorne::hide);
+        listBorne.forEach((b) -> b.hide(false));
     }
 
     private void handleOnMouseReleased(MouseEvent event) {
@@ -163,10 +163,17 @@ public class VueFil extends Region{
     private void handleOnMouseClicked(MouseEvent event) {
         this.requestFocus();
         event.consume();
+
+        Point2D generalCoord = this.getParent().sceneToLocal(event.getSceneX(), event.getSceneY());
+
+        listBorne.addLast(new VueBorne(generalCoord.getX(), generalCoord.getY()));
+
+        this.getChildren().add(listBorne.getLast());
+        listBorne.getLast().toFront();
     }
 
     private void handleOnMouseEntered(MouseEvent event) {
-        listBorne.forEach(VueBorne::show);
+        listBorne.forEach((b) -> b.show(false));
     }
 
     private void handleOnMouseDragged(MouseEvent event) {

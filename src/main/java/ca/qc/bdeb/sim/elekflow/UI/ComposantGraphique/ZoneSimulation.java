@@ -94,11 +94,11 @@ public class ZoneSimulation extends Pane {
     }
 
     private void handleShowNode(WireEvent wireEvent) {
-        listeBorne.forEach(VueBorne::show);
+        listeBorne.forEach((b) -> b.show(true));
     }
 
     private void handleHideNode(WireEvent wireEvent) {
-        listeBorne.forEach(VueBorne::hide);
+        listeBorne.forEach((b) -> b.hide(true));
     }
 
     private void handleCreateWire(WireEvent event) {
