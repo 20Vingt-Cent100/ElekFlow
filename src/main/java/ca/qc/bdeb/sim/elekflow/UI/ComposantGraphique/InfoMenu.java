@@ -3,8 +3,10 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 import ca.qc.bdeb.sim.elekflow.Logique.ProprieteElectrique;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -14,19 +16,19 @@ import java.text.ParsePosition;
 
 public class InfoMenu extends VBox {
 
-    private static final String DARK_BLUE = "#0A1A2B";
-    private static final String TITLE = "#D7E6F5";
-    private static final String SUBTITLE = "#7FA1C2";
-    private static final String LABEL = "#8FA9C4";
-    private static final String VALUE = "#CFE2F3";
-    private static final String BORDER = "rgba(127,161,194,0.25)";
+    private static final String BACKGROUND = "#031927";
+    private static final String BORDER = "#03131E";
+
+    private static final String TITLE = "#CFE2F3";
+    private static final String SUBTITLE = "#8FA9C4";
+    private static final String LABEL = "#7FA1C2";
+    private static final String VALUE = "#D7E6F5";
 
     public InfoMenu(ComposantJSON comp) {
 
         setSpacing(8);
         setPadding(new Insets(12));
         setAlignment(Pos.TOP_LEFT);
-
         setMaxHeight(Region.USE_PREF_SIZE);
 
         setStyle("""
@@ -35,10 +37,7 @@ public class InfoMenu extends VBox {
             -fx-border-radius: 12;
             -fx-border-color: %s;
             -fx-border-width: 1;
-        """.formatted(DARK_BLUE, BORDER));
-
-        AnchorPane.setTopAnchor(this, 12.0);
-        AnchorPane.setRightAnchor(this, 12.0);
+        """.formatted(BACKGROUND, BORDER));
 
         Label title = new Label(comp.getNOM());
         title.setStyle("""
@@ -56,7 +55,7 @@ public class InfoMenu extends VBox {
         Separator sep = new Separator();
         sep.setStyle("""
             -fx-background-color: %s;
-            -fx-opacity: 0.6;
+            -fx-opacity: 0.8;
         """.formatted(BORDER));
 
         getChildren().addAll(title, subtitle, sep);
@@ -85,14 +84,14 @@ public class InfoMenu extends VBox {
 
             TextField value = new TextField(String.valueOf(p.getValue()));
             value.setStyle("""
-                -fx-background-color: #10263D;
+                -fx-background-color: %s;
                 -fx-text-fill: %s;
                 -fx-background-radius: 6;
                 -fx-border-radius: 6;
                 -fx-border-color: %s;
                 -fx-font-size: 12px;
                 -fx-padding: 3 6 3 6;
-            """.formatted(VALUE, BORDER));
+            """.formatted(BORDER, VALUE, BORDER));
 
             value.setTextFormatter(new TextFormatter<>(c -> {
 
