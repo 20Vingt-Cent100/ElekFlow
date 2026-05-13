@@ -15,6 +15,8 @@ public class VueBorne extends Circle {
     private VueFil vueFil;
     private VueBorne hovered;
 
+    private boolean priority = false;
+
     public VueBorne(BigDecimal[] coordinate, double[] parentSize){
         setRadius(4);
         this.setLayoutX(coordinate[0].doubleValue() * parentSize[0]);
@@ -41,12 +43,20 @@ public class VueBorne extends Circle {
         ((ZoneSimulation)((BorderPane)((StackPane)this.getScene().getRoot()).getChildren().getFirst()).getCenter()).addBorne(this);
     }
 
-    public void hide(){
-        this.setVisible(false);
-        this.setManaged(false);
+    public void hide(boolean isPriority){
+        if(isPriority)
+            priority = false;
+
+        if(!priority) {
+            this.setVisible(false);
+            this.setManaged(false);
+        }
     }
 
-    public void show(){
+    public void show(boolean isPriority){
+        if (isPriority)
+            priority = true;
+
         this.setVisible(true);
         this.setManaged(true);
     }
@@ -63,8 +73,8 @@ public class VueBorne extends Circle {
         setOnMouseDragReleased(this::handleOnMouseDragReleased);
         setOnMouseDragExited(this::handleOnMouseDragExited);
         setOnKeyPressed(this::handleOnKeyPressed);
-        addEventFilter(WireEvent.SHOW_NODE, (e) ->{show();});
-        addEventFilter(WireEvent.HIDE_NODE, (e) ->{hide();});
+        addEventFilter(WireEvent.SHOW_NODE, (e) ->{show(true);});
+        addEventFilter(WireEvent.HIDE_NODE, (e) ->{hide(true);});
     }
 
     private void handleOnKeyPressed(KeyEvent event) {

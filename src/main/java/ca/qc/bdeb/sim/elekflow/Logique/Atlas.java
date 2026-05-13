@@ -20,6 +20,8 @@ public class Atlas {
    private final String DEFAULT_FOLDER_PATH = "./src/main/resources/";
    private final String RESOURCE_PATH = "ca/qc/bdeb/sim/elekflow/";
 
+   private double volume = 0.3;
+
    public void loadAtlas(){
        loadSvgs();
        loadImgs();
@@ -119,12 +121,20 @@ public class Atlas {
 
     public AudioClip getAudioClip(String key){
         AudioClip clip = LIST_AUDIO.get(key);
-        clip.setVolume(.3);
+        clip.setVolume(volume);
 
         return clip;
     }
 
     public String getStylesheet(String key){
         return LIST_STYLESHEETS.get(key);
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 }

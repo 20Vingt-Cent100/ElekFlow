@@ -9,15 +9,20 @@ import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekFlowStage;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.StartupScene;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 
 import java.io.File;
 
 public class TopBar extends HBox {
     private static double son = 1.0;
     private boolean consoleActivated = false;
+
+    private VolumePopup volumePopup;
 
     public TopBar(){
         this.getStyleClass().add("top-hbox");
@@ -53,7 +58,18 @@ public class TopBar extends HBox {
         var close = new MenuItem("Close");
         close.setOnAction(this::handleClose);
 
-        var son = new MenuItem("son");
+        volumePopup = new VolumePopup();
+
+        Popup popup = new Popup();
+        popup.getContent().add(volumePopup);
+        popup.focusedProperty().addListener((o, oldV, newV) -> {if(!newV) popup.hide();});
+
+        var son = new MenuItem("Volume");
+        son.setOnAction((e) ->{
+
+          popup.show(this.getScene().getWindow());
+          popup.centerOnScreen();
+        });
 
         fichier.getItems().addAll(save, saveAs, importF, export, exportAsSvg, close);
         parametres.getItems().add(son);
