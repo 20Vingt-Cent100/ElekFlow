@@ -61,7 +61,7 @@ public class VueComposantElectrique extends Region{
                 if(composantElecGraphique.getBORNES() != null){
                     BigDecimal[][] listBorne = composantElecGraphique.getBORNES();
                         for (int i = 0; i < listBorne.length; i++) {
-                            var borne = new VueBorne(listBorne[i], size);
+                            var borne = new VueBorne(listBorne[i], size, component == null ? 0 : component.getBornes(i).getIndex());
                             bornes.add(borne);
                             Loggeur.logConsole("borne creer", NiveauLog.TOTAL);
                             this.getChildren().add(borne);
@@ -257,11 +257,16 @@ public class VueComposantElectrique extends Region{
                 return 1.0;
         }
 
-        public void addBornes(ZoneSimulation zoneSimulation){
-                bornes.forEach((v) -> v.addToAll(zoneSimulation));
+        public void addBornes(ZoneSimulation zoneSimulation, boolean isLoaded){
+                bornes.forEach((v) -> v.addToAll(zoneSimulation, isLoaded));
         }
 
         public Component getComponent(){
+                component.clearBornes();
+
+                for (int i  = 0; i < bornes.size(); i ++){
+                        component.addBornes(i, bornes.get(i).getBorne());
+                }
                 return component.build();
         }
 }

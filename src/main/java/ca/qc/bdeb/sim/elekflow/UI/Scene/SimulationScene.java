@@ -97,7 +97,7 @@ public class SimulationScene extends ElekflowScene {
     private void handlePlacedComponent(ComponentEvent e) {
         OVERLAY_PANE.getChildren().remove(e.getComposantElectrique());
         zoneSimulation.addComponent(e.getComposantElectrique(), e.getMouseEvent());
-        e.getComposantElectrique().addBornes(zoneSimulation);
+        e.getComposantElectrique().addBornes(zoneSimulation, false);
     }
 
     private void handleMoveComponent(ComponentEvent e) {

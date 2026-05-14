@@ -5,25 +5,21 @@ import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
-import ca.qc.bdeb.sim.elekflow.UI.Scene.ElekflowScene;
 import ca.qc.bdeb.sim.elekflow.UI.Scene.SimulationScene;
 import ca.qc.bdeb.sim.elekflow.proto.Circuit;
-import ca.qc.bdeb.sim.elekflow.proto.Component;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import org.girod.javafx.svgimage.tosvg.ConverterParameters;
+import org.girod.javafx.svgimage.SVGContent;
 import org.girod.javafx.svgimage.tosvg.SVGConverter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class ZoneSimulation extends Pane {
@@ -38,7 +34,7 @@ public class ZoneSimulation extends Pane {
 
     private Point2D lastClick = new Point2D(0,0);
 
-    private final ArrayList<VueBorne> listeBorne = new ArrayList<>();
+    private final HashMap<Long, VueBorne> listeBorne = new HashMap<>();
 
     /**
      * Extension de JavaFX pane qui affiche les composants électriques affichés à l'écran
@@ -101,11 +97,11 @@ public class ZoneSimulation extends Pane {
     }
 
     private void handleShowNode(WireEvent wireEvent) {
-        listeBorne.forEach((b) -> b.show(true));
+        listeBorne.forEach((k, b) -> b.show(true));
     }
 
     private void handleHideNode(WireEvent wireEvent) {
-        listeBorne.forEach((b) -> b.hide(true));
+        listeBorne.forEach((k, b) -> b.hide(true));
     }
 
     private void handleCreateWire(WireEvent event) {
@@ -173,21 +169,30 @@ public class ZoneSimulation extends Pane {
     }
 
     public VueBorne findHoveredNode(double sceneX, double sceneY) {
-        for (VueBorne node : listeBorne) {
+        AtomicReference<VueBorne> hoveredBorne = new AtomicReference<>();
+
+        listeBorne.forEach((k, node) ->{
             // Convert the node's bounds to Scene coordinates for a fair comparison
             Bounds bounds = node.localToScene(node.getBoundsInLocal());
 
             if (bounds.contains(sceneX, sceneY)) {
-                return node; // We found the node the mouse is over
+                hoveredBorne.set(node); // We found the node the mouse is over
             }
-        }
-        return null;
+        });
+
+
+        return hoveredBorne.get();
     }
 
-    public void addBorne(VueBorne bornes){
-        listeBorne.add(bornes);
+    public void addBorne(VueBorne bornes, long index){
+        listeBorne.put(index , bornes);
     }
 
+    public VueBorne getBorne(long key){
+        if (key == 0)
+            return null;
+        return listeBorne.get(key);
+    }
 
     public Circuit getCircuit(){
         circuit.setZoomFactor(pane.getScaleX());
@@ -198,11 +203,16 @@ public class ZoneSimulation extends Pane {
         circuit.clearWires();
 
         simultionGroup.getChildren().forEach((child)->{
-            if(child instanceof VueComposantElectrique vue)
+            if(child instanceof VueComposantElectrique vue){
                 circuit.addComponents(vue.getComponent());
+            }
 
-            if(child instanceof VueFil wire)
+
+            if(child instanceof VueFil wire){
                 circuit.addWires(wire.getWire());
+            }
+
+
         });
 
         return circuit.build();
@@ -228,7 +238,7 @@ public class ZoneSimulation extends Pane {
                                 comp.toBuilder()
                         );
 
-                        vue.addBornes(this);
+                        vue.addBornes(this, true);
 
                         simultionGroup.getChildren().add(vue);
                     }
@@ -236,11 +246,15 @@ public class ZoneSimulation extends Pane {
 
             circuit.getWiresList().forEach((wire) ->{
                 var fil = new VueFil(
-                        wire.toBuilder()
+                        wire.toBuilder(), this
                 );
+
+
 
                 simultionGroup.getChildren().add(fil);
             });
+
+            handleHideNode(null);
         }
     }
 }

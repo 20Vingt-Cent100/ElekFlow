@@ -105,6 +105,7 @@ public class ProjectElement extends HBox {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(file.getParentFile());
         newFile =  fileChooser.showSaveDialog(this.getScene().getWindow());
+        newFile = new File(newFile.getPath()+ ".elk");
 
         if(file.renameTo(newFile)){
             Loggeur.logConsole("file was renamed to " + newFile.getName(), NiveauLog.TOTAL);

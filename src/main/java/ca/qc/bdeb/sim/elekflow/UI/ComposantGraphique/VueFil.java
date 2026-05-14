@@ -3,6 +3,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
+import ca.qc.bdeb.sim.elekflow.proto.Borne;
 import ca.qc.bdeb.sim.elekflow.proto.Point;
 import ca.qc.bdeb.sim.elekflow.proto.Wire;
 import javafx.beans.value.ObservableValue;
@@ -52,13 +53,29 @@ public class VueFil extends Region{
         this.wire.addPoints(Point.newBuilder().setX(startX).setY(startY).build());
     }
 
-    public VueFil(Wire.Builder wire){
+    public VueFil(Wire.Builder wire, ZoneSimulation simulation){
         this.wire = wire;
+
         listBorne = new ArrayList<>();
+
+        for(Borne b : wire.getBornesList()){
+            VueBorne borne = simulation.getBorne(b.getIndex());
+            if(borne != null)
+                listBorne.add(borne);
+        }
+
+        if (!listBorne.isEmpty()) {
+            listBorne.getFirst().getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> {
+                updateInitialPosition();
+            });
+        }
+        if(listBorne.size() >= 2){
+            addEndNode(listBorne.getLast(), true);
+        }
+
         this.getStyleClass().add("vue-fil");
         fil.getStyleClass().addAll("fil", "cursor");
 
-        //vueBornes.getFirst().getParent().localToParentTransformProperty().addListener((o, oldV, newV) ->{updateInitialPosition();});
         this.setFocusTraversable(true);
         this.setPickOnBounds(false);
 
@@ -233,12 +250,18 @@ public class VueFil extends Region{
         if (isLinked) borne.getParent().localToParentTransformProperty().addListener((o, oldV, newV) -> updateEndPosition());
         else{
             this.getChildren().add(borne);
-            borne.addToAll((ZoneSimulation) this.getParent().getParent().getParent());
+            borne.addToAll((ZoneSimulation) this.getParent().getParent().getParent(), false);
             borne.toFront();
         }
     }
 
     public Wire getWire() {
+        wire.clearBornes();
+
+        for (int i = 0; i < listBorne.size(); i++) {
+            wire.addBornes(i, listBorne.get(i).getBorne());
+        }
+
         return wire.build();
     }
 }

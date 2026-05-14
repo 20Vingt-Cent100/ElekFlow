@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
+import ca.qc.bdeb.sim.elekflow.proto.Borne;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
@@ -12,12 +13,20 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class VueBorne extends Circle {
+    private static long OverallIndex = 1;
+
+    private final long index;
+    private final long onLoadIndex;
+
     private VueFil vueFil;
     private VueBorne hovered;
 
     private boolean priority = false;
 
-    public VueBorne(BigDecimal[] coordinate, double[] parentSize){
+    public VueBorne(BigDecimal[] coordinate, double[] parentSize, long onLoadIndex){
+        index = OverallIndex++;
+        this.onLoadIndex = onLoadIndex;
+
         setRadius(4);
         this.setLayoutX(coordinate[0].doubleValue() * parentSize[0]);
         this.setLayoutY(coordinate[1].doubleValue() * parentSize[1]);
@@ -29,6 +38,10 @@ public class VueBorne extends Circle {
     }
 
     public VueBorne(double layoutX, double layoutY){
+        index = OverallIndex++;
+
+        this.onLoadIndex = 0;
+
         setRadius(4);
         this.setLayoutX(layoutX);
         this.setLayoutY(layoutY);
@@ -39,8 +52,11 @@ public class VueBorne extends Circle {
         setHandles();
     }
 
-    public void addToAll(ZoneSimulation simulation){
-        simulation.addBorne(this);
+    public void addToAll(ZoneSimulation simulation, boolean isLoaded){
+        if(isLoaded)
+            simulation.addBorne(this, getOnLoadIndex());
+        else
+            simulation.addBorne(this, getIndex());
     }
 
     public void hide(boolean isPriority){
@@ -146,5 +162,15 @@ public class VueBorne extends Circle {
         }
     }
 
+    public Borne getBorne(){
+        return Borne.newBuilder().setIndex(index).build();
+    }
 
+    public long getIndex() {
+        return index;
+    }
+
+    public long getOnLoadIndex() {
+        return onLoadIndex;
+    }
 }

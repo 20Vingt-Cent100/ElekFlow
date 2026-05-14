@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'ca.qc.bdeb.SIM'
-version '0-Beta'
+version '0-Alpha'
 
 repositories {
     mavenCentral()
