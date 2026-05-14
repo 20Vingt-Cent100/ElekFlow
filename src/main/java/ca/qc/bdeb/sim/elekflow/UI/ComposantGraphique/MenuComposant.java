@@ -11,8 +11,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -134,8 +133,9 @@ public class MenuComposant extends VBox {
 
     public void loadAllElectricalComponents(){
         try {
-            FileReader jsonFile = new FileReader(getClass().getResource("/ca/qc/bdeb/sim/elekflow/Composants.json").getFile(), StandardCharsets.UTF_8);
-            JsonArray jsonArray = (JsonArray) Jsoner.deserialize(jsonFile);
+            InputStream jsonFile = getClass().getResourceAsStream("/ca/qc/bdeb/sim/elekflow/Composants.json");
+            Reader reader = new InputStreamReader(jsonFile, java.nio.charset.StandardCharsets.UTF_8);
+            JsonArray jsonArray = (JsonArray) Jsoner.deserialize(reader);
 
             for (Object o : jsonArray){
                 JsonObject obj = (JsonObject) o;
@@ -151,7 +151,7 @@ public class MenuComposant extends VBox {
                     COMPOSANT_NOM.add(obj.getString(NOM));
                 }
             }
-        }catch (JsonException | NullPointerException | IOException ex){
+        }catch (JsonException | NullPointerException ex){
             Loggeur.logConsole(ex.getMessage(), NiveauLog.ERREUR);
         }
     }

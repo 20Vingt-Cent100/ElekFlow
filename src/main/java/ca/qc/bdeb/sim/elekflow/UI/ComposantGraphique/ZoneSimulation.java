@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.Logique.Simulation;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
@@ -10,6 +11,7 @@ import ca.qc.bdeb.sim.elekflow.proto.Circuit;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -18,8 +20,13 @@ import org.girod.javafx.svgimage.tosvg.SVGConverter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static javafx.scene.input.KeyCode.H;
+import static javafx.scene.input.KeyCode.J;
 
 
 public class ZoneSimulation extends Pane {
@@ -78,6 +85,38 @@ public class ZoneSimulation extends Pane {
         addEventHandler(WireEvent.DELETE_WIRE, this::handleDeleteWire);
         addEventHandler(WireEvent.SHOW_NODE, this::handleShowNode);
         addEventHandler(WireEvent.HIDE_NODE, this::handleHideNode);
+        pane.setOnKeyPressed((event) -> {
+            if(event.isControlDown() && event.getCode() == H){
+                List<Simulation.Composant> composants = new ArrayList<>();
+                List<Simulation.Wire> wires = new ArrayList<>();
+
+                for(Node n : simultionGroup.getChildren()){
+                    if(n instanceof VueComposantElectrique vueComposantElectrique) {
+                        composants.add(vueComposantElectrique.getComposant());
+                        vueComposantElectrique.setCourant(1);
+                    }
+
+                    if(n instanceof VueFil fil)
+                        wires.add(fil.getSimulationWire());
+                }
+
+                Simulation.solve(composants, wires);
+                Loggeur.logConsole("Solved", NiveauLog.TOTAL);
+            }
+
+            else if(event.isControlDown() && event.getCode() == J){
+                List<Simulation.Composant> composants = new ArrayList<>();
+                List<Simulation.Wire> wires = new ArrayList<>();
+
+                for(Node n : simultionGroup.getChildren()) {
+                    if (n instanceof VueComposantElectrique vueComposantElectrique) {
+                        composants.add(vueComposantElectrique.getComposant());
+                        vueComposantElectrique.setCourant(0);
+                    }
+                }
+            }
+
+        });
     }
 
 
@@ -116,7 +155,8 @@ public class ZoneSimulation extends Pane {
         this.simultionGroup.getChildren().remove(event.getFil());
     }
 
-    private void handleOnKeyPressed(KeyEvent keyEvent) {}
+    private void handleOnKeyPressed(KeyEvent keyEvent) {
+    }
 
     private void handleOnMouseDragExited(MouseDragEvent mouseDragEvent) {}
 
@@ -128,6 +168,7 @@ public class ZoneSimulation extends Pane {
 
     private void handleOnMousePressed(MouseEvent mouseEvent) {
         lastClick = new Point2D(mouseEvent.getX(), mouseEvent.getY());
+        pane.requestFocus();
     }
 
     private void handleOnZoom(ZoomEvent zoomEvent) {}

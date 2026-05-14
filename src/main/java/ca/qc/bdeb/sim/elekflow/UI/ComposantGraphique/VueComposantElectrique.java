@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.Logique.Loggeur;
 import ca.qc.bdeb.sim.elekflow.Logique.NiveauLog;
+import ca.qc.bdeb.sim.elekflow.Logique.Simulation;
 import ca.qc.bdeb.sim.elekflow.UI.App;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ShowInfoEvent;
@@ -15,8 +16,10 @@ import org.girod.javafx.svgimage.SVGImage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
-public class VueComposantElectrique extends Region{
+public class VueComposantElectrique extends Region implements SetCourant {
         boolean isMovable = false;
 
         private long clickTime = 0;
@@ -36,6 +39,8 @@ public class VueComposantElectrique extends Region{
 
         private final InteractionComposant interactionComposant;
         private final Behavior behavior;
+
+        private double courant = 0;
 
         private Component.Builder component;
 
@@ -268,5 +273,42 @@ public class VueComposantElectrique extends Region{
                         component.addBornes(i, bornes.get(i).getBorne());
                 }
                 return component.build();
+        }
+
+        public Simulation.Composant getComposant(){
+                List<Integer> bornesIndex = new ArrayList<>();
+
+                for(VueBorne borne : bornes){
+                        bornesIndex.add(borne.getIndex());
+                }
+
+                int type = 0;
+                String name = this.composantElecGraphique.getPROPRIETES()[0].getPropertyName();
+                if (name.equals("Résistance: "))
+                        type = Simulation.RESISTANCE;
+                else if(name.equals("Tension: "))
+                        type = Simulation.SOURCE_TENSION;
+                else if (name.equals("Courant: "))
+                        type = Simulation.SOURCE_COURANT;
+
+                double valeur = this.composantElecGraphique.getPROPRIETES()[0].getValue();
+
+                return new Simulation.Composant(bornesIndex, type, valeur, this::setCourant);
+        }
+
+        @Override
+        public void setCourant(double newValue) {
+                System.out.println("Le nouveau courant est" + newValue);
+
+                courant = newValue;
+
+                //courant = newValue;
+                if (courant == 0){
+                        if(behavior != null)
+                                behavior.asNoCurrent(null, this);
+                }else{
+                        if(behavior!= null)
+                                behavior.asCurrent(null, this);
+                }
         }
 }

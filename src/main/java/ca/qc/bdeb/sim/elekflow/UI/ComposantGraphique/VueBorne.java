@@ -2,28 +2,24 @@ package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import ca.qc.bdeb.sim.elekflow.proto.Borne;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public class VueBorne extends Circle {
-    private static long OverallIndex = 1;
+    private static int OverallIndex = 1;
 
-    private final long index;
-    private final long onLoadIndex;
+    private final int index;
+    private final int onLoadIndex;
 
     private VueFil vueFil;
     private VueBorne hovered;
 
     private boolean priority = false;
 
-    public VueBorne(BigDecimal[] coordinate, double[] parentSize, long onLoadIndex){
+    public VueBorne(BigDecimal[] coordinate, double[] parentSize, int onLoadIndex){
         index = OverallIndex++;
         this.onLoadIndex = onLoadIndex;
 
@@ -166,7 +162,7 @@ public class VueBorne extends Circle {
         return Borne.newBuilder().setIndex(index).build();
     }
 
-    public long getIndex() {
+    public int getIndex() {
         return index;
     }
 

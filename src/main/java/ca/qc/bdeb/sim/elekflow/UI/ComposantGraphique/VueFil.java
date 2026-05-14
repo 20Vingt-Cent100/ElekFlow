@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.elekflow.UI.ComposantGraphique;
 
+import ca.qc.bdeb.sim.elekflow.Logique.Simulation;
 import ca.qc.bdeb.sim.elekflow.UI.Events.ComponentEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Events.WireEvent;
 import ca.qc.bdeb.sim.elekflow.UI.Utils.Vec2;
@@ -264,4 +265,10 @@ public class VueFil extends Region{
 
         return wire.build();
     }
+
+    public Simulation.Wire getSimulationWire(){
+        return new Simulation.Wire(this.listBorne.getFirst().getIndex(), this.listBorne.getLast().getIndex());
+    }
 }
+
+

@@ -5,7 +5,7 @@
     "category": "Générateurs",
     "description": "Composante qui fournit une tension électrique continue et stable afin d’alimenter un circuit. La polarité reste constante dans le temps.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]],
-    "proprietes": [["Tension", 5.0]]
+    "proprietes": [["Tension: ", 5.0]]
   },
   {
     "nom": "Pile",
@@ -13,7 +13,7 @@
     "category": "Générateurs",
     "description": "Générateur électrochimique transformant l’énergie chimique en énergie électrique pour alimenter un circuit en courant continu.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Tension", 1.5]]
+    "proprietes": [["Tension: ", 1.5]]
   },
   {
     "nom": "Source de courant",
@@ -21,7 +21,7 @@
     "category": "Générateurs",
     "description": "Composante fournissant un courant électrique constant, peu importe la résistance ou la charge connectée au circuit.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]],
-    "proprietes": [["Courant", 1.0]]
+    "proprietes": [["Courant: ", 1.0]]
   },
   {
     "nom": "Source de tension alternative",
@@ -29,7 +29,7 @@
     "category": "Générateurs",
     "description": "Source produisant une tension variant périodiquement dans le temps, généralement sous forme sinusoïdale.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]],
-    "proprietes": [["Tension RMS", 120.0], ["Frequence", 60.0]]
+    "proprietes": [["Tension RMS: ", 120.0], ["Fréquence: ", 60.0]]
   },
 
   {
@@ -38,7 +38,7 @@
     "category": "Passifs",
     "description": "Composante passive qui limite le passage du courant électrique et dissipe une partie de l’énergie sous forme de chaleur.",
     "bornes": [[0.0, 0.5], [1.0, 0.5]],
-    "proprietes": [["Resistance", 5.0]]
+    "proprietes": [["Résistance: ", 5.0]]
   },
   {
     "nom": "Inductance",
@@ -46,7 +46,7 @@
     "category": "Passifs",
     "description": "Bobine conductrice qui emmagasine de l’énergie sous forme de champ magnétique lorsqu’un courant la traverse.",
     "bornes": [[0.0, 0.96], [1.0, 0.96]],
-    "proprietes": [["Inductance", 0.01]]
+    "proprietes": [["Inductance: ", 0.01]]
   },
   {
     "nom": "Condensateur",
@@ -54,7 +54,7 @@
     "category": "Passifs",
     "description": "Composante capable d’emmagasiner temporairement des charges électriques et de les restituer plus tard dans le circuit.",
     "bornes": [[0.5, 0.0], [0.5, 1.0]],
-    "proprietes": [["Capacite", 0.000001]]
+    "proprietes": [["Capacité: ", 0.000001]]
   },
   {
     "nom": "Condensateur Polarisé",
